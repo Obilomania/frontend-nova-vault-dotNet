@@ -1,0 +1,38 @@
+import axios from "axios";
+import { toast } from "react-toastify";
+
+export const validateEmail = async (email: string) => {
+    return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+}
+
+export const base_Url = "https://localhost:44338/api/"
+
+// *****************REGISTRATION SERVICE*********************
+interface registrationData {
+    name: string;
+    email: string;
+    password: string;
+    btcWallet: string;
+    referalCode: string;
+}
+export const registerUser = async (userData: registrationData) => {
+    
+}
+
+
+// *****************LOGIN SERVICE*********************
+export default interface loginData {
+    email: string;
+    password: string;
+}
+export const loginUser = async (userData: loginData) => {
+    try {
+        const response = await axios.post(`${base_Url}auth/login`, userData, { withCredentials: true })
+        return response.data.result
+    } catch (error: any) {
+        if (error.response?.data?.statusCode === 400) {
+            toast.error("Username or password is incorrect")
+            return;
+        }
+    }
+}
