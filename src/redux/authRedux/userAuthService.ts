@@ -36,3 +36,21 @@ export const loginUser = async (userData: loginData) => {
       return  toast.error(error?.response?.data?.errorMessages?.$values[0])
     }
 }
+
+
+// *****************LOGIN SERVICE*********************
+interface recoverPassword {
+    email: string;
+    clientUrl: string;
+}
+export const recoverUserPassword = async (userData: recoverPassword) => {
+    try {
+        const response = await axios.post(`${base_Url}auth/forgot-password`, userData)
+        if (response.status === 200) {
+            toast.success(response.data.result)
+        }
+        return response
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}

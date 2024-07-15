@@ -56,7 +56,8 @@ const Register = () => {
       userPromoCode: registerInfo.userPromoCode,
       role: "",
       openPassword: registerInfo.password
-    });
+     });
+    navigate("/login")
     setIsLoading(false);
   };
 

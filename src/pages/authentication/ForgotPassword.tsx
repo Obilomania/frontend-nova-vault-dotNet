@@ -1,45 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../../components/layout/MainLayout";
-
-
+import Loader from "../../components/Loader";
+import { recoverUserPassword } from "../../redux/authRedux/userAuthService";
 
 const ForgotPassword = () => {
-    return (
-      <MainLayout>
-        <Forgot>
-          <div className="overlay"></div>
-          {/* <video className="video" src={Background} autoPlay loop muted /> */}
-          <div className="auth-content">
-            <h1 className="heading">RECOVER PASSWORD</h1>
-            <p>
-              <b>
-                If reset email doesn`t come to your email after 10 minutes,
-                contact support
-              </b>
-            </p>
-            <form>
-              <input
-                type="email"
-                placeholder="Enter Your Registered Email Address"
-                name="email"
-              />
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [userInput, setUserInput] = useState({
+    email: "",
+    clientUrl:""
+  });
 
-              <input
-                type="submit"
-                className="submit"
-                value="RECOVER PASSWORD"
-              />
-            </form>{" "}
-            <br />
-            <Link to="/login" className="back-to-login">
-              BACK TO LOGIN
-            </Link>
-          </div>
-        </Forgot>
-      </MainLayout>
-    );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInput((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    await recoverUserPassword({
+      email: userInput.email,
+      clientUrl: "http://localhost:3000/changepassword",
+    });
+    navigate("/")
+    setIsLoading(false);
+  };
+  return (
+    <MainLayout>
+      {isLoading && <Loader />}
+      <Forgot>
+        <div className="overlay"></div>
+        {/* <video className="video" src={Background} autoPlay loop muted /> */}
+        <div className="auth-content">
+          <h1 className="heading">RECOVER PASSWORD</h1>
+          <p>
+            <b>
+              If reset email doesn`t come to your email after 10 minutes,
+              contact support
+            </b>
+          </p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Enter Your Registered Email Address"
+              value={userInput.email}
+              onChange={(e) => handleInputChange(e)}
+              name="email"
+            />
+
+            <input type="submit" className="submit" value="RECOVER PASSWORD" />
+          </form>{" "}
+          <br />
+          <Link to="/login" className="back-to-login">
+            BACK TO LOGIN
+          </Link>
+        </div>
+      </Forgot>
+    </MainLayout>
+  );
 };
 const Forgot = styled.div`
   width: 100%;
