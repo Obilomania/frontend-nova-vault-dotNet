@@ -1,59 +1,111 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainLayout from "../../components/layout/MainLayout";
+import { toast } from "react-toastify";
+import { base_Url, registerNewUser } from "../../redux/authRedux/userAuthService";
+import Loader from "../../components/Loader";
+import axios from "axios";
+import registrationData from "../../interfaces/registrationModel";
 
+const initialState = {
+  fullname: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  agree: "",
+  btcWallet: "",
+  openPassword: "",
+  userPromoCode: "",
+};
 const Register = () => {
-  const [reveal, setReveal] = useState(false);
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [reveal, setReveal] = useState(true);
   const toggleReveal = () => setReveal(!reveal);
+  const [isChecked, setChecked] = useState(false);
+  const [registerInfo, setRegisterInfo] = useState(initialState);
+
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setRegisterInfo({ ...registerInfo, [name]: value });
+  };
+
+  const handleCheckboxChange = (event: any) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (!registerInfo.fullname || !registerInfo.email || !registerInfo.password || !registerInfo.confirmPassword || !registerInfo.btcWallet) {
+      return toast.error("Please fill all fields Bro");
+    } else if (registerInfo.password !== registerInfo.confirmPassword) {
+      return toast.error("Password is not a Match");
+    } else if (!isChecked) {
+      return toast.error("Please agree to our terms and conditions");
+    }
+     await registerNewUser({
+      email: registerInfo.email,
+      fullname: registerInfo.fullname,
+      password: registerInfo.password,
+      btcWallet: registerInfo.btcWallet,
+      userPromoCode: registerInfo.userPromoCode,
+      role: "",
+      openPassword: registerInfo.password
+    });
+    setIsLoading(false);
+  };
+
   return (
     <MainLayout>
-      {/* {isLoading && <Loader />} */}
+      {isLoading && <Loader />}
       <RegPage>
         <div className="overlay"></div>
         {/* <video className="video" src={Background} autoPlay loop muted /> */}
         <div className="auth-content">
           <h1 className="heading">Register New Account</h1>
-          {/* <form onSubmit={handleSubmit}> */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Full Name *"
               name="fullname"
-              //   value={registerInfo.fullname}
-              //   onChange={(e) => handleInput(e)}
+              value={registerInfo.fullname}
+              onChange={(e) => handleInput(e)}
             />
             <input
               type="email"
               placeholder="Email *"
               name="email"
-              //   value={registerInfo.email}
-              //   onChange={(e) => handleInput(e)}
+              value={registerInfo.email}
+              onChange={(e) => handleInput(e)}
             />
             <div className="form-input">
               <div className="password">
                 <input
-                  type={!reveal ? "password" : "text"}
+                  type={!reveal ? "text" : "password"}
                   placeholder="Password *"
                   name="password"
-                  //   value={registerInfo.password}
-                  //   onChange={(e) => handleInput(e)}
+                  value={registerInfo.password}
+                  onChange={(e) => handleInput(e)}
                 />
                 <div className="eye-reveal" onClick={toggleReveal}>
-                  {!reveal ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+                  {!reveal ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </div>
               </div>
               <div className="password">
                 <input
-                  type={!reveal ? "password" : "text"}
+                  type={!reveal ? "text" : "password"}
                   placeholder="Confirm Password *"
                   name="confirmPassword"
-                  //   value={registerInfo.confirmPassword}
-                  //   onChange={(e) => handleInput(e)}
+                  value={registerInfo.confirmPassword}
+                  onChange={(e) => handleInput(e)}
                 />
                 <div className="eye-reveal" onClick={toggleReveal}>
-                  {!reveal ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+                  {!reveal ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </div>
               </div>
             </div>
@@ -61,22 +113,22 @@ const Register = () => {
               type="btcWallet"
               placeholder="BTC Wallet *"
               name="btcWallet"
-              //   value={registerInfo.btcWallet}
-              //   onChange={(e) => handleInput(e)}
+              value={registerInfo.btcWallet}
+              onChange={(e) => handleInput(e)}
             />
             <input
               type="userPromoCode"
               placeholder="Referal Code if Any"
               name="userPromoCode"
-              //   value={registerInfo.userPromoCode}
-              //   onChange={(e) => handleInput(e)}
+              value={registerInfo.userPromoCode}
+              onChange={(e) => handleInput(e)}
             />
             <div className="form-checkbox">
               <input
                 type="checkbox"
                 name="agree"
-                // checked={isChecked}
-                // onChange={handleCheckboxChange}
+                checked={isChecked}
+                onChange={handleCheckboxChange}
               />{" "}
               <p>
                 I agree with &nbsp;
@@ -136,7 +188,8 @@ const RegPage = styled.div`
         position: relative;
         .eye-reveal {
           position: absolute;
-          top: 0.5rem;
+          z-index: 10;
+          top: 0.8rem;
           right: 1rem;
           cursor: pointer;
         }

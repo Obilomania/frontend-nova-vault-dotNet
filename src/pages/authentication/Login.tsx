@@ -41,29 +41,32 @@ const Login = () => {
       password: userInput.password,
     });
 
-    const token = res?.token;
-    const { fullName, id, email, role, isBlocked }: userModel =
-      jwtDecode(token);
-    if (isBlocked === true) {
-      setIsLoading(false);
-      return toast.error("User Blocked, Please contact Admin");
-    }
-    else {
-      dispatch(
-        current_signed_in_user({ fullName, id, email, role, isBlocked })
-      );
-      dispatch(current_user_login_status(true));
-      dispatch(user_role(role))
-      navigate("/");
-      setIsLoading(false);
+    if (res) {
+      const token = res?.token;
+      const { fullName, id, email, role, isBlocked }: userModel =
+        jwtDecode(token);
+    
+      if (isBlocked === true) {
+        setIsLoading(false);
+        return toast.error("User Blocked, Please contact Admin");
+      }
+      else {
+        dispatch(
+          current_signed_in_user({ fullName, id, email, role, isBlocked })
+        );
+        dispatch(current_user_login_status(true));
+        dispatch(user_role(role))
+        navigate("/");
+        setIsLoading(false);
 
-      return toast.success("Login Successful");
+        return toast.success("Login Successful");
+      }
     }
   };
 
   return (
     <MainLayout>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <LogPage>
         <div className="overlay"></div>
         {/* <video className="video" src={Background} autoPlay loop muted /> */}
