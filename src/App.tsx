@@ -13,6 +13,7 @@ import UpdateProfile from "./pages/authentication/UpdateProfile";
 import ChangePassword from "./pages/authentication/ChangePassword";
 import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/authentication/ForgotPassword";
+import ResetPassword from "./pages/authentication/ResetPassword";
 
 
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/investment-plans" element={<InvestmentPlans />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
 
         {/* Authentication */}
         <Route path="/register" element={<Register />} />

@@ -22,23 +22,7 @@ export const registerNewUser = async (userData: registrationData) => {
     }
 }
 
-
-// *****************LOGIN SERVICE*********************
-export default interface loginData {
-    email: string;
-    password: string;
-}
-export const loginUser = async (userData: loginData) => {
-    try {
-        const response = await axios.post(`${base_Url}auth/login`, userData, { withCredentials: true })
-        return response.data.result
-    } catch (error: any) {
-      return  toast.error(error?.response?.data?.errorMessages?.$values[0])
-    }
-}
-
-
-// *****************LOGIN SERVICE*********************
+// *****************RECOVER PASSWORD SERVICE*********************
 interface recoverPassword {
     email: string;
     clientUrl: string;
@@ -46,6 +30,25 @@ interface recoverPassword {
 export const recoverUserPassword = async (userData: recoverPassword) => {
     try {
         const response = await axios.post(`${base_Url}auth/forgot-password`, userData)
+        if (response.status === 200) {
+            toast.success(response.data.result)
+        }
+        return response
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+// *****************RESET PASSWORD SERVICE*********************
+interface resetPassword {
+    newPassword: string;
+    openPasswordChange: string;
+    email: any;
+    token: any;
+}
+export const resetUserPassword = async (userData: resetPassword) => {
+    try {
+        const response = await axios.post(`${base_Url}auth/reset-password`, userData)
         if (response.status === 200) {
             toast.success(response.data.result)
         }

@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     setIsLoading(true);
     await recoverUserPassword({
       email: userInput.email,
-      clientUrl: "http://localhost:3000/changepassword",
+      clientUrl: "http://localhost:3000/resetpassword",
     });
     navigate("/")
     setIsLoading(false);

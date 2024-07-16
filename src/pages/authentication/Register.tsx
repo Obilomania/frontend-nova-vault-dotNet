@@ -4,10 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainLayout from "../../components/layout/MainLayout";
 import { toast } from "react-toastify";
-import { base_Url, registerNewUser } from "../../redux/authRedux/userAuthService";
+import { registerNewUser } from "../../redux/authRedux/userAuthService";
 import Loader from "../../components/Loader";
-import axios from "axios";
-import registrationData from "../../interfaces/registrationModel";
 
 const initialState = {
   fullname: "",
