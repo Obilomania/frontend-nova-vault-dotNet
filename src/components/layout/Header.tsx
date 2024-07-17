@@ -1,20 +1,41 @@
-import React, { useState } from 'react'
-import { FiMenu } from 'react-icons/fi';
-import { Link, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { FiMenu } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import {
+  current_signed_in_user,
+  current_user_login_status,
+  user_role,
+} from "../../redux/authRedux/userAuthSlice";
+import { toast } from "react-toastify";
+import CurrentUser from "../../interfaces/currentUserModel";
 
-
-
-
-
-const Logo = require("../../assets/nova-logo.png")
-const activeLink = ({ isActive }: any) => (isActive ? "activeLink" : "darkLink");
+const Logo = require("../../assets/nova-logo.png");
+const activeLink = ({ isActive }: any) =>
+  isActive ? "activeLink" : "darkLink";
 
 const Header = () => {
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [navigation, setNavigation] = useState(false);
   const toggleNav = () => setNavigation(!navigation);
-  const userInfo:any = "Obilomania"
+  const userInfo: CurrentUser = useSelector(
+    (state: any) => state.persistedReducer.auth?.currentUser
+  );
+  const logout = () => {
+    try {
+      localStorage.clear();
+      dispatch(current_signed_in_user(null));
+      dispatch(current_user_login_status(false));
+      dispatch(user_role(""));
+      navigate("/");
+      toast.success("User Logged Out");
+    } catch (error: any) {
+      toast.success(error);
+    }
+  };
+
   return (
     <Navigation>
       <div className="logo">
@@ -35,7 +56,7 @@ const Header = () => {
         <NavLink to={"/contact"} className={activeLink} onClick={toggleNav}>
           CONTACT
         </NavLink>
-        {userInfo === "Admin" && (
+        {userInfo?.role === "Admin" && (
           <>
             <NavLink
               to={"/admin-landing"}
@@ -48,7 +69,7 @@ const Header = () => {
           </>
         )}
 
-        {userInfo?.currentUser ? (
+        {userInfo?.fullName ? (
           <>
             <NavLink
               to={"/dashboard"}
@@ -58,9 +79,9 @@ const Header = () => {
             >
               DASHBOARD
             </NavLink>
-            {/* <button className="LogOut-btn" onClick={logout}>
+            <button className="LogOut-btn" onClick={logout}>
               LOGOUT
-            </button> */}
+            </button>
           </>
         ) : (
           <>
@@ -88,7 +109,7 @@ const Header = () => {
       </div>
     </Navigation>
   );
-}
+};
 
 const Navigation = styled.div`
   width: 100%;
@@ -458,4 +479,4 @@ const Navigation = styled.div`
     }
   }
 `;
-export default Header
+export default Header;

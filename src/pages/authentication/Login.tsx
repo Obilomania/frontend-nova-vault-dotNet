@@ -35,11 +35,8 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // setIsLoading(true);
-    // const res = await loginUser({
-    //   email: userInput.email,
-    //   password: userInput.password,
-    // });
+    setIsLoading(true);
+
     try {
       const response = await axios.post(
         `${base_Url}auth/login`,
@@ -55,7 +52,6 @@ const Login = () => {
         const token = response?.data?.result?.token;
         const { fullName, id, email, role, isBlocked }: userModel =
           jwtDecode(token);
-        console.log(token);
         if (isBlocked === true) {
           setIsLoading(false);
           return toast.error("User Blocked, Please contact Admin");
@@ -71,34 +67,11 @@ const Login = () => {
       }
     } catch (error: any) {
       if (error.message === "Request failed with status code 400") {
+        setIsLoading(false);
         return toast.error("Username or password is incorrect");
       }
       return toast.error(error?.response?.data?.errorMessages?.$values[0]);
     }
-
-    //  const token = res?.token;
-    //  const { fullName, id, email, role, isBlocked }: userModel =
-    //    jwtDecode(token);
-    // console.log(res)
-
-    //   if (res) {
-
-    //   if (isBlocked === true) {
-    //     setIsLoading(false);
-    //     return toast.error("User Blocked, Please contact Admin");
-    //   }
-    //   else {
-    //     dispatch(
-    //       current_signed_in_user({ fullName, id, email, role, isBlocked })
-    //     );
-    //     dispatch(current_user_login_status(true));
-    //     dispatch(user_role(role))
-    //     navigate("/");
-    //     setIsLoading(false);
-
-    //     return toast.success("Login Successful");
-    //   }
-    // }
   };
 
   return (
