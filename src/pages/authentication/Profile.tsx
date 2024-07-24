@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MainLayout from '../../components/layout/MainLayout';
 import Loader from '../../components/Loader';
+import { useSelector } from 'react-redux';
+import CurrentUser from '../../interfaces/currentUserModel';
 
 const Profile = () => {
   const [isLoading] = useState(false);
-//   const [isLoading, setIsLoading] = useState(false);
+  const userInfo: CurrentUser = useSelector(
+    (state: any) => state.persistedReducer.auth
+  );
 
   return (
     <MainLayout>
@@ -24,7 +28,7 @@ const Profile = () => {
                   type="text"
                   placeholder="John Doe"
                   name="fullname"
-                  value="Obinna Iloanya"
+                  value={userInfo?.fullName}
                   disabled
                 />
               </div>
@@ -33,17 +37,17 @@ const Profile = () => {
                 <input
                   type="text"
                   placeholder="Email Address"
-                  value="test@gmail.com"
+                  value={userInfo?.email}
                   disabled
                 />
               </div>
 
               <div className="plan-form">
-                <label>Wallet Address :</label>
+                <label>Wallet Address : <span className="warning">Contact Admin to change wallet Address</span></label>
                 <input
                   type="text"
                   placeholder="BTC Wallet Address"
-                  value="0x3aa6e4cdc0eadbe0870437eb4d9bc7d8099855d3"
+                  value={userInfo?.btcWallet}
                   disabled
                 />
               </div>

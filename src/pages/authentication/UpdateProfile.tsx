@@ -1,11 +1,61 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainLayout from "../../components/layout/MainLayout";
+import { useDispatch, useSelector } from "react-redux";
+import CurrentUser from "../../interfaces/currentUserModel";
+import Loader from "../../components/Loader";
+import { updateUserProfile } from "../../redux/authRedux/userAuthService";
+import { toast } from "react-toastify";
+import { current_user_fullname } from "../../redux/authRedux/userAuthSlice";
 
 const UpdateProfile = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfo: CurrentUser = useSelector(
+    (state: any) => state.persistedReducer.auth
+  );
+  const appUserId = userInfo?.id;
+
+  const [userInput, setUserInput] = useState({
+    fullName: "",
+    appUserId,
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInput((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (userInput.fullName.trim() === "") {
+      toast.error("Input cannot be Empty!!!");
+    }
+    const res: any = await updateUserProfile({
+      fullname: userInput.fullName,
+      appUserId,
+    });
+    if (res.status === 200) {
+      dispatch(current_user_fullname(res?.data));
+      navigate("/my-profile");
+      setIsLoading(false);
+    } else {
+      navigate("/updateuser");
+      setIsLoading(false);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <MainLayout>
+      {isLoading && <Loader />}
+
       <EditProfile>
         <div className="dashboard-content">
           {/* <Time /> */}
@@ -13,17 +63,15 @@ const UpdateProfile = () => {
           <div className="right-dash dash">
             <h5 className="heading-deposit-form">EDIT PROFILE</h5> <br />
             <p>You can only Edit your Name</p>
-            {/* <form onSubmit={handleSubmit}> */}
-            <form >
+            <form onSubmit={handleSubmit}>
               <div className="plan-form">
                 <label>Full Name :</label>
                 <input
                   type="text"
-                  name="fullname"
+                  name="fullName"
                   placeholder="Full Name"
-                  value="Obinna Iloaya"
-                  //   value={profile.fullname}
-                  //   onChange={handleInputChange}
+                  value={userInput.fullName}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="plan-form">
@@ -33,8 +81,7 @@ const UpdateProfile = () => {
                 <input
                   type="text"
                   placeholder="Email Address"
-                  value="test@gmail.com"
-                  //   value={currentUser?.currentUser?.email}
+                  value={userInfo?.email}
                   disabled
                   id="diabledInput"
                 />
@@ -54,8 +101,7 @@ const UpdateProfile = () => {
                   type="text"
                   name="btcWallet"
                   placeholder="BTC Wallet Address"
-                  value="0x3aa6e4cdc0eadbe0870437eb4d9bc7d8099855d3"
-                  //   value={currentUser?.currentUser?.btcWallet}
+                  value={userInfo?.btcWallet}
                   disabled
                   id="diabledInput"
                 />

@@ -4,4 +4,5 @@ export default interface CurrentUser {
     email: string;
     role: string;
     isBlocked: boolean;
+    btcWallet: string;
 }

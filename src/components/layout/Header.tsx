@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
-  current_signed_in_user,
+  current_user_btcWallet,
+  current_user_email,
+  current_user_fullname,
+  current_user_ID,
   current_user_login_status,
   user_role,
 } from "../../redux/authRedux/userAuthSlice";
@@ -21,12 +24,15 @@ const Header = () => {
   const [navigation, setNavigation] = useState(false);
   const toggleNav = () => setNavigation(!navigation);
   const userInfo: CurrentUser = useSelector(
-    (state: any) => state.persistedReducer.auth?.currentUser
+    (state: any) => state.persistedReducer.auth
   );
   const logout = () => {
     try {
       localStorage.clear();
-      dispatch(current_signed_in_user(null));
+      dispatch(current_user_fullname(""));
+      dispatch(current_user_ID(""));
+      dispatch(current_user_email(""));
+      dispatch(current_user_btcWallet(""));
       dispatch(current_user_login_status(false));
       dispatch(user_role(""));
       navigate("/");

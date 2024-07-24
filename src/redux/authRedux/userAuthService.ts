@@ -57,3 +57,21 @@ export const resetUserPassword = async (userData: resetPassword) => {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
     }
 }
+
+ 
+// *****************UPDATE PROFILE*********************
+interface userProfile {
+    fullname: string
+    appUserId : string
+}
+export const updateUserProfile = async (userData: userProfile) => {
+    try {
+        const response = await axios.put(`${base_Url}auth/edit-profile`, userData);
+        if (response.status === 200 || response.statusText === "OK") {
+            toast.success("Login is successful");
+        }
+        return response;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
