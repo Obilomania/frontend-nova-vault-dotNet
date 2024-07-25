@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import Table from "react-bootstrap/Table";
-import { useSelector } from 'react-redux';
-import CurrentUser from '../../interfaces/currentUserModel';
+import { useDispatch, useSelector } from 'react-redux';
+import { all_applicationUser } from '../../redux/adminRedux/adminSlice';
 
-const AllAppUser = () => {
-  const userInfo: CurrentUser = useSelector(
-    (state: any) => state.persistedReducer.auth
-  );
+const AllAppUser = ({ appUsers }: any) => {
+  const dispatch = useDispatch();
+  if (appUsers) {
+    dispatch(all_applicationUser(appUsers));
+  }
+  const appApplicationUsers = useSelector((state: any) => state.admin.allAppUsers)
+  
   return (
     <AllUsers>
       <h1 className="heading">All App Users</h1>
@@ -17,26 +20,30 @@ const AllAppUser = () => {
             <th>Email</th>
             <th>FullName</th>
             <th></th>
-          </tr> 
+          </tr>
         </thead>
         <tbody className="tbody">
-          <tr>
-            <td>1</td>
-            <td>applicationadmin@gmail.com</td>
-            <td>Application Tester</td>
-            <td className="call-to-action">
-              {userInfo?.isBlocked || userInfo?.isBlocked === true ?
+          <>
+            {appApplicationUsers.map((user: any, index: any) => (
+              <tr key={index}>
+                <td>1</td>
+                <td>{user?.fullname}</td>
+                <td>{user?.email}</td>
+                <td className="call-to-action">
+              {user?.isBlocked || user?.isBlocked === true ?
               <button className="approve">Un-Block User</button>
                 : 
               <button className="delete">Block User</button>
                }
             </td>
-          </tr>
+              </tr>
+            ))}
+          </>
         </tbody>
       </Table>
     </AllUsers>
   );
-}
+};
 
 
 const AllUsers = styled.div`
