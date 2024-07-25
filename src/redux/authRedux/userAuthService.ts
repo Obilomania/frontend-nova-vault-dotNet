@@ -58,11 +58,11 @@ export const resetUserPassword = async (userData: resetPassword) => {
     }
 }
 
- 
+
 // *****************UPDATE PROFILE*********************
 interface userProfile {
     fullname: string
-    appUserId : string
+    appUserId: string
 }
 export const updateUserProfile = async (userData: userProfile) => {
     try {
@@ -70,6 +70,17 @@ export const updateUserProfile = async (userData: userProfile) => {
         if (response.status === 200 || response.statusText === "OK") {
             toast.success("Login is successful");
         }
+        return response;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+// *****************ALL ROLES*********************
+export const getAllRoles = async () => {
+    try {
+        const response = await axios.get(`${base_Url}auth/all-Roles`);
         return response;
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])

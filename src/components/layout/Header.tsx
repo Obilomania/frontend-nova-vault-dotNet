@@ -62,7 +62,7 @@ const Header = () => {
         <NavLink to={"/contact"} className={activeLink} onClick={toggleNav}>
           CONTACT
         </NavLink>
-        {userInfo?.role === "Admin" && (
+        {userInfo?.userRole === "Admin" && (
           <>
             <NavLink
               to={"/admin-landing"}

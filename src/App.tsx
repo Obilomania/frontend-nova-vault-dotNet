@@ -14,6 +14,7 @@ import ChangePassword from "./pages/authentication/ChangePassword";
 import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/authentication/ForgotPassword";
 import ResetPassword from "./pages/authentication/ResetPassword";
+import AdminLanding from "./pages/admin/AdminLanding";
 
 
 
@@ -50,6 +51,9 @@ function App() {
         <Route path="/updateuser" element={<UpdateProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Admin Section */}
+        <Route path="/admin-landing" element={<AdminLanding />} />
       </Routes>
     </BrowserRouter>
   );

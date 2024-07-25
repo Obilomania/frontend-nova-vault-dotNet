@@ -5,4 +5,6 @@ export default interface CurrentUser {
     role: string;
     isBlocked: boolean;
     btcWallet: string;
+    isLoggedin: Boolean;
+    userRole: string;
 }
