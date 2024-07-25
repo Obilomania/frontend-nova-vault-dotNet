@@ -19,10 +19,8 @@ const UserInfoPage = () => {
   if (allUsers) {
     dispatch(all_applicationUser(allUsers));
   }
-
-  const users = useSelector((state: any) => state.admin.allAppUsers);
-    const userInfo = users?.find((u: any) => u.id === id);
-    console.log(userInfo)
+//   const users = useSelector((state: any) => state.admin.allAppUsers);
+    const userInfo:any = allUsers?.find((u: any) => u.id === id);
 
   return (
     <MainLayout>
@@ -54,14 +52,14 @@ const UserInfoPage = () => {
               </div>{" "}
               <br />
               <div className="call-to-action">
-                <button
+                {/* <button
                   className="btn-danger btn"
                   onClick={() =>
                     navigate(`/admin-edit-user-Info/${userInfo.id}`)
                   }
                 >
                   EDIT WALLET
-                </button>
+                </button> */}
                 {/* <button className="btn-danger btn">EDIT PASSWORD</button> */}
                 <button
                   className="btn-danger btn"
