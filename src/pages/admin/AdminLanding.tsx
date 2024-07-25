@@ -46,11 +46,11 @@ const AdminLanding = () => {
         </div>
         <hr />
         <div className="admin-container">
-          {/* <PendingWithdrawals withdrawals={ allWithdrawals} /> */}
+          <PendingWithdrawals withdrawals={ allWithdrawals} />
         </div>
         <hr />
         <div className="admin-container">
-          {/* <AllAppUser appUsers {allUsers} /> */}
+          <AllAppUser appUsers {allUsers} />
         </div>
       </AdminLand>
     </MainLayout>

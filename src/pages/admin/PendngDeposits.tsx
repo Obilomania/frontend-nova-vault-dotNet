@@ -14,7 +14,6 @@ const PendngDeposits = ({ deposits }: any) => {
   const allDeposits = useSelector((state: any) => state.admin.allDeposits)
   
   let pendingDeposits = allDeposits.filter((dep: { isProcessing: Boolean; }) => !dep.isProcessing)
-  console.log(pendingDeposits)
   return (
     <PendingDepo>
       <h1 className="heading">Pending Deposits</h1>
@@ -30,7 +29,7 @@ const PendngDeposits = ({ deposits }: any) => {
         </thead>
         <tbody className="tbody">
           {pendingDeposits.length <= 0 ? (
-            <p></p>
+            <p className='no-result'>No Pending Deposits</p>
           ) : (
             <>
               {pendingDeposits.map((pend: any, index: any) => (
@@ -60,6 +59,11 @@ const PendingDepo = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  .no-result{
+    text-align:center;
+    color:red;
+    font-weight:600;
+  }
   .table {
     font-size: 0.8rem;
   }
