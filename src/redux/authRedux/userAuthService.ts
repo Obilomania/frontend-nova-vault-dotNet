@@ -86,3 +86,16 @@ export const getAllRoles = async () => {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
     }
 }
+
+
+
+// *****************USER ACCOUNT BALANCE*********************
+export const getUserAccountBalance = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}transactions/usergetaccountbalance/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+

@@ -6,48 +6,31 @@ import { FaBitcoin } from "react-icons/fa";
 import { TbZoomMoney } from "react-icons/tb";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-
+import { getUserAccountBalance } from "../redux/authRedux/userAuthService";
+import { user_account_balance } from "../redux/transactions/transactionSlice";
 
 const Dashboard = () => {
-
   const dispatch = useDispatch();
+  const [userAccountBalance, setUserAccountBalance] = useState<any>(0);
   const [cantWithdraw, setCantWithdraw] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const userInfo = useSelector((state: any) => state.persistedReducer.auth);
+  const id = userInfo?.id;
 
-  //API CALLS  ===========================================================
   useEffect(() => {
-    setIsLoading(true);
-    async function userTransactions() {
-      // const userTotalAccountBalance = 400;
-      // const userTotalDepositAmount = 1500;
-      // const userPendingDepositAmount = 200;
-      // const userTotalWithdrawalAmount = 350;
-      // const userPendingWithdrawaltotal =200;
-      // const userLastWithdrawalAmount =800;
-      // const getAlltransactions = [200,500,400];
-      // const lastDeposit = 200;
-
-      // dispatch(user_account_balance_amount(userTotalAccountBalance));
-      // dispatch(user_total_deposit_amount(userTotalDepositAmount));
-      // dispatch(user_pending_deposit_amount(userPendingDepositAmount));
-      // dispatch(user_last_deposit_amount(lastDeposit));
-      // dispatch(user_last_deposit(lastDeposit));
-      // dispatch(user_total_withdrawal_amount(userTotalWithdrawalAmount));
-      // dispatch(user_pending_withdrwawal_amount(userPendingWithdrawaltotal));
-      // dispatch(user_last_withdrawal_amount(userLastWithdrawalAmount));
-      // dispatch(all_user_transactions(getAlltransactions));
-      setIsLoading(false);
-    }
-    userTransactions();
-    setIsLoading(false);
-  }, [dispatch]);
-
-  // All Transactions from Redux ===========================================================
-  // const allTransaction = useSelector(
-  //   (state) => state.persistedReducer.transactions
-  // );
+    getUserAccountBalance(id)
+      .then((data) => {
+        setUserAccountBalance(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_account_balance(userAccountBalance));
+  }
 
   // //Top Up Balance Settings ===========================================================
   let currentPlan = "silver";
@@ -73,8 +56,7 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      {accountBalance === 1 ||
-        (accountBalance === 2 && <Loader />)}
+      {accountBalance === 1 || (accountBalance === 2 && <Loader />)}
       <Dash>
         <div className="dashboard-content">
           {/* <Time /> */}
@@ -86,8 +68,8 @@ const Dashboard = () => {
                 <h6>ACCOUNT BALANCE</h6>
                 <hr />
                 <div className="dollar">
-                  <span>$</span>
-                  <span>1400</span>
+                  <span>$ </span>
+                  <span>{userAccountBalance}</span>
                 </div>
                 <hr />
                 <div className="call-to-action">
@@ -96,7 +78,7 @@ const Dashboard = () => {
                   ) : (
                     <Link to={"/topUp"}>TOP-UP</Link>
                   )}
-                  {accountBalance === 0 || accountBalance > 300 ? (
+                  { userAccountBalance  === 0 || accountBalance > 300 ? (
                     <p>CANT WITHDRAW</p>
                   ) : (
                     <Link to={"/withdraw"}>WITHDRAW</Link>
@@ -124,9 +106,7 @@ const Dashboard = () => {
                   <RiLuggageDepositFill />
                 </div>
                 <div className="inside-dash">
-                  <span className="text-danger fw-bold">
-                    $ {544}
-                  </span>
+                  <span className="text-danger fw-bold">$ {544}</span>
                   <p className="dark">PENDING DEPOSIT</p>
                 </div>
               </div>
@@ -159,9 +139,7 @@ const Dashboard = () => {
                   <BsCashCoin />
                 </div>
                 <div className="inside-dash">
-                  <span className="text-danger fw-bold">
-                    $ 455
-                  </span>
+                  <span className="text-danger fw-bold">$ 455</span>
                   <p className="dark">PENDING WITHDRAWAL</p>
                 </div>
               </div>
@@ -247,7 +225,7 @@ const Dash = styled.div`
           letter-spacing: 0px;
           transition: var(--transition);
           margin-top: 1rem;
-          font-size: 0.8rem;
+          font-size: 0.7rem;
         }
         a {
           text-decoration: none;
