@@ -34,9 +34,9 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
               {pendingWithdrawals.map((pend: any, index: any) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{pend?.appUser?.email }</td>
+                  <td>{pend?.appUser?.email}</td>
                   <td>$ {pend?.amount}</td>
-                   <td className='text-danger'>Processing</td>
+                  <td className="text-danger">Processing</td>
                   <td className="call-to-action">
                     <button className="approve">Approve</button>
                     <button className="delete">Delete</button>

@@ -1,19 +1,18 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from 'react-redux';
-import { all_deposits } from '../../redux/adminRedux/adminSlice';
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { all_deposits } from "../../redux/adminRedux/adminSlice";
 
 const PendngDeposits = ({ deposits }: any) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   if (deposits) {
-    dispatch(all_deposits(deposits))
+    dispatch(all_deposits(deposits));
   }
-  const allDeposits = useSelector((state: any) => state.admin.allDeposits)
-  
-  let pendingDeposits = allDeposits.filter((dep: { isProcessing: Boolean; }) => !dep.isProcessing)
+  const allDeposits = useSelector((state: any) => state.admin.allDeposits);
+
+  let pendingDeposits = allDeposits.filter(
+    (dep: { isProcessing: Boolean }) => !dep.isProcessing
+  );
   return (
     <PendingDepo>
       <h1 className="heading">Pending Deposits</h1>
@@ -29,15 +28,15 @@ const PendngDeposits = ({ deposits }: any) => {
         </thead>
         <tbody className="tbody">
           {pendingDeposits.length <= 0 ? (
-            <p className='no-result'>No Pending Deposits</p>
+            <p className="no-result">No Pending Deposits</p>
           ) : (
             <>
               {pendingDeposits.map((pend: any, index: any) => (
                 <tr key={index}>
-                  <td>{index +1 }</td>
-                  <td>{pend?.appUser?.email }</td>
-                  <td>$ { pend?.amount}</td>
-                  <td className='text-danger'>Processing</td>
+                  <td>{index + 1}</td>
+                  <td>{pend?.appUser?.email}</td>
+                  <td>$ {pend?.amount}</td>
+                  <td className="text-danger">Processing</td>
                   <td className="call-to-action">
                     <button className="approve">Approve</button>
                     <button className="delete">Delete</button>
@@ -50,7 +49,7 @@ const PendngDeposits = ({ deposits }: any) => {
       </Table>
     </PendingDepo>
   );
-}
+};
 
 const PendingDepo = styled.div`
   width: 100%;
@@ -59,10 +58,10 @@ const PendingDepo = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  .no-result{
-    text-align:center;
-    color:red;
-    font-weight:600;
+  .no-result {
+    text-align: center;
+    color: red;
+    font-weight: 600;
   }
   .table {
     font-size: 0.8rem;
@@ -90,4 +89,4 @@ const PendingDepo = styled.div`
     }
   }
 `;
-export default PendngDeposits
+export default PendngDeposits;

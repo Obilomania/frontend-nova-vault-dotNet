@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/authentication/ForgotPassword";
 import ResetPassword from "./pages/authentication/ResetPassword";
 import AdminLanding from "./pages/admin/AdminLanding";
+import UserInfoPage from "./pages/admin/UserInfoPage";
 
 
 
@@ -54,6 +55,7 @@ function App() {
 
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
+        <Route path="/getParticularUser/:id" element={<UserInfoPage />} />
       </Routes>
     </BrowserRouter>
   );

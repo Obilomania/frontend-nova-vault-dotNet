@@ -1,15 +1,19 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from 'react-redux';
-import { all_applicationUser } from '../../redux/adminRedux/adminSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { all_applicationUser } from "../../redux/adminRedux/adminSlice";
+import { useNavigate } from "react-router-dom";
 
 const AllAppUser = ({ appUsers }: any) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   if (appUsers) {
     dispatch(all_applicationUser(appUsers));
   }
-  const appApplicationUsers = useSelector((state: any) => state.admin.allAppUsers)
-  
+  const appApplicationUsers = useSelector(
+    (state: any) => state.admin.allAppUsers
+  );
+
   return (
     <AllUsers>
       <h1 className="heading">All App Users</h1>
@@ -26,16 +30,22 @@ const AllAppUser = ({ appUsers }: any) => {
           <>
             {appApplicationUsers.map((user: any, index: any) => (
               <tr key={index}>
-                <td>1</td>
+                <td>{index + 1}</td>
                 <td>{user?.fullname}</td>
                 <td>{user?.email}</td>
                 <td className="call-to-action">
-              {user?.isBlocked || user?.isBlocked === true ?
-              <button className="approve">Un-Block User</button>
-                : 
-              <button className="delete">Block User</button>
-               }
-            </td>
+                  <button
+                    className="info"
+                    onClick={() => navigate(`/getParticularUser/${user.id}`)}
+                  >
+                    View
+                  </button>
+                  {user?.isBlocked || user?.isBlocked === true ? (
+                    <button className="approve">Un-Block User</button>
+                  ) : (
+                    <button className="delete">Block User</button>
+                  )}
+                </td>
               </tr>
             ))}
           </>
@@ -44,7 +54,6 @@ const AllAppUser = ({ appUsers }: any) => {
     </AllUsers>
   );
 };
-
 
 const AllUsers = styled.div`
   width: 100%;
@@ -69,6 +78,14 @@ const AllUsers = styled.div`
       letter-spacing: 1px;
       cursor: pointer;
     }
+    .info {
+      font-size: 0.8rem;
+      background: #00a2ff;
+      color: white;
+      padding: 0.2rem 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
     .delete {
       background: red;
       color: white;
@@ -79,4 +96,4 @@ const AllUsers = styled.div`
     }
   }
 `;
-export default AllAppUser
+export default AllAppUser;
