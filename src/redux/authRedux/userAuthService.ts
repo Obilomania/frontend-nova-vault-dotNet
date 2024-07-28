@@ -93,6 +93,8 @@ export const getAllRoles = async () => {
 export const getUserAccountBalance = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}transactions/usergetaccountbalance/${id}`);
+        // console.log(response.data.result);
+        // return;
         return response.data?.result;
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
@@ -132,3 +134,35 @@ export const getUserLastDeposit = async (id: any) => {
     }
 }
 
+
+// *****************USER LAST WITHDRAWAL*********************
+export const getUserWithdrawalTotal = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}withdraw/getallusertotalwithdrawal/${id}`);
+        return response.data;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+// *****************USER PENDING WITHDRAWAL*********************
+export const getUserPendingWithdrawal = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}withdraw/getalluserpendingwithdrawaltotal/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+// *****************USER LAST WITHDRAWAL*********************
+export const getUserLastWithdrawal = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}withdraw/getalluserpendingwithdrawaltotal/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}

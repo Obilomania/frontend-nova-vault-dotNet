@@ -29,6 +29,7 @@ const Header = () => {
   const logout = () => {
     try {
       localStorage.clear();
+      localStorage.removeItem("persistroot");
       dispatch(current_user_fullname(""));
       dispatch(current_user_ID(""));
       dispatch(current_user_email(""));

@@ -8,17 +8,19 @@ import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-import { getUserAccountBalance, getUserLastDeposit, getUserTotalDepositBalance, getUserTotalPendingDepositBalance } from "../redux/authRedux/userAuthService";
-import { user_account_balance, user_deposit_total, user_last_deposit, user_pendingDeposit_total } from "../redux/transactions/transactionSlice";
+import { getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
+import { user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [userAccountBalance, setUserAccountBalance] = useState<any>(0);
   const [depositTotal, setDepositTotal] = useState<any>(0);
   const [pendingDepositTotal, setPendingDepositTotal] = useState<any>(0);
-  const [userLastDeposit, setUserLastDeposit] = useState<any>(null)
+  const [userLastDeposit, setUserLastDeposit] = useState<any>(null);
+  const [withdrawalTotal, setWithdrawalTotal] = useState<any>(0)
+  const [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0)
+  const [lastWithdrawal, setLastWithdrawal] = useState<any>(null)
   const [cantWithdraw, setCantWithdraw] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
   const id = userInfo?.id;
 
@@ -50,7 +52,6 @@ const Dashboard = () => {
     dispatch(user_deposit_total(depositTotal));
   }
 
-
   //***********EFFECT TO GET ALL PENDING DEPOSIT TOTAL******** */
   useEffect(() => {
     getUserTotalPendingDepositBalance(id)
@@ -64,7 +65,7 @@ const Dashboard = () => {
   if (userAccountBalance) {
     dispatch(user_pendingDeposit_total(pendingDepositTotal));
   }
-  
+
   //***********EFFECT TO GET ALL LAST DEPOSIT ******** */
   useEffect(() => {
     getUserLastDeposit(id)
@@ -79,7 +80,49 @@ const Dashboard = () => {
     dispatch(user_last_deposit(userLastDeposit));
   }
 
+  //***********EFFECT TO GET WITHDRAWAL TOTAL ******** */
+  useEffect(() => {
+    getUserWithdrawalTotal(id)
+      .then((data) => {
+        setWithdrawalTotal(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_withdrawal_total(withdrawalTotal));
+  }
 
+
+  //***********EFFECT TO GET PENDINGWITHDRAWAL TOTAL ******** */
+  useEffect(() => {
+    getUserPendingWithdrawal(id)
+      .then((data) => {
+        setPendingWithdrawalTotal(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_pending_withdrawal_total(pendingWithdrawalTotal));
+  }
+
+
+  //***********EFFECT TO GET LAST WITHDRAWAL ******** */
+  useEffect(() => {
+    getUserLastWithdrawal(id)
+      .then((data) => {
+        setLastWithdrawal(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_last_withdrawal(lastWithdrawal));
+  }
 
   // //Top Up Balance Settings ===========================================================
   let currentPlan = userLastDeposit?.plan;
@@ -97,9 +140,7 @@ const Dashboard = () => {
     }
   }, [accountBalance, currentPlan]);
 
-  if (!accountBalance) {
-    return <Loader />;
-  }
+
 
   return (
     <MainLayout>
@@ -178,7 +219,7 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>$ 566</span>
+                  <span>$ {withdrawalTotal}</span>
                   <p className="dark">TOTAL WITHDRAWAL</p>
                 </div>
               </div>
@@ -187,7 +228,9 @@ const Dashboard = () => {
                   <BsCashCoin />
                 </div>
                 <div className="inside-dash">
-                  <span className="text-danger fw-bold">$ 455</span>
+                  <span className="text-danger fw-bold">
+                    $ {pendingWithdrawalTotal}
+                  </span>
                   <p className="dark">PENDING WITHDRAWAL</p>
                 </div>
               </div>
@@ -196,7 +239,9 @@ const Dashboard = () => {
                   <TbZoomMoney />
                 </div>
                 <div className="inside-dash">
-                  $ 244
+                  $ {!lastWithdrawal ? <>0</> : <>
+                   {lastWithdrawal}
+                  </>}
                   <p className="dark">LAST WITHDRAWAL</p>
                 </div>
               </div>
