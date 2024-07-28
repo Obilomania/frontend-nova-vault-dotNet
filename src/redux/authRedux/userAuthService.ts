@@ -99,3 +99,36 @@ export const getUserAccountBalance = async (id: any) => {
     }
 }
 
+
+// *****************USER TOTAL DEPOSIT BALANCE*********************
+export const getUserTotalDepositBalance = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}deposit/getalluserdeposittotal/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+// *****************USER TOTAL PENDING DEPOSIT BALANCE*********************
+export const getUserTotalPendingDepositBalance = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}deposit/getalluserdeposittotal/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+// *****************USER LAST DEPOSIT*********************
+export const getUserLastDeposit = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}deposit/userlastdeposit/${id}`);
+        return response.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+

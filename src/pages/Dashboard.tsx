@@ -8,17 +8,21 @@ import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-import { getUserAccountBalance } from "../redux/authRedux/userAuthService";
-import { user_account_balance } from "../redux/transactions/transactionSlice";
+import { getUserAccountBalance, getUserLastDeposit, getUserTotalDepositBalance, getUserTotalPendingDepositBalance } from "../redux/authRedux/userAuthService";
+import { user_account_balance, user_deposit_total, user_last_deposit, user_pendingDeposit_total } from "../redux/transactions/transactionSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [userAccountBalance, setUserAccountBalance] = useState<any>(0);
+  const [depositTotal, setDepositTotal] = useState<any>(0);
+  const [pendingDepositTotal, setPendingDepositTotal] = useState<any>(0);
+  const [userLastDeposit, setUserLastDeposit] = useState<any>(null)
   const [cantWithdraw, setCantWithdraw] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
   const id = userInfo?.id;
 
+  //***********EFFECT TO GET ALL USER BALANCE ******** */
   useEffect(() => {
     getUserAccountBalance(id)
       .then((data) => {
@@ -32,9 +36,54 @@ const Dashboard = () => {
     dispatch(user_account_balance(userAccountBalance));
   }
 
+  //***********EFFECT TO GET TOTAL DEPOSIT BALANCE ******** */
+  useEffect(() => {
+    getUserTotalDepositBalance(id)
+      .then((data) => {
+        setDepositTotal(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_deposit_total(depositTotal));
+  }
+
+
+  //***********EFFECT TO GET ALL PENDING DEPOSIT TOTAL******** */
+  useEffect(() => {
+    getUserTotalPendingDepositBalance(id)
+      .then((data) => {
+        setPendingDepositTotal(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_pendingDeposit_total(pendingDepositTotal));
+  }
+  
+  //***********EFFECT TO GET ALL LAST DEPOSIT ******** */
+  useEffect(() => {
+    getUserLastDeposit(id)
+      .then((data) => {
+        setUserLastDeposit(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_last_deposit(userLastDeposit));
+  }
+
+
+
   // //Top Up Balance Settings ===========================================================
-  let currentPlan = "silver";
-  let accountBalance = 300;
+  let currentPlan = userLastDeposit?.plan;
+  let accountBalance = userAccountBalance;
 
   useEffect(() => {
     if (currentPlan === "Gold" || accountBalance <= 7000) {
@@ -48,15 +97,12 @@ const Dashboard = () => {
     }
   }, [accountBalance, currentPlan]);
 
-  // if (!allTransaction?.userAccountBalance) {
-  //   return (
-  //     <Loader />
-  //   )
-  // }
+  if (!accountBalance) {
+    return <Loader />;
+  }
 
   return (
     <MainLayout>
-      {accountBalance === 1 || (accountBalance === 2 && <Loader />)}
       <Dash>
         <div className="dashboard-content">
           {/* <Time /> */}
@@ -78,7 +124,7 @@ const Dashboard = () => {
                   ) : (
                     <Link to={"/topUp"}>TOP-UP</Link>
                   )}
-                  { userAccountBalance  === 0 || accountBalance > 300 ? (
+                  {userAccountBalance === 0 || accountBalance > 300 ? (
                     <p>CANT WITHDRAW</p>
                   ) : (
                     <Link to={"/withdraw"}>WITHDRAW</Link>
@@ -97,7 +143,7 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>$ 600</span>
+                  <span>$ {depositTotal}</span>
                   <p className="dark">TOTAL DEPOSIT</p>
                 </div>
               </div>
@@ -106,7 +152,9 @@ const Dashboard = () => {
                   <RiLuggageDepositFill />
                 </div>
                 <div className="inside-dash">
-                  <span className="text-danger fw-bold">$ {544}</span>
+                  <span className="text-danger fw-bold">
+                    $ {pendingDepositTotal}
+                  </span>
                   <p className="dark">PENDING DEPOSIT</p>
                 </div>
               </div>
@@ -115,7 +163,7 @@ const Dashboard = () => {
                   <BsHourglassSplit />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {433}</span>
+                  <span>$ {userLastDeposit?.amount}</span>
                   <p className="dark">LAST DEPOSIT</p>
                 </div>
               </div>
@@ -207,7 +255,7 @@ const Dash = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 2rem;
+        font-size: 1.2rem;
         font-weight: 700;
       }
       .call-to-action {
@@ -220,7 +268,7 @@ const Dash = styled.div`
           background: var(--primary);
           border: 3px solid var(--primary);
           border-radius: 2rem;
-          padding: 0.5rem 1rem;
+          padding: 0.3rem 1rem;
           font-weight: 500;
           letter-spacing: 0px;
           transition: var(--transition);
@@ -233,11 +281,11 @@ const Dash = styled.div`
           background: none;
           border: 3px solid black;
           border-radius: 2rem;
-          padding: 0.5rem 2rem;
+          padding: 0.3rem 1rem;
           font-weight: 500;
           letter-spacing: 1px;
           transition: var(--transition);
-          font-size: 0.8rem;
+          font-size: 0.7rem;
           &:hover {
             background: black;
             color: white;
@@ -255,11 +303,11 @@ const Dash = styled.div`
         background: none;
         border: 3px solid black;
         border-radius: 2rem;
-        padding: 0.5rem 2rem;
+        padding: 0.3rem 1rem;
         font-weight: 500;
         letter-spacing: 1px;
         transition: var(--transition);
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         &:hover {
           background: black;
           color: white;
@@ -290,7 +338,7 @@ const Dash = styled.div`
         margin-top: 0.5rem;
         border: 2px solid var(--light);
         background: var(--light);
-        padding: 0.2rem 1.5rem;
+        padding: 0.3rem 1rem;
         border-radius: 2rem;
         color: white;
         letter-spacing: 1px;
@@ -318,12 +366,12 @@ const Dash = styled.div`
       justify-content: flex-start;
       font-size: 0.8rem;
       gap: 1rem;
-      padding: 0.8rem 2rem;
+      padding: 0.3rem 1rem;
       width: 100%;
       /* height:5rem; */
     }
     .dash-icons {
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
     }
     .inside-dash {
@@ -331,7 +379,7 @@ const Dash = styled.div`
       flex-direction: column;
       align-items: start;
       p {
-        font-size: 1rem;
+        font-size: 0.7rem;
       }
     }
     .dark {
@@ -347,11 +395,12 @@ const Dash = styled.div`
       color: white;
       border: 3px solid black;
       border-radius: 2rem;
-      padding: 0.5rem 2rem;
+      padding: 0.3rem 1rem;
       font-weight: 500;
       letter-spacing: 1px;
       transition: var(--transition);
       margin: 1.2rem auto;
+      font-size: 0.7rem;
       &:hover {
         color: black;
         background: none;
