@@ -16,9 +16,6 @@ const TopUp = () => {
     );
     const theLastDeposit = transactionInfo?.userLastDeposit;
     let numberOfDeposits = transactionInfo?.alluserdeposits;
-    console.log('====================================');
-    console.log(numberOfDeposits);
-    console.log('====================================');
 
 
     function formatDateString(dateString:any) {
