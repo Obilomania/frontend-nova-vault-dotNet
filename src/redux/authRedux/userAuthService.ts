@@ -116,7 +116,7 @@ export const getUserTotalDepositBalance = async (id: any) => {
 // *****************USER TOTAL PENDING DEPOSIT BALANCE*********************
 export const getUserTotalPendingDepositBalance = async (id: any) => {
     try {
-        const response = await axios.get(`${base_Url}deposit/getalluserdeposittotal/${id}`);
+        const response = await axios.get(`${base_Url}deposit/getalluserpendingdeposittotal/${id}`);
         return response.data?.result;
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
@@ -135,7 +135,7 @@ export const getUserLastDeposit = async (id: any) => {
 }
 
 
-// *****************USER LAST WITHDRAWAL*********************
+// *****************USER WITHDRAWAL TOTAL*********************
 export const getUserWithdrawalTotal = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}withdraw/getallusertotalwithdrawal/${id}`);
@@ -157,12 +157,34 @@ export const getUserPendingWithdrawal = async (id: any) => {
 }
 
 
-// *****************USER LAST WITHDRAWAL*********************
+// *****************USER LAST  WITHDRAWAL*********************
 export const getUserLastWithdrawal = async (id: any) => {
     try {
-        const response = await axios.get(`${base_Url}withdraw/getalluserpendingwithdrawaltotal/${id}`);
-        return response.data?.result;
+        const response = await axios.get(`${base_Url}withdraw/userlastwithdrawal/${id}`);
+        return response.data?.result?.amount;
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+
+// *****************CREATE WITHDRAWAL SERVICE*********************
+
+
+export const makeAWithdrawal = async (Body: any) => {
+    try {
+        const response = await axios.post(`${base_Url}withdraw`, Body, {
+            withCredentials: true,
+        })
+        console.log(response);
+        if (response.status === 200) {
+            toast.success("Withdrawal is successful")
+        }
+        return response.data.result
+    } catch (error: any) {
+        console.log(error.response.data.errors);
+        return toast.error(error)
+        return toast.error(error.response.data.error)
     }
 }

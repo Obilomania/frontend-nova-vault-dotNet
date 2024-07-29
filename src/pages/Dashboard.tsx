@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import { getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
 import { user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
+import Time from "../components/Time";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Dashboard = () => {
     dispatch(user_account_balance(userAccountBalance));
   }
 
+  
   //***********EFFECT TO GET TOTAL DEPOSIT BALANCE ******** */
   useEffect(() => {
     getUserTotalDepositBalance(id)
@@ -123,7 +125,6 @@ const Dashboard = () => {
   if (userAccountBalance) {
     dispatch(user_last_withdrawal(lastWithdrawal));
   }
-
   // //Top Up Balance Settings ===========================================================
   let currentPlan = userLastDeposit?.plan;
   let accountBalance = userAccountBalance;
@@ -146,7 +147,7 @@ const Dashboard = () => {
     <MainLayout>
       <Dash>
         <div className="dashboard-content">
-          {/* <Time /> */}
+          <Time />
           <hr />
           <br />
           <div className="dash-content-content">

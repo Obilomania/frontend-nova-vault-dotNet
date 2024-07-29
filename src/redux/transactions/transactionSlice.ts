@@ -7,7 +7,8 @@ const initialState = {
   userLastDeposit: null,
   userWithdrawalTotal: 0,
   userPendingWithdrawalTotal: 0,
-  userLastWithdrawal:null
+  userLastWithdrawal: null,
+  topUpTime: '',
 }
 
 const transactionSlice = createSlice({
@@ -34,10 +35,13 @@ const transactionSlice = createSlice({
     },
     user_last_withdrawal: (state, action) => {
       state.userLastWithdrawal = action.payload
-    }
+    },
+    top_up_time: (state, action) => {
+      state.topUpTime = action.payload;
+    },
   }
 });
 
-export const { user_account_balance, user_deposit_total, user_pendingDeposit_total, user_last_deposit, user_withdrawal_total, user_pending_withdrawal_total, user_last_withdrawal } = transactionSlice.actions
+export const { user_account_balance, user_deposit_total, user_pendingDeposit_total, user_last_deposit, user_withdrawal_total, user_pending_withdrawal_total, user_last_withdrawal, top_up_time } = transactionSlice.actions
 
 export const transactionReducer = transactionSlice.reducer

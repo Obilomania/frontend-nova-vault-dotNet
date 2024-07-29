@@ -13,6 +13,7 @@ import {
 } from "../../redux/authRedux/userAuthSlice";
 import { toast } from "react-toastify";
 import CurrentUser from "../../interfaces/currentUserModel";
+import { top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../../redux/transactions/transactionSlice";
 
 const Logo = require("../../assets/nova-logo.png");
 const activeLink = ({ isActive }: any) =>
@@ -36,6 +37,15 @@ const Header = () => {
       dispatch(current_user_btcWallet(""));
       dispatch(current_user_login_status(false));
       dispatch(user_role(""));
+      dispatch(user_last_withdrawal(null));
+      dispatch(user_pending_withdrawal_total(0));
+      dispatch(user_account_balance(0));
+      dispatch(user_deposit_total(0));
+      dispatch(user_pendingDeposit_total(0));
+      dispatch(user_last_deposit(null));
+      dispatch(user_withdrawal_total(0));
+      dispatch(top_up_time(0));
+
       navigate("/");
       toast.success("User Logged Out");
     } catch (error: any) {

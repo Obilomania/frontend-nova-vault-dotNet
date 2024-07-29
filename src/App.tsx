@@ -16,6 +16,7 @@ import ForgotPassword from "./pages/authentication/ForgotPassword";
 import ResetPassword from "./pages/authentication/ResetPassword";
 import AdminLanding from "./pages/admin/AdminLanding";
 import UserInfoPage from "./pages/admin/UserInfoPage";
+import Withdraw from "./pages/homeSections/Withdraw";
 
 
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/updateuser" element={<UpdateProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/withdraw" element={<Withdraw />} />
 
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
