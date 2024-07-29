@@ -8,8 +8,8 @@ import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-import { getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
-import { user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
+import { getAllUserDeposit, getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
+import { all_user_deposits, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
 import Time from "../components/Time";
 
 const Dashboard = () => {
@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0)
   const [lastWithdrawal, setLastWithdrawal] = useState<any>(null)
   const [cantWithdraw, setCantWithdraw] = useState(false);
+  const [allUserDeposit, setAllUserDeposit] = useState<[]>([])
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
   const id = userInfo?.id;
 
@@ -124,6 +125,20 @@ const Dashboard = () => {
   }, [id]);
   if (userAccountBalance) {
     dispatch(user_last_withdrawal(lastWithdrawal));
+  }
+
+  //***********EFFECT TO GET ALL DEPOSIT ******** */
+  useEffect(() => {
+    getAllUserDeposit(id)
+      .then((data) => {
+        setAllUserDeposit(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(all_user_deposits(allUserDeposit));
   }
   // //Top Up Balance Settings ===========================================================
   let currentPlan = userLastDeposit?.plan;

@@ -202,3 +202,16 @@ export const makeADeposit = async (Body: any) => {
         return toast.error(error.response.data.error)
     }
 }
+
+
+
+// *****************GET ALL THE USER DEPOSITS*********************
+export const getAllUserDeposit = async (id:any) => {
+    try {
+        const response = await axios.get(`${base_Url}deposit/usergetalldeposits/${id}`,)
+        return response.data.result.$values
+    } catch (error: any) {
+        return toast.error(error)
+        return toast.error(error.response.data.error)
+    }
+}

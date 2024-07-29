@@ -18,6 +18,7 @@ import AdminLanding from "./pages/admin/AdminLanding";
 import UserInfoPage from "./pages/admin/UserInfoPage";
 import Withdraw from "./pages/Withdraw";
 import Deposit from "./pages/Deposit";
+import TopUp from "./pages/TopUp";
 
 
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/withdraw" element={<Withdraw />} />
         <Route path="/my-new-deposit" element={<Deposit />} />
+        <Route path="/topUp" element={<TopUp />} />
 
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
