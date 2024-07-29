@@ -170,20 +170,34 @@ export const getUserLastWithdrawal = async (id: any) => {
 
 
 // *****************CREATE WITHDRAWAL SERVICE*********************
-
-
 export const makeAWithdrawal = async (Body: any) => {
     try {
         const response = await axios.post(`${base_Url}withdraw`, Body, {
             withCredentials: true,
         })
-        console.log(response);
         if (response.status === 200) {
             toast.success("Withdrawal is successful")
         }
         return response.data.result
     } catch (error: any) {
-        console.log(error.response.data.errors);
+        return toast.error(error)
+        return toast.error(error.response.data.error)
+    }
+}
+
+
+
+// *****************CREATE Deposit SERVICE*********************
+export const makeADeposit = async (Body: any) => {
+    try {
+        const response = await axios.post(`${base_Url}deposit`, Body, {
+            withCredentials: true,
+        })
+        if (response.status === 200) {
+            toast.success("Deposit is successful")
+        }
+        return response.data.result
+    } catch (error: any) {
         return toast.error(error)
         return toast.error(error.response.data.error)
     }

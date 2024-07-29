@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import MainLayout from "../../components/layout/MainLayout";
-import Loader from "../../components/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import CurrentUser from "../../interfaces/currentUserModel";
+import MainLayout from "../components/layout/MainLayout";
+import Loader from "../components/Loader";
+import {  useSelector } from "react-redux";
+import CurrentUser from "../interfaces/currentUserModel";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import Time from "../../components/Time";
-import { makeAWithdrawal } from "../../redux/authRedux/userAuthService";
+import Time from "../components/Time";
+import { makeAWithdrawal } from "../redux/authRedux/userAuthService";
 import { useNavigate } from "react-router-dom";
 
 const Withdraw = () => {
@@ -17,7 +17,6 @@ const Withdraw = () => {
   const transactionRedux = useSelector(
     (state: any) => state.persistedReducer.transaction
   );
-    const dispatch = useDispatch();
     const navigate = useNavigate();
   const [withdraw, setWithdraw] = useState({
     AppUserId: userInfo?.id,
@@ -45,13 +44,7 @@ const Withdraw = () => {
 
     await makeAWithdrawal(withdraw);
 
-    // await makeAWithdrawal({
-    //   AppUserId: userInfo.id,
-    //   Amount: withdraw.amount,
-    //   // CreatedOn: new Date(),
-    //   Wallet: withdraw.wallet,
-    //   IsProcessing: false,
-    // });
+
     setLoading(false);
   };
   return (
