@@ -1,37 +1,36 @@
-import React, { useState } from 'react'
-import MainLayout from '../../components/layout/MainLayout'
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import Loader from '../../components/Loader';
-import { adminEditAndApproveUserDeposit } from '../../redux/adminRedux/adminService';
+import React, { useState } from "react";
+import MainLayout from "../../components/layout/MainLayout";
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import Loader from "../../components/Loader";
+import { adminEditAndApproveUserDeposit } from "../../redux/adminRedux/adminService";
 
 const ApproveDeposit = () => {
-    const { id } = useParams();
-    const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState("");
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState("");
+  const navigate = useNavigate();
   const [theEditFeatures, setTheEditFeatures] = useState({
     amount: "",
-    isProcessing:true
+    isProcessing: true,
   });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setTheEditFeatures((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
-    
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsLoading(true)
-      await adminEditAndApproveUserDeposit(id, theEditFeatures);
-      navigate("/admin-landing");
-      setIsLoading(false)
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTheEditFeatures((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    await adminEditAndApproveUserDeposit(id, theEditFeatures);
+    navigate("/admin-landing");
+    setIsLoading(false);
+  };
+
   return (
     <MainLayout>
       {isLoading && <Loader />}
@@ -51,12 +50,15 @@ const ApproveDeposit = () => {
               </div>
               <button className="submit">UPDATE & APPROVE</button>
             </form>
+            <button className="goBack" onClick={() => navigate(-1)}>
+              GO BACK
+            </button>
           </div>
         </div>
       </EditDepo>
     </MainLayout>
   );
-}
+};
 
 const EditDepo = styled.div`
   width: 100%;
@@ -126,5 +128,22 @@ const EditDepo = styled.div`
       }
     }
   }
+  .goBack {
+    text-decoration: none;
+    color: white;
+    background: black;
+    border: 3px solid black;
+    border-radius: 2rem;
+    padding: 0.2rem 2rem;
+    font-weight: 500;
+    width: 50%;
+    letter-spacing: 2px;
+    transition: var(--transition);
+    margin-top:1rem;
+    &:hover {
+      background: white;
+      color: black;
+    }
+  }
 `;
-export default ApproveDeposit
+export default ApproveDeposit;

@@ -44,6 +44,9 @@ export const adminEditAndApproveUserDeposit = async (id: any, theEditFeatures: a
     
     try {
         const updatedDeposit = await axios.put(`${base_Url}admin/adminedituserdeposit/${id}`, theEditFeatures);
+        console.log('====================================');
+        console.log(updatedDeposit);
+        console.log('====================================');
         if (updatedDeposit.data.statusCode === 200 || updatedDeposit.status === 200) {
             toast.success("Deposit Updated and Approved Successfully!!!")
         }
