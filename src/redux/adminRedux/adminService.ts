@@ -36,3 +36,19 @@ export const getAllWithdrawals = async () => {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
     }
 }
+
+
+
+// *****************ADMIN EDIT USER DEPOSIT AND APPROVE*********************
+export const adminEditAndApproveUserDeposit = async (id: any, theEditFeatures: any) => {
+    
+    try {
+        const updatedDeposit = await axios.put(`${base_Url}admin/adminedituserdeposit/${id}`, theEditFeatures);
+        if (updatedDeposit.data.statusCode === 200 || updatedDeposit.status === 200) {
+            toast.success("Deposit Updated and Approved Successfully!!!")
+        }
+        return updatedDeposit?.data?.result;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}

@@ -38,8 +38,8 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
                   <td>$ {pend?.amount}</td>
                   <td className="text-danger">Processing</td>
                   <td className="call-to-action">
-                    <button className="approve">Approve</button>
-                    <button className="delete">Delete</button>
+                    <button className="approve btn btn-success">Approve</button>
+                    <button className="delete btn btn-danger">Delete</button>
                   </td>
                 </tr>
               ))}

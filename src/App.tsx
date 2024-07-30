@@ -19,6 +19,7 @@ import UserInfoPage from "./pages/admin/UserInfoPage";
 import Withdraw from "./pages/Withdraw";
 import Deposit from "./pages/Deposit";
 import TopUp from "./pages/TopUp";
+import ApproveDeposit from "./pages/admin/ApproveDeposit";
 
 
 
@@ -62,6 +63,7 @@ function App() {
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
         <Route path="/getParticularUser/:id" element={<UserInfoPage />} />
+        <Route path="/editDeposit/:id" element={<ApproveDeposit />} />
       </Routes>
     </BrowserRouter>
   );

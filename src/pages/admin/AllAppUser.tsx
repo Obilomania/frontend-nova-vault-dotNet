@@ -35,15 +35,15 @@ const AllAppUser = ({ appUsers }: any) => {
                 <td>{user?.email}</td>
                 <td className="call-to-action">
                   <button
-                    className="info"
+                    className="info btn btn-info "
                     onClick={() => navigate(`/getParticularUser/${user.id}`)}
                   >
                     View
                   </button>
                   {user?.isBlocked || user?.isBlocked === true ? (
-                    <button className="approve">Un-Block User</button>
+                    <button className="approve btn btn-success">Un-Block User</button>
                   ) : (
-                    <button className="delete">Block User</button>
+                    <button className="delete btn btn-danger">Block User</button>
                   )}
                 </td>
               </tr>

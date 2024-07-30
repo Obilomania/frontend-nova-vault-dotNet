@@ -2,9 +2,11 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { all_deposits } from "../../redux/adminRedux/adminSlice";
+import { useNavigate } from "react-router-dom";
 
 const PendngDeposits = ({ deposits }: any) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   if (deposits) {
     dispatch(all_deposits(deposits));
   }
@@ -38,8 +40,13 @@ const PendngDeposits = ({ deposits }: any) => {
                   <td>$ {pend?.amount}</td>
                   <td className="text-danger">Processing</td>
                   <td className="call-to-action">
-                    <button className="approve">Approve</button>
-                    <button className="delete">Delete</button>
+                    <button
+                      className="approve btn btn-success"
+                      onClick={() => navigate(`/editDeposit/${pend?.id}`)}
+                    >
+                      Approve
+                    </button>
+                    <button className="delete btn btn-danger">Delete</button>
                   </td>
                 </tr>
               ))}
