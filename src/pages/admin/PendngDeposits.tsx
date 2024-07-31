@@ -30,7 +30,13 @@ const PendngDeposits = ({ deposits }: any) => {
         </thead>
         <tbody className="tbody">
           {pendingDeposits.length <= 0 ? (
-            <p className="no-result">No Pending Deposits</p>
+            <tr key="">
+              <td></td>
+              <td></td>
+              <td className="no-result"> No Pending Withdrawals</td>
+              <td></td>
+              <td></td>
+            </tr>
           ) : (
             <>
               {pendingDeposits.map((pend: any, index: any) => (
@@ -46,7 +52,7 @@ const PendngDeposits = ({ deposits }: any) => {
                     >
                       Approve
                     </button>
-                    <button className="delete btn btn-danger">Delete</button>
+                    {/* <button className="delete btn btn-danger">Delete</button> */}
                   </td>
                 </tr>
               ))}

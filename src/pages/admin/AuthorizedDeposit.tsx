@@ -1,29 +1,25 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { all_withdrawals } from "../../redux/adminRedux/adminSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { adminApproveUserWithdrawal } from "../../redux/adminRedux/adminService";
-import Loader from "../../components/Loader";
-import { useState } from "react";
+import { all_deposits } from "../../redux/adminRedux/adminSlice";
 
-const PendingWithdrawals = ({ withdrawals }: any) => {
+const AuthorizedDeposit = ({ deposits }: any) => {
   const dispatch = useDispatch();
-  if (withdrawals) {
-    dispatch(all_withdrawals(withdrawals));
+  if (deposits) {
+    dispatch(all_deposits(deposits));
   }
-  const allWithdraws = useSelector((state: any) => state.admin.allWithdrawals);
-  let pendingWithdrawals = allWithdraws.filter(
-    (dep: { isProcessing: Boolean }) => !dep.isProcessing
+  const allDeposits = useSelector((state: any) => state.admin.allDeposits);
+
+  let pendingDeposits = allDeposits.filter(
+    (dep: { isProcessing: Boolean }) => dep.isProcessing
   );
 
-  const approveWithdrawal: any = async (id: any) => {
-    await adminApproveUserWithdrawal(id);
-    window.location.reload();
-  };
-
+    // const deleteDeposit = async (id: any) => {
+    //   await adminDeleteOneDeposit(id);
+    // };
   return (
-    <PendingWithdraw>
-      <h1 className="heading">Pending Withdrawals</h1>
+    <PendingDepo>
+      <h1 className="heading">Approved Deposits</h1>
       <Table striped size="sm" className="table">
         <thead>
           <tr>
@@ -31,46 +27,36 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
             <th>Email</th>
             <th>Amount</th>
             <th>Status</th>
-            <th></th>
           </tr>
         </thead>
         <tbody className="tbody">
-          {pendingWithdrawals <= 0 ? (
+          {pendingDeposits.length <= 0 ? (
             <tr key="">
               <td></td>
               <td></td>
-              <td className="no-result"> No Pending Withdrawals</td>
+              <td className="no-result"> No Approved Deposits</td>
               <td></td>
               <td></td>
             </tr>
           ) : (
             <>
-              {pendingWithdrawals.map((pend: any, index: any) => (
+              {pendingDeposits.map((pend: any, index: any) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>
                   <td>$ {pend?.amount}</td>
-                  <td className="text-danger">Processing</td>
-                  <td className="call-to-action">
-                    <button
-                      className="approve btn btn-success"
-                      onClick={() => approveWithdrawal(pend?.id)}
-                    >
-                      Approve
-                    </button>
-                    {/* <button className="delete btn btn-danger">Delete</button> */}
-                  </td>
+                  <td className="text-success"><b>Approved</b></td>
                 </tr>
               ))}
             </>
           )}
         </tbody>
       </Table>
-    </PendingWithdraw>
+    </PendingDepo>
   );
 };
 
-const PendingWithdraw = styled.div`
+const PendingDepo = styled.div`
   width: 100%;
   height: fit-content;
   display: flex;
@@ -108,5 +94,4 @@ const PendingWithdraw = styled.div`
     }
   }
 `;
-
-export default PendingWithdrawals;
+export default AuthorizedDeposit;

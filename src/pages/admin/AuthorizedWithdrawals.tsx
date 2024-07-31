@@ -2,28 +2,20 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import { all_withdrawals } from "../../redux/adminRedux/adminSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { adminApproveUserWithdrawal } from "../../redux/adminRedux/adminService";
-import Loader from "../../components/Loader";
-import { useState } from "react";
 
-const PendingWithdrawals = ({ withdrawals }: any) => {
+const AuthorizedWithdrawals = ({ withdrawals }: any) => {
   const dispatch = useDispatch();
   if (withdrawals) {
     dispatch(all_withdrawals(withdrawals));
   }
   const allWithdraws = useSelector((state: any) => state.admin.allWithdrawals);
   let pendingWithdrawals = allWithdraws.filter(
-    (dep: { isProcessing: Boolean }) => !dep.isProcessing
+    (dep: { isProcessing: Boolean }) => dep.isProcessing
   );
-
-  const approveWithdrawal: any = async (id: any) => {
-    await adminApproveUserWithdrawal(id);
-    window.location.reload();
-  };
 
   return (
     <PendingWithdraw>
-      <h1 className="heading">Pending Withdrawals</h1>
+      <h1 className="heading">Approved Withdrawals</h1>
       <Table striped size="sm" className="table">
         <thead>
           <tr>
@@ -39,7 +31,7 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
             <tr key="">
               <td></td>
               <td></td>
-              <td className="no-result"> No Pending Withdrawals</td>
+              <td className="no-result"> No Approved Withdrawals</td>
               <td></td>
               <td></td>
             </tr>
@@ -50,14 +42,15 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>
                   <td>$ {pend?.amount}</td>
-                  <td className="text-danger">Processing</td>
+                  <td className="text-success">
+                    <b>Approved</b>
+                  </td>
                   <td className="call-to-action">
-                    <button
+                    {/* <button
                       className="approve btn btn-success"
-                      onClick={() => approveWithdrawal(pend?.id)}
                     >
                       Approve
-                    </button>
+                    </button> */}
                     {/* <button className="delete btn btn-danger">Delete</button> */}
                   </td>
                 </tr>
@@ -108,5 +101,4 @@ const PendingWithdraw = styled.div`
     }
   }
 `;
-
-export default PendingWithdrawals;
+export default AuthorizedWithdrawals;

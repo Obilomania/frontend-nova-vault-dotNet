@@ -5,11 +5,14 @@ import PendingWithdrawals from "./PendingWithdrawals";
 import AllAppUser from "./AllAppUser";
 import { useEffect, useState } from "react";
 import {
+  adminDeleteOneDeposit,
   getAllApplicationUser,
   getAllDeposits,
   getAllWithdrawals,
 } from "../../redux/adminRedux/adminService";
 import Loader from "../../components/Loader";
+import AuthorizedDeposit from "./AuthorizedDeposit";
+import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
 
 const AdminLanding = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -35,18 +38,30 @@ const AdminLanding = () => {
   }, []);
 
   if (!allUsers || !allDeposits || !allWithdrawals) {
-    return <Loader/>
+    return <Loader />;
   }
+
+
 
   return (
     <MainLayout>
       <AdminLand>
         <div className="admin-container">
-          <PendngDeposits deposits={ allDeposits} />
+          <PendngDeposits
+            deposits={allDeposits}
+          />
+        </div>
+        <div className="admin-container">
+          <AuthorizedDeposit
+            deposits={allDeposits}
+          />
         </div>
         <hr />
         <div className="admin-container">
-          <PendingWithdrawals withdrawals={ allWithdrawals} />
+          <PendingWithdrawals withdrawals={allWithdrawals} />
+        </div>
+        <div className="admin-container">
+          <AuthorizedWithdrawals withdrawals={allWithdrawals} />
         </div>
         <hr />
         <div className="admin-container">
