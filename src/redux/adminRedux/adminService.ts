@@ -41,7 +41,7 @@ export const getAllWithdrawals = async () => {
 
 // *****************ADMIN EDIT USER DEPOSIT AND APPROVE*********************
 export const adminEditAndApproveUserDeposit = async (id: any, theEditFeatures: any) => {
-    
+
     try {
         const updatedDeposit = await axios.put(`${base_Url}admin/adminedituserdeposit/${id}`, theEditFeatures);
         if (updatedDeposit.data.statusCode === 200 || updatedDeposit.status === 200) {
@@ -71,9 +71,46 @@ export const adminApproveUserWithdrawal = async (id: any) => {
 
     try {
         const approvedWithdrawal = await axios.put(`${base_Url}admin/adminedituserWithdrawal/${id}`);
-       
+
         if (approvedWithdrawal.data.statusCode === 200 || approvedWithdrawal.status === 200) {
             toast.success("Withdrawal Approved Successfully")
+        }
+        return;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+// *****************ADMIN BLOCK USER*********************
+export const adminBlockUser = async (id: any, blockBody: Boolean) => {
+    // // console.log(id, blockBody);
+    // console.log('====================================');
+    // console.log(id, blockBody );
+    // console.log('====================================');
+    // return
+    // return
+
+    try {
+        const toggleUserBlock = await axios.put(`${base_Url}auth/admin-toggle-blockuser/${id}`, blockBody);
+        if (toggleUserBlock.data === true) {
+            toast.success("User Blocked Successfully")
+        }
+        return toggleUserBlock;
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+
+// *****************ADMIN UN-BLOCK USER*********************
+export const adminUnBlockUser = async (id: any, blockBody: Boolean) => {
+
+    try {
+        const toggleUserUnBlock = await axios.put(`${base_Url}auth/admin-toggle-unblockuser/${id}`, blockBody);
+        console.log(toggleUserUnBlock);
+        if (toggleUserUnBlock.data === false) {
+            toast.success("User Un-Blocked Successfully")
         }
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])

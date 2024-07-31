@@ -45,14 +45,16 @@ const AuthorizedWithdrawals = ({ withdrawals }: any) => {
                   <td className="text-success">
                     <b>Approved</b>
                   </td>
-                  <td className="call-to-action">
+                  <td></td>
+                  
+                  {/* <td className="call-to-action"> */}
                     {/* <button
                       className="approve btn btn-success"
                     >
                       Approve
                     </button> */}
                     {/* <button className="delete btn btn-danger">Delete</button> */}
-                  </td>
+                  {/* </td> */}
                 </tr>
               ))}
             </>

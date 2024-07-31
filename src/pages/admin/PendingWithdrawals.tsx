@@ -50,7 +50,10 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>
                   <td>$ {pend?.amount}</td>
-                  <td className="text-danger">Processing</td>
+                  <td className="text-danger">
+                    <b>Processing</b>
+                  </td>
+                  
                   <td className="call-to-action">
                     <button
                       className="approve btn btn-success"

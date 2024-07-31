@@ -3,16 +3,28 @@ import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { all_applicationUser } from "../../redux/adminRedux/adminSlice";
 import { useNavigate } from "react-router-dom";
+import { adminBlockUser, adminUnBlockUser } from "../../redux/adminRedux/adminService";
+import { useState } from "react";
 
 const AllAppUser = ({ appUsers }: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [blockThekUser, setBlockTheUser] = useState<Boolean>(true)
+  const [unBlockTheUser, setUnBlockTheUser] = useState<Boolean>(false);
   if (appUsers) {
     dispatch(all_applicationUser(appUsers));
   }
   const appApplicationUsers = useSelector(
     (state: any) => state.admin.allAppUsers
   );
+
+  const blockUser = async (id:any) => {
+    await adminBlockUser(id, blockThekUser)
+  }
+
+  const unBlockUser = async (id:any) => {
+    await adminUnBlockUser(id, unBlockTheUser)
+  }
 
   return (
     <AllUsers>
@@ -41,9 +53,9 @@ const AllAppUser = ({ appUsers }: any) => {
                     View
                   </button>
                   {user?.isBlocked || user?.isBlocked === true ? (
-                    <button className="approve btn btn-success">Un-Block User</button>
+                    <button className="approve btn btn-success" onClick={() => unBlockUser(user?.id)}>Un-Block User</button>
                   ) : (
-                    <button className="delete btn btn-danger">Block User</button>
+                    <button className="delete btn btn-danger" onClick={() => blockUser(user?.id)}>Block User</button>
                   )}
                 </td>
               </tr>
