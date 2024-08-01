@@ -20,6 +20,7 @@ import Withdraw from "./pages/Withdraw";
 import Deposit from "./pages/Deposit";
 import TopUp from "./pages/TopUp";
 import ApproveDeposit from "./pages/admin/ApproveDeposit";
+import PromoCodes from "./pages/PromoCodes";
 
 
 
@@ -64,6 +65,7 @@ function App() {
         <Route path="/admin-landing" element={<AdminLanding />} />
         <Route path="/getParticularUser/:id" element={<UserInfoPage />} />
         <Route path="/editDeposit/:id" element={<ApproveDeposit />} />
+        <Route path="/promoCodes" element={<PromoCodes />} />
       </Routes>
     </BrowserRouter>
   );

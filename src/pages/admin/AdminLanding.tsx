@@ -13,11 +13,13 @@ import {
 import Loader from "../../components/Loader";
 import AuthorizedDeposit from "./AuthorizedDeposit";
 import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
+import { useNavigate } from "react-router-dom";
 
 const AdminLanding = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [allDeposits, setAllDeposits] = useState([]);
   const [allWithdrawals, setAllWithdrawals] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllApplicationUser().then((data) => {
@@ -46,6 +48,9 @@ const AdminLanding = () => {
   return (
     <MainLayout>
       <AdminLand>
+        <div className="create-promo-code w-auto mb-5">
+          <button className="btn btn-success flex align-center justify-center mt-5 w-[100%]" onClick={() => navigate("/promoCodes")}>Click Here to get Promo Codes</button>
+      </div> <hr />
         <div className="admin-container">
           <PendngDeposits
             deposits={allDeposits}

@@ -108,7 +108,6 @@ export const adminUnBlockUser = async (id: any, blockBody: Boolean) => {
 
     try {
         const toggleUserUnBlock = await axios.put(`${base_Url}auth/admin-toggle-unblockuser/${id}`, blockBody);
-        console.log(toggleUserUnBlock);
         if (toggleUserUnBlock.data === false) {
             toast.success("User Un-Blocked Successfully")
         }
@@ -118,3 +117,44 @@ export const adminUnBlockUser = async (id: any, blockBody: Boolean) => {
 }
 
 
+
+// *****************ADMIN CREATE PROMO CODE*********************
+export const adminCreatePromoCode = async (thePromoCode: any) => {
+  
+    try {
+        const promoCodeCreate = await axios.post(`${base_Url}admin/create-promo-code`, thePromoCode);
+        if (promoCodeCreate.status === 200 || promoCodeCreate) {
+            toast.success("Promo Code Created Successfully")
+        }
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+
+
+// *****************ADMIN VIEW ALL PROMO CODE*********************
+export const adminViewAllPromoCode = async () => {
+  
+    try {
+        const allPromoCodes = await axios.get(`${base_Url}admin/all-promo-codes`);
+        return allPromoCodes
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
+
+
+
+// *****************ADMIN DELETE PROMO CODE*********************
+export const adminDeletePromoCode = async (id: any) => {
+    try {
+        const promoCodeDelete = await axios.delete(`${base_Url}admin/delete-promo-code/${id}`);
+        if (promoCodeDelete.status === 200 ) {
+            toast.success("Promo Code Deleted Successfully")
+        }
+    } catch (error: any) {
+        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+    }
+}
