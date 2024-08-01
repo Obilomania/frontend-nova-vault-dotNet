@@ -20,7 +20,7 @@ import Withdraw from "./pages/Withdraw";
 import Deposit from "./pages/Deposit";
 import TopUp from "./pages/TopUp";
 import ApproveDeposit from "./pages/admin/ApproveDeposit";
-import PromoCodes from "./pages/PromoCodes";
+import PromoCodes from "./pages/admin/PromoCodes";
 
 
 

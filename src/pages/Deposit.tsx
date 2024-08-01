@@ -9,6 +9,7 @@ import MainLayout from "../components/layout/MainLayout";
 import Loader from "../components/Loader";
 import Time from "../components/Time";
 import { makeADeposit } from "../redux/authRedux/userAuthService";
+import withAuth from "../HOC/withAuth";
 
 const Deposit = () => {
   const [iAmount, setIAmount] = useState<any>("");
@@ -900,4 +901,4 @@ const MyDeposit = styled.div`
     }
   }
 `;
-export default Deposit;
+export default withAuth(Deposit);

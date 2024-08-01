@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import TopUpWithBalance from './TopUpWithBalance';
 import TopUpWithBitcoin from './TopUpWithBitcoin';
+import withAuth from '../HOC/withAuth';
 
 const TopUp = () => {
     const [balancePop, setBalancePop] = useState(false);
@@ -421,4 +422,4 @@ const Toppings = styled.div`
     }
   }
 `;
-export default TopUp
+export default withAuth(TopUp);

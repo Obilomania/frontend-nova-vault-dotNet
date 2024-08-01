@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 import { getAllUserDeposit, getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
 import { all_user_deposits, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
 import Time from "../components/Time";
+import withAuth from "../HOC/withAuth";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -1258,4 +1259,4 @@ const Dash = styled.div`
     }
   }
 `;
-export default Dashboard;
+export default withAuth(Dashboard);

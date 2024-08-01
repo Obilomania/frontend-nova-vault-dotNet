@@ -1,6 +1,8 @@
 import Carousel from "react-bootstrap/Carousel";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import CurrentUser from "../../interfaces/currentUserModel";
+import { useSelector } from "react-redux";
 
 const MobileSlider1 = require("../../assets/mobile-Slider1.png")
 const MobileSlider2 = require("../../assets/mobile-Slider2.png")
@@ -12,7 +14,10 @@ const Slider3 = require("../../assets/Slider3.png")
 
 const Hero = () => {
     const navigate = useNavigate();
-    const userData = "Wested"
+    const userInfo: CurrentUser = useSelector(
+      (state: any) => state.persistedReducer.auth
+    );
+    const userData = userInfo?.fullName
   return (
     <HeroSection>
       <div className="overlay"></div>

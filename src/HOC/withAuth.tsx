@@ -2,7 +2,8 @@
 const withAuth = (WrappedComponent:any) => {
     return (props: any) => {
         const userRole = localStorage.getItem("userRole");
-        if (!userRole || userRole === "") {
+      if (!userRole || userRole === "") {
+          
           window.location.replace("/login");
           return null;
         }

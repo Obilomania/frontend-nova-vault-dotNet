@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { makeADeposit } from '../redux/authRedux/userAuthService';
+import withAuth from '../HOC/withAuth';
 
 const TopUpWithBitcoin = ({ btcPop, revealBtcPop }: any) => {
     const navigate = useNavigate();
@@ -393,4 +394,4 @@ const TopBtcModal = styled.div`
   @media screen and (max-width: 350px) {
   }
 `;
-export default TopUpWithBitcoin
+export default withAuth(TopUpWithBitcoin);

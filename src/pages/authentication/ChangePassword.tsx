@@ -4,6 +4,7 @@ import MainLayout from '../../components/layout/MainLayout';
 import Loader from '../../components/Loader';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import withAuth from '../../HOC/withAuth';
 
 const ChangePassword = () => {
     const [isLoading] = useState(false)
@@ -720,4 +721,4 @@ const EditProfile = styled.div`
   }
 `;
 
-export default ChangePassword
+export default withAuth(ChangePassword);

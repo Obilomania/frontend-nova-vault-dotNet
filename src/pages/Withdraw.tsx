@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Time from "../components/Time";
 import { makeAWithdrawal } from "../redux/authRedux/userAuthService";
 import { useNavigate } from "react-router-dom";
+import withAuth from "../HOC/withAuth";
 
 const Withdraw = () => {
   const [Loading, setLoading] = useState(false);
@@ -456,4 +457,4 @@ const WithdrawSection = styled.div`
   @media screen and (max-width: 350px) {
   }
 `;
-export default Withdraw;
+export default withAuth(Withdraw);

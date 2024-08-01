@@ -5,6 +5,7 @@ import MainLayout from '../../components/layout/MainLayout';
 import Loader from '../../components/Loader';
 import { useSelector } from 'react-redux';
 import CurrentUser from '../../interfaces/currentUserModel';
+import withAuth from '../../HOC/withAuth';
 
 const Profile = () => {
   const [isLoading] = useState(false);
@@ -704,4 +705,4 @@ const ProfilePage = styled.div`
   }
 `;
 
-export default Profile
+export default withAuth(Profile);

@@ -1,9 +1,11 @@
 import React, {  useState } from 'react'
 import styled from 'styled-components';
-import MainLayout from '../components/layout/MainLayout';
-import Loader from '../components/Loader';
-import AdminAllPromoCodes from './admin/AdminAllPromoCodes';
-import { adminCreatePromoCode } from '../redux/adminRedux/adminService';
+import AdminAllPromoCodes from './AdminAllPromoCodes';
+import { adminCreatePromoCode } from '../../redux/adminRedux/adminService';
+import Loader from '../../components/Loader';
+import MainLayout from '../../components/layout/MainLayout';
+import withAdminAuth from '../../HOC/withAdminAuth';
+
 
 const PromoCodes = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -102,4 +104,4 @@ const Promo = styled.div`
     }
   }
 `;
-export default PromoCodes
+export default withAdminAuth(PromoCodes);

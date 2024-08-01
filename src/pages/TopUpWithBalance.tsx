@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { makeADeposit } from "../redux/authRedux/userAuthService";
+import withAuth from "../HOC/withAuth";
 
 interface TopUpWithBalanceProps {
   revealBalancePop: any;
@@ -392,4 +393,4 @@ const TopUpModal = styled.div`
   }
 `;
 
-export default TopUpWithBalance;
+export default withAuth(TopUpWithBalance);

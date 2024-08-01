@@ -14,6 +14,7 @@ import Loader from "../../components/Loader";
 import AuthorizedDeposit from "./AuthorizedDeposit";
 import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
 import { useNavigate } from "react-router-dom";
+import withAdminAuth from "../../HOC/withAdminAuth";
 
 const AdminLanding = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -85,4 +86,4 @@ const AdminLand = styled.div`
   }
 `;
 
-export default AdminLanding;
+export default withAdminAuth(AdminLanding);
