@@ -7,9 +7,8 @@ import { TbZoomMoney } from "react-icons/tb";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../components/Loader";
-import { getAllUserDeposit, getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
-import { all_user_deposits, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
+import { getAllUserDeposit, getAllUserWithdrawal, getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
+import { all_user_deposits, all_user_withdrawals, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
 import Time from "../components/Time";
 import withAuth from "../HOC/withAuth";
 
@@ -128,6 +127,21 @@ const Dashboard = () => {
     dispatch(user_last_withdrawal(lastWithdrawal));
   }
 
+
+  //***********EFFECT TO GET All USER WITHDRAWAL ******** */
+  useEffect(() => {
+    getAllUserWithdrawal(id)
+      .then((data) => {
+        dispatch(all_user_withdrawals(data));
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
+  if (userAccountBalance) {
+    dispatch(user_last_withdrawal(lastWithdrawal));
+  }
+
   //***********EFFECT TO GET ALL DEPOSIT ******** */
   useEffect(() => {
     getAllUserDeposit(id)
@@ -225,7 +239,7 @@ const Dashboard = () => {
                   <p className="dark">LAST DEPOSIT</p>
                 </div>
               </div>
-              <div className="two-dash">
+              <div className="two-dash my-depo-btn">
                 <Link to={"/all-my-deposits"}>MY DEPOSITS</Link>
               </div>
             </div>
@@ -297,6 +311,9 @@ const Dash = styled.div`
   }
   .dash {
     width: 32%;
+  }
+  .my-depo-btn a{
+    visibility:hidden;
   }
 
   .left-dash {

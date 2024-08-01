@@ -181,7 +181,6 @@ export const makeAWithdrawal = async (Body: any) => {
         return response.data.result
     } catch (error: any) {
         return toast.error(error)
-        return toast.error(error.response.data.error)
     }
 }
 
@@ -199,7 +198,6 @@ export const makeADeposit = async (Body: any) => {
         return response.data.result
     } catch (error: any) {
         return toast.error(error)
-        return toast.error(error.response.data.error)
     }
 }
 
@@ -212,6 +210,16 @@ export const getAllUserDeposit = async (id:any) => {
         return response.data.result.$values
     } catch (error: any) {
         return toast.error(error)
-        return toast.error(error.response.data.error)
+    }
+}
+
+
+// *****************GET ALL THE USER DEPOSITS*********************
+export const getAllUserWithdrawal = async (id: any) => {
+    try {
+        const response = await axios.get(`${base_Url}withdraw/usergetallwithdrawals/${id}`,)
+        return response.data.result.$values
+    } catch (error: any) {
+        return toast.error(error)
     }
 }

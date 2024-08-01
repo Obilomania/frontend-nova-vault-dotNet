@@ -21,6 +21,7 @@ import Deposit from "./pages/Deposit";
 import TopUp from "./pages/TopUp";
 import ApproveDeposit from "./pages/admin/ApproveDeposit";
 import PromoCodes from "./pages/admin/PromoCodes";
+import Transactions from "./pages/Transactions";
 
 
 
@@ -60,6 +61,7 @@ function App() {
         <Route path="/withdraw" element={<Withdraw />} />
         <Route path="/my-new-deposit" element={<Deposit />} />
         <Route path="/topUp" element={<TopUp />} />
+        <Route path="/transactions" element={<Transactions />} />
 
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
