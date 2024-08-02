@@ -61,7 +61,7 @@ const Transactions = () => {
               {/* ------------------------------------- */}
               {allWithdrawals?.length > 0 ? (
                 <>
-                  {allWithdrawals.map((withdraw: any) => (
+                  {allWithdrawals?.map((withdraw: any) => (
                     <>
                       <div
                         className="table-body the-row one"
@@ -103,7 +103,7 @@ const Transactions = () => {
               {/* ------------------------------------- */}
               {allDeposits.length > 0 ? (
                 <>
-                  {allDeposits.map((depo: any) => (
+                  {allDeposits?.map((depo: any) => (
                     <>
                       <div className="table-body the-row one" key={depo._id}>
                         <p className="amount">$ {depo?.amount}</p>

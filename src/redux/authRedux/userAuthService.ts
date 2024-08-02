@@ -1,12 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import registrationData from "../../interfaces/registrationModel";
+import { log } from "console";
 
 export const validateEmail = async (email: string) => {
     return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 }
 
-export const base_Url = "https://localhost:44338/api/"
+export const base_Url = "https://nova-vault-ventures-api.azurewebsites.net/api/"
+// export const base_Url = "https://localhost:44338/api/"
 
 // *****************REGISTRATION SERVICE*********************
 
@@ -83,7 +85,7 @@ export const getAllRoles = async () => {
         const response = await axios.get(`${base_Url}auth/all-Roles`);
         return response;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.errorMessages?.$values[0]
     }
 }
 
@@ -93,11 +95,10 @@ export const getAllRoles = async () => {
 export const getUserAccountBalance = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}transactions/usergetaccountbalance/${id}`);
-        // console.log(response.data.result);
-        // return;
-        return response.data?.result;
+       
+        return response?.data?.result;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -106,9 +107,10 @@ export const getUserAccountBalance = async (id: any) => {
 export const getUserTotalDepositBalance = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}deposit/getalluserdeposittotal/${id}`);
-        return response.data?.result;
+       
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -117,9 +119,10 @@ export const getUserTotalDepositBalance = async (id: any) => {
 export const getUserTotalPendingDepositBalance = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}deposit/getalluserpendingdeposittotal/${id}`);
-        return response.data?.result;
+       
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -128,9 +131,10 @@ export const getUserTotalPendingDepositBalance = async (id: any) => {
 export const getUserLastDeposit = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}deposit/userlastdeposit/${id}`);
-        return response.data?.result;
+       
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -139,9 +143,9 @@ export const getUserLastDeposit = async (id: any) => {
 export const getUserWithdrawalTotal = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}withdraw/getallusertotalwithdrawal/${id}`);
-        return response.data;
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -150,9 +154,10 @@ export const getUserWithdrawalTotal = async (id: any) => {
 export const getUserPendingWithdrawal = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}withdraw/getalluserpendingwithdrawaltotal/${id}`);
-        return response.data?.result;
+        
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -161,9 +166,11 @@ export const getUserPendingWithdrawal = async (id: any) => {
 export const getUserLastWithdrawal = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}withdraw/userlastwithdrawal/${id}`);
-        return response.data?.result?.amount;
+       
+        return response?.data;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+       
+        return error?.response?.data?.message
     }
 }
 
@@ -207,9 +214,10 @@ export const makeADeposit = async (Body: any) => {
 export const getAllUserDeposit = async (id:any) => {
     try {
         const response = await axios.get(`${base_Url}deposit/usergetalldeposits/${id}`,)
-        return response.data.result.$values
+        
+        return response.data.$values
     } catch (error: any) {
-        return toast.error(error)
+        return error?.response?.data?.message
     }
 }
 
@@ -218,8 +226,11 @@ export const getAllUserDeposit = async (id:any) => {
 export const getAllUserWithdrawal = async (id: any) => {
     try {
         const response = await axios.get(`${base_Url}withdraw/usergetallwithdrawals/${id}`,)
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
         return response.data.result.$values
     } catch (error: any) {
-        return toast.error(error)
+        return error?.response?.data?.message
     }
 }

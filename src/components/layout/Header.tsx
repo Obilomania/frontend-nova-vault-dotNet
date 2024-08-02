@@ -13,7 +13,7 @@ import {
 } from "../../redux/authRedux/userAuthSlice";
 import { toast } from "react-toastify";
 import CurrentUser from "../../interfaces/currentUserModel";
-import { top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../../redux/transactions/transactionSlice";
+import { all_user_deposits, all_user_withdrawals, top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../../redux/transactions/transactionSlice";
 
 const Logo = require("../../assets/nova-logo.png");
 const activeLink = ({ isActive }: any) =>
@@ -45,6 +45,8 @@ const Header = () => {
       dispatch(user_last_deposit(null));
       dispatch(user_withdrawal_total(0));
       dispatch(top_up_time(0));
+      dispatch(all_user_deposits(null));
+      dispatch(all_user_withdrawals(null));
 
       navigate("/");
       toast.success("User Logged Out");

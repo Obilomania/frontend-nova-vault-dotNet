@@ -71,10 +71,12 @@ const Login = () => {
         return toast.success("Login Successful");
       }
     } catch (error: any) {
+      setIsLoading(false);
       if (error.message === "Request failed with status code 400") {
         setIsLoading(false);
         return toast.error("Username or password is incorrect");
       }
+      setIsLoading(false);
       return toast.error(error?.response?.data?.errorMessages?.$values[0]);
     }
   };

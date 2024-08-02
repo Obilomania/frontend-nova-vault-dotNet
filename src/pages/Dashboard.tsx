@@ -7,22 +7,42 @@ import { TbZoomMoney } from "react-icons/tb";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BsCashCoin, BsHourglassSplit } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUserDeposit, getAllUserWithdrawal, getUserAccountBalance, getUserLastDeposit, getUserLastWithdrawal, getUserPendingWithdrawal, getUserTotalDepositBalance, getUserTotalPendingDepositBalance, getUserWithdrawalTotal } from "../redux/authRedux/userAuthService";
-import { all_user_deposits, all_user_withdrawals, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
+import {
+  getAllUserDeposit,
+  getAllUserWithdrawal,
+  getUserAccountBalance,
+  getUserLastDeposit,
+  getUserLastWithdrawal,
+  getUserPendingWithdrawal,
+  getUserTotalDepositBalance,
+  getUserTotalPendingDepositBalance,
+  getUserWithdrawalTotal,
+} from "../redux/authRedux/userAuthService";
+import {
+  all_user_deposits,
+  all_user_withdrawals,
+  user_account_balance,
+  user_deposit_total,
+  user_last_deposit,
+  user_last_withdrawal,
+  user_pending_withdrawal_total,
+  user_pendingDeposit_total,
+  user_withdrawal_total,
+} from "../redux/transactions/transactionSlice";
 import Time from "../components/Time";
 import withAuth from "../HOC/withAuth";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const [userAccountBalance, setUserAccountBalance] = useState<any>(0);
-  const [depositTotal, setDepositTotal] = useState<any>(0);
-  const [pendingDepositTotal, setPendingDepositTotal] = useState<any>(0);
-  const [userLastDeposit, setUserLastDeposit] = useState<any>(null);
-  const [withdrawalTotal, setWithdrawalTotal] = useState<any>(0)
-  const [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0)
-  const [lastWithdrawal, setLastWithdrawal] = useState<any>(null)
-  const [cantWithdraw, setCantWithdraw] = useState(false);
-  const [allUserDeposit, setAllUserDeposit] = useState<[]>([])
+  let [userAccountBalance, setUserAccountBalance] = useState<any>(0);
+  let [depositTotal, setDepositTotal] = useState<any>(0);
+  let [pendingDepositTotal, setPendingDepositTotal] = useState<any>(0);
+  let [userLastDeposit, setUserLastDeposit] = useState<any>(null);
+  let [withdrawalTotal, setWithdrawalTotal] = useState<any>(0);
+  let [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0);
+  let [lastWithdrawal, setLastWithdrawal] = useState<any>(null);
+  let [cantWithdraw, setCantWithdraw] = useState(false);
+  let [allUserDeposit, setAllUserDeposit] = useState<[]>([]);
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
   const id = userInfo?.id;
 
@@ -33,14 +53,11 @@ const Dashboard = () => {
         setUserAccountBalance(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_account_balance(userAccountBalance));
-  }
+      dispatch(user_account_balance(userAccountBalance));
+  }, [dispatch, id, userAccountBalance]);
 
-  
   //***********EFFECT TO GET TOTAL DEPOSIT BALANCE ******** */
   useEffect(() => {
     getUserTotalDepositBalance(id)
@@ -48,12 +65,12 @@ const Dashboard = () => {
         setDepositTotal(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_deposit_total(depositTotal));
-  }
+      dispatch(user_deposit_total(depositTotal));
+  }, [depositTotal, dispatch, id]);
+ 
+
 
   //***********EFFECT TO GET ALL PENDING DEPOSIT TOTAL******** */
   useEffect(() => {
@@ -62,12 +79,12 @@ const Dashboard = () => {
         setPendingDepositTotal(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_pendingDeposit_total(pendingDepositTotal));
-  }
+      dispatch(user_pendingDeposit_total(pendingDepositTotal));
+  }, [dispatch, id, pendingDepositTotal]);
+  
+
 
   //***********EFFECT TO GET ALL LAST DEPOSIT ******** */
   useEffect(() => {
@@ -76,12 +93,12 @@ const Dashboard = () => {
         setUserLastDeposit(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_last_deposit(userLastDeposit));
-  }
+      dispatch(user_last_deposit(userLastDeposit));
+  }, [dispatch, id, userLastDeposit]);
+
+  
 
   //***********EFFECT TO GET WITHDRAWAL TOTAL ******** */
   useEffect(() => {
@@ -90,12 +107,12 @@ const Dashboard = () => {
         setWithdrawalTotal(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_withdrawal_total(withdrawalTotal));
-  }
+      dispatch(user_withdrawal_total(withdrawalTotal));
+  }, [dispatch, id, withdrawalTotal]);
+  
+  
 
 
   //***********EFFECT TO GET PENDINGWITHDRAWAL TOTAL ******** */
@@ -105,12 +122,12 @@ const Dashboard = () => {
         setPendingWithdrawalTotal(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_pending_withdrawal_total(pendingWithdrawalTotal));
-  }
+      dispatch(user_pending_withdrawal_total(pendingWithdrawalTotal));
+  }, [dispatch, id, pendingWithdrawalTotal]);
+ 
+  
 
 
   //***********EFFECT TO GET LAST WITHDRAWAL ******** */
@@ -120,13 +137,11 @@ const Dashboard = () => {
         setLastWithdrawal(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_last_withdrawal(lastWithdrawal));
-  }
-
+      dispatch(user_last_withdrawal(lastWithdrawal));  
+  }, [dispatch, id, lastWithdrawal]);
+  
 
   //***********EFFECT TO GET All USER WITHDRAWAL ******** */
   useEffect(() => {
@@ -135,12 +150,11 @@ const Dashboard = () => {
         dispatch(all_user_withdrawals(data));
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(user_last_withdrawal(lastWithdrawal));
-  }
+      dispatch(user_last_withdrawal(lastWithdrawal));
+  }, [dispatch, id, lastWithdrawal]);
+  
 
   //***********EFFECT TO GET ALL DEPOSIT ******** */
   useEffect(() => {
@@ -149,12 +163,12 @@ const Dashboard = () => {
         setAllUserDeposit(data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
-  }, [id]);
-  if (userAccountBalance) {
-    dispatch(all_user_deposits(allUserDeposit));
-  }
+      dispatch(all_user_deposits(allUserDeposit));
+  }, [allUserDeposit, dispatch, id]);
+
+  
   // //Top Up Balance Settings ===========================================================
   let currentPlan = userLastDeposit?.plan;
   let accountBalance = userAccountBalance;
@@ -171,8 +185,9 @@ const Dashboard = () => {
     }
   }, [accountBalance, currentPlan]);
 
+  
 
-
+  
   return (
     <MainLayout>
       <Dash>
@@ -215,7 +230,7 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {depositTotal}</span>
+                  <span>$ {!depositTotal || depositTotal === 0 ? 0 : (depositTotal)}</span>
                   <p className="dark">TOTAL DEPOSIT</p>
                 </div>
               </div>
@@ -225,7 +240,7 @@ const Dashboard = () => {
                 </div>
                 <div className="inside-dash">
                   <span className="text-danger fw-bold">
-                    $ {pendingDepositTotal}
+                    $ {!pendingDepositTotal || pendingDepositTotal === 0 ? 0 : (pendingDepositTotal)}
                   </span>
                   <p className="dark">PENDING DEPOSIT</p>
                 </div>
@@ -235,7 +250,7 @@ const Dashboard = () => {
                   <BsHourglassSplit />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {userLastDeposit?.amount}</span>
+                  <span>$ {!userLastDeposit || userLastDeposit.amount === 0 ? 0 : (userLastDeposit.amount)}</span>
                   <p className="dark">LAST DEPOSIT</p>
                 </div>
               </div>
@@ -270,9 +285,7 @@ const Dashboard = () => {
                   <TbZoomMoney />
                 </div>
                 <div className="inside-dash">
-                  $ {!lastWithdrawal ? <>0</> : <>
-                   {lastWithdrawal}
-                  </>}
+                  $ {lastWithdrawal === null ? <>0</> : <>{lastWithdrawal}</>}
                   <p className="dark">LAST WITHDRAWAL</p>
                 </div>
               </div>
@@ -312,8 +325,8 @@ const Dash = styled.div`
   .dash {
     width: 32%;
   }
-  .my-depo-btn a{
-    visibility:hidden;
+  .my-depo-btn a {
+    visibility: hidden;
   }
 
   .left-dash {
