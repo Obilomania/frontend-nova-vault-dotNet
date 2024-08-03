@@ -72,7 +72,7 @@ const Login = () => {
       }
     } catch (error: any) {
       setIsLoading(false);
-      navigate("/register");
+     
       if (error.message === "Request failed with status code 400") {
         setIsLoading(false);
         return toast.error("Username or password is incorrect");

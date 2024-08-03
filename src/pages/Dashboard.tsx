@@ -41,6 +41,7 @@ const Dashboard = () => {
   let [withdrawalTotal, setWithdrawalTotal] = useState<any>(0);
   let [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0);
   let [lastWithdrawal, setLastWithdrawal] = useState<any>(null);
+  let [allWithdrawal, setAllWithdrawal] = useState<any>(null);
   let [cantWithdraw, setCantWithdraw] = useState(false);
   let [allUserDeposit, setAllUserDeposit] = useState<[]>([]);
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
@@ -55,8 +56,8 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_account_balance(userAccountBalance));
-  }, [dispatch, id, userAccountBalance]);
+    dispatch(user_account_balance(userAccountBalance));
+  }, []);
 
   //***********EFFECT TO GET TOTAL DEPOSIT BALANCE ******** */
   useEffect(() => {
@@ -67,10 +68,8 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_deposit_total(depositTotal));
-  }, [depositTotal, dispatch, id]);
- 
-
+    dispatch(user_deposit_total(depositTotal));
+  }, []);
 
   //***********EFFECT TO GET ALL PENDING DEPOSIT TOTAL******** */
   useEffect(() => {
@@ -81,10 +80,8 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_pendingDeposit_total(pendingDepositTotal));
-  }, [dispatch, id, pendingDepositTotal]);
-  
-
+    dispatch(user_pendingDeposit_total(pendingDepositTotal));
+  }, []);
 
   //***********EFFECT TO GET ALL LAST DEPOSIT ******** */
   useEffect(() => {
@@ -95,10 +92,8 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_last_deposit(userLastDeposit));
-  }, [dispatch, id, userLastDeposit]);
-
-  
+    dispatch(user_last_deposit(userLastDeposit));
+  }, []);
 
   //***********EFFECT TO GET WITHDRAWAL TOTAL ******** */
   useEffect(() => {
@@ -109,11 +104,8 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_withdrawal_total(withdrawalTotal));
-  }, [dispatch, id, withdrawalTotal]);
-  
-  
-
+    dispatch(user_withdrawal_total(withdrawalTotal));
+  }, []);
 
   //***********EFFECT TO GET PENDINGWITHDRAWAL TOTAL ******** */
   useEffect(() => {
@@ -124,11 +116,20 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(user_pending_withdrawal_total(pendingWithdrawalTotal));
-  }, [dispatch, id, pendingWithdrawalTotal]);
- 
-  
+    dispatch(user_pending_withdrawal_total(pendingWithdrawalTotal));
+  }, []);
 
+  //***********EFFECT TO GET All USER WITHDRAWAL ******** */
+  useEffect(() => {
+    getAllUserWithdrawal(id)
+      .then((data) => {
+        setAllWithdrawal(data);
+      })
+      .catch((error) => {
+        // console.error("Error:", error);
+      });
+    dispatch(all_user_withdrawals(lastWithdrawal));
+  }, []);
 
   //***********EFFECT TO GET LAST WITHDRAWAL ******** */
   useEffect(() => {
@@ -137,24 +138,13 @@ const Dashboard = () => {
         setLastWithdrawal(data);
       })
       .catch((error) => {
-        // console.error("Error:", error);
+        console.error("Error:", error);
       });
-      dispatch(user_last_withdrawal(lastWithdrawal));  
-  }, [dispatch, id, lastWithdrawal]);
-  
-
-  //***********EFFECT TO GET All USER WITHDRAWAL ******** */
-  useEffect(() => {
-    getAllUserWithdrawal(id)
-      .then((data) => {
-        dispatch(all_user_withdrawals(data));
-      })
-      .catch((error) => {
-        // console.error("Error:", error);
-      });
-      dispatch(user_last_withdrawal(lastWithdrawal));
-  }, [dispatch, id, lastWithdrawal]);
-  
+    if (!lastWithdrawal) {
+      dispatch(user_last_withdrawal(null));
+    }
+    dispatch(user_last_withdrawal(lastWithdrawal));
+  }, []);
 
   //***********EFFECT TO GET ALL DEPOSIT ******** */
   useEffect(() => {
@@ -165,10 +155,9 @@ const Dashboard = () => {
       .catch((error) => {
         // console.error("Error:", error);
       });
-      dispatch(all_user_deposits(allUserDeposit));
-  }, [allUserDeposit, dispatch, id]);
+    dispatch(all_user_deposits(allUserDeposit));
+  }, []);
 
-  
   // //Top Up Balance Settings ===========================================================
   let currentPlan = userLastDeposit?.plan;
   let accountBalance = userAccountBalance;
@@ -185,9 +174,6 @@ const Dashboard = () => {
     }
   }, [accountBalance, currentPlan]);
 
-  
-
-  
   return (
     <MainLayout>
       <Dash>
@@ -230,7 +216,9 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {!depositTotal || depositTotal === 0 ? 0 : (depositTotal)}</span>
+                  <span>
+                    $ {!depositTotal || depositTotal === 0 ? 0 : depositTotal}
+                  </span>
                   <p className="dark">TOTAL DEPOSIT</p>
                 </div>
               </div>
@@ -240,7 +228,10 @@ const Dashboard = () => {
                 </div>
                 <div className="inside-dash">
                   <span className="text-danger fw-bold">
-                    $ {!pendingDepositTotal || pendingDepositTotal === 0 ? 0 : (pendingDepositTotal)}
+                    ${" "}
+                    {!pendingDepositTotal || pendingDepositTotal === 0
+                      ? 0
+                      : pendingDepositTotal}
                   </span>
                   <p className="dark">PENDING DEPOSIT</p>
                 </div>
@@ -250,7 +241,12 @@ const Dashboard = () => {
                   <BsHourglassSplit />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {!userLastDeposit || userLastDeposit.amount === 0 ? 0 : (userLastDeposit.amount)}</span>
+                  <span>
+                    ${" "}
+                    {!userLastDeposit || userLastDeposit.amount === 0
+                      ? 0
+                      : userLastDeposit.amount}
+                  </span>
                   <p className="dark">LAST DEPOSIT</p>
                 </div>
               </div>
@@ -285,7 +281,7 @@ const Dashboard = () => {
                   <TbZoomMoney />
                 </div>
                 <div className="inside-dash">
-                  $ {lastWithdrawal === null ? <>0</> : <>{lastWithdrawal}</>}
+                  $ {!lastWithdrawal ? <>0</> : <>{lastWithdrawal}</>}
                   <p className="dark">LAST WITHDRAWAL</p>
                 </div>
               </div>

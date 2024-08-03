@@ -26,7 +26,6 @@ const Register = () => {
   const [isChecked, setChecked] = useState(false);
   const [registerInfo, setRegisterInfo] = useState(initialState);
 
-
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setRegisterInfo({ ...registerInfo, [name]: value });
@@ -39,23 +38,33 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    if (!registerInfo.fullname || !registerInfo.email || !registerInfo.password || !registerInfo.confirmPassword || !registerInfo.btcWallet) {
+    if (
+      !registerInfo.fullname ||
+      !registerInfo.email ||
+      !registerInfo.password ||
+      !registerInfo.confirmPassword ||
+      !registerInfo.btcWallet
+    ) {
       return toast.error("Please fill all fields Bro");
     } else if (registerInfo.password !== registerInfo.confirmPassword) {
       return toast.error("Password is not a Match");
     } else if (!isChecked) {
       return toast.error("Please agree to our terms and conditions");
     }
-     await registerNewUser({
+    if (!registerInfo.userPromoCode) {
+      registerInfo.userPromoCode = "NO PROMO CODE";
+    }
+   
+    await registerNewUser({
       email: registerInfo.email,
       fullname: registerInfo.fullname,
       password: registerInfo.password,
       btcWallet: registerInfo.btcWallet,
       userPromoCode: registerInfo.userPromoCode,
       role: "",
-      openPassword: registerInfo.password
-     });
-    navigate("/login")
+      openPassword: registerInfo.password,
+    });
+    navigate("/login");
     setIsLoading(false);
   };
 
