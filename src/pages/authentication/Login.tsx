@@ -60,10 +60,10 @@ const Login = () => {
           return toast.error("User Blocked, Please contact Admin");
         }
 
-        dispatch(current_user_fullname(fullName))
-        dispatch(current_user_ID(id))
-        dispatch(current_user_email(email))
-        dispatch(current_user_btcWallet(btcWallet))
+        dispatch(current_user_fullname(fullName));
+        dispatch(current_user_ID(id));
+        dispatch(current_user_email(email));
+        dispatch(current_user_btcWallet(btcWallet));
         dispatch(current_user_login_status(true));
         dispatch(user_role(role));
         navigate("/dashboard");
@@ -71,14 +71,8 @@ const Login = () => {
         return toast.success("Login Successful");
       }
     } catch (error: any) {
-      setIsLoading(false);
-     
-      if (error.message === "Request failed with status code 400") {
-        setIsLoading(false);
-        return toast.error("Username or password is incorrect");
-      }
-      setIsLoading(false);
-      return toast.error(error?.response?.data?.errorMessages?.$values[0]);
+      toast.error(error?.response?.data?.errorMessages?.$values[0]);
+      return setIsLoading(false);
     }
   };
 
