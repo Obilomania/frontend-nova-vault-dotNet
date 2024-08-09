@@ -52,7 +52,7 @@ const dashboardApi = createApi({
         }),
         getAlltheUserDeposit: builder.query({
             query: (id) => ({
-                url: `deposit/usergetallAppDepositss/${id}`
+                url: `deposit/usergetalldeposits/${id}`
             }),
             providesTags: ["DashboardItems"]
         }),

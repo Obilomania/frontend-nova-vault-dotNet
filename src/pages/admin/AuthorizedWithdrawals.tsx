@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { all_withdrawals } from "../../redux/adminRedux/adminSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-const AuthorizedWithdrawals = ({ withdrawals }: any) => {
-  const dispatch = useDispatch();
-  if (withdrawals) {
-    dispatch(all_withdrawals(withdrawals));
+const AuthorizedWithdrawals = () => {
+  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+  if (adminInfo.allWithdrawals === null) {
+    return <h6 className="text-center">NO WITHDRAWALS AT ALL</h6>;
   }
-  const allWithdraws = useSelector((state: any) => state.admin.allWithdrawals);
-  let pendingWithdrawals = allWithdraws.filter(
+  let pendingWithdrawals = adminInfo.allWithdrawals.filter(
     (dep: { isProcessing: Boolean }) => dep.isProcessing
   );
 
@@ -46,14 +44,14 @@ const AuthorizedWithdrawals = ({ withdrawals }: any) => {
                     <b>Approved</b>
                   </td>
                   <td></td>
-                  
+
                   {/* <td className="call-to-action"> */}
-                    {/* <button
+                  {/* <button
                       className="approve btn btn-success"
                     >
                       Approve
                     </button> */}
-                    {/* <button className="delete btn btn-danger">Delete</button> */}
+                  {/* <button className="delete btn btn-danger">Delete</button> */}
                   {/* </td> */}
                 </tr>
               ))}

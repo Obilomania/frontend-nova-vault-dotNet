@@ -1,18 +1,15 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { all_withdrawals } from "../../redux/adminRedux/adminSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { adminApproveUserWithdrawal } from "../../redux/adminRedux/adminService";
-import Loader from "../../components/Loader";
-import { useState } from "react";
 
 const PendingWithdrawals = ({ withdrawals }: any) => {
-  const dispatch = useDispatch();
-  if (withdrawals) {
-    dispatch(all_withdrawals(withdrawals));
-  }
-  const allWithdraws = useSelector((state: any) => state.admin.allWithdrawals);
-  let pendingWithdrawals = allWithdraws.filter(
+  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+  
+   if (adminInfo.allWithdrawals === null) {
+     return <h6 className="text-center">NO WITHDRAWALS AT ALL</h6>;
+   }
+  let pendingWithdrawals = adminInfo.allWithdrawals.filter(
     (dep: { isProcessing: Boolean }) => !dep.isProcessing
   );
 

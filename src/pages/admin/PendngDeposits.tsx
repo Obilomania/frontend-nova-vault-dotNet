@@ -3,9 +3,12 @@ import Table from "react-bootstrap/Table";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const PendngDeposits = ({ deposits }: any) => {
+const PendngDeposits = () => {
   const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
   const navigate = useNavigate();
+   if (adminInfo.allAppDeposits === null) {
+     return <h6 className="text-center">NO DEPOSITS AT ALL</h6>;
+   }
 
   let pendingDeposits = adminInfo.allAppDeposits.filter(
     (dep: { isProcessing: Boolean }) => !dep.isProcessing

@@ -16,18 +16,10 @@ const Dashboard = () => {
   const transactions = useSelector(
     (state: any) => state.persistedReducer.transaction
   );
-  let [pendingDepositTotal, setPendingDepositTotal] = useState<any>(0);
-  let [userLastDeposit, setUserLastDeposit] = useState<any>(null);
-  let [withdrawalTotal, setWithdrawalTotal] = useState<any>(0);
-  let [pendingWithdrawalTotal, setPendingWithdrawalTotal] = useState<any>(0);
-  let [lastWithdrawal, setLastWithdrawal] = useState<any>(null);
-  let [allWithdrawal, setAllWithdrawal] = useState<any>(null);
   let [cantWithdraw, setCantWithdraw] = useState(false);
-  let [allUserDeposit, setAllUserDeposit] = useState<[]>([]);
-  const userInfo = useSelector((state: any) => state.persistedReducer.auth);
 
   // //Top Up Balance Settings ===========================================================
-  let currentPlan = userLastDeposit?.plan;
+  let currentPlan = transactions.userLastDeposit?.plan;
   let accountBalance = transactions.userAccountBalance;
 
   useEffect(() => {

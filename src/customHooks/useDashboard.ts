@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { all_user_deposits, all_user_withdrawals, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from '../redux/transactions/transactionSlice';
+import { all_the_user_deposits, all_user_withdrawals, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from '../redux/transactions/transactionSlice';
 import { useGetAlltheUserDepositQuery, useGetAllTheUserWithdrawalQuery, useGetTheUserAccountBalanceQuery, useGetTheUserLastDepositQuery, useGetTheUserLastWithdrawalQuery, useGetTheUserPendingWithdrawalTotalQuery, useGetTheUserTotalDepositBalanceQuery, useGetTheUserTotalPendingDepositBalanceQuery, useGetTheUserWithdrawalTotalQuery } from '../redux/APIs/dashboardApi';
 
 const useDashboard = () => {
@@ -10,7 +10,7 @@ const useDashboard = () => {
     function GetUserAccountBalance() {
         const { data, isLoading } = useGetTheUserAccountBalanceQuery(id)
         if (!isLoading) {
-            dispatch(user_account_balance(data.result))
+            dispatch(user_account_balance(data?.result))
         }
     }
     function GetUserTotalDepositBalance() {
@@ -51,14 +51,17 @@ const useDashboard = () => {
     }
     function GetAllUserDeposits() {
         const { data, isLoading } = useGetAlltheUserDepositQuery(id)
+        console.log('====================================');
+        console.log(data);
+        console.log('====================================');
         if (!isLoading) {
-            dispatch(all_user_deposits(data.$values))
+            dispatch(all_the_user_deposits(data?.$values))
         }
     }
     function GetAllUserWithdrawals() {
         const { data, isLoading } = useGetAllTheUserWithdrawalQuery(id)
         if (!isLoading) {
-            dispatch(all_user_withdrawals(data.$values))
+            dispatch(all_user_withdrawals(data?.$values))
         }
     }
     

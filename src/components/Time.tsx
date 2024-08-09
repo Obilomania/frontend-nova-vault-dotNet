@@ -3,7 +3,7 @@ import Moment from "react-moment";
 import CurrentUser from "../interfaces/currentUserModel";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { all_user_deposits, all_user_withdrawals, top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
+import { all_the_user_deposits, all_user_withdrawals, top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../redux/transactions/transactionSlice";
 import { Dispatch } from "redux";
 import { toast } from "react-toastify";
 import { current_user_btcWallet, current_user_email, current_user_fullname, current_user_ID, current_user_login_status, user_role } from "../redux/authRedux/userAuthSlice";
@@ -102,7 +102,7 @@ const Time = () => {
       dispatch(user_last_deposit(null));
       dispatch(user_withdrawal_total(0));
       dispatch(top_up_time(0));
-      dispatch(all_user_deposits(null));
+      dispatch(all_the_user_deposits(null));
       dispatch(all_user_withdrawals(null));
       dispatch(all_app_deposits(null));
       dispatch(all_withdrawals(null));

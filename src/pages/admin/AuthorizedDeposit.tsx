@@ -1,22 +1,19 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from "react-redux";
-import { all_app_deposits } from "../../redux/adminRedux/adminSlice";
+import {  useSelector } from "react-redux";
 
-const AuthorizedDeposit = ({ deposits }: any) => {
-  const dispatch = useDispatch();
-  if (deposits) {
-    dispatch(all_app_deposits(deposits));
+const AuthorizedDeposit = () => {
+  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+  if (adminInfo.allAppDeposits === null) {
+    return (
+      <h6 className="text-center">NO DEPOSITS AT ALL</h6>
+    )
   }
-  const allAppDepositss = useSelector((state: any) => state.admin.allAppDepositss);
+    let pendingDeposits = adminInfo.allAppDeposits?.filter(
+      (dep: { isProcessing: Boolean }) => dep.isProcessing
+    );
 
-  let pendingDeposits = allAppDepositss.filter(
-    (dep: { isProcessing: Boolean }) => dep.isProcessing
-  );
-
-    // const deleteDeposit = async (id: any) => {
-    //   await adminDeleteOneDeposit(id);
-    // };
+   
   return (
     <PendingDepo>
       <h1 className="heading">Approved Deposits</h1>

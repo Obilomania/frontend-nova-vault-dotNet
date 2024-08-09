@@ -9,14 +9,12 @@ import {
 } from "../../redux/adminRedux/adminService";
 import { useState } from "react";
 
-const AllAppUser = ({ appUsers }: any) => {
-  const dispatch = useDispatch();
+const AllAppUser = () => {
+  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+
   const navigate = useNavigate();
   const [blockThekUser] = useState<Boolean>(true);
   const [unBlockTheUser] = useState<Boolean>(false);
-  const adminInfo = useSelector((state:any) => state.persistedReducer.admin)
-
-  
 
   const blockUser = async (id: any) => {
     await adminBlockUser(id, blockThekUser);
@@ -42,7 +40,7 @@ const AllAppUser = ({ appUsers }: any) => {
         </thead>
         <tbody className="tbody">
           <>
-            {adminInfo?.allAppusers.map((user: any, index: any) => (
+            {adminInfo?.allAppUsers?.map((user: any, index: any) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{user?.fullname}</td>
