@@ -23,8 +23,6 @@ import ApproveDeposit from "./pages/admin/ApproveDeposit";
 import PromoCodes from "./pages/admin/PromoCodes";
 import Transactions from "./pages/Transactions";
 
-
-
 export const ScrollToTop = () => {
   const location = useLocation();
   useEffect(() => {
@@ -32,8 +30,6 @@ export const ScrollToTop = () => {
   }, [location]);
   return null;
 };
-
-
 
 function App() {
   return (

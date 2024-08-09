@@ -44,7 +44,7 @@ const Withdraw = () => {
     }
 
     await makeAWithdrawal(withdraw);
-
+    navigate("/dashboard")
 
     setLoading(false);
   };
@@ -60,7 +60,7 @@ const Withdraw = () => {
               <h5 className="heading-deposit-form">MAKE A WITHDRAWAL</h5>
               <h6>
                 ACCOUNT BALANCE &nbsp;
-                <span>$ {transactionRedux?.userAccountBalance}</span>
+                <span>$ {transactionRedux?.userAccountBalance.toFixed(2)}</span>
               </h6>
               <form onSubmit={handleSubmit}>
                 {" "}
@@ -91,7 +91,12 @@ const Withdraw = () => {
                 <button className="submit">WITHDRAW</button>
               </form>{" "}
               <br />
-              <button className="go-back" onClick={() =>navigate("/dashboard")}>&nbsp;GO BACK &nbsp;</button>
+              <button
+                className="go-back"
+                onClick={() => navigate("/dashboard")}
+              >
+                &nbsp;GO BACK &nbsp;
+              </button>
             </div>
           </div>
         </>

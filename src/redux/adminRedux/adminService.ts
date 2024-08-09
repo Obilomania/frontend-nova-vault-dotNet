@@ -7,9 +7,11 @@ import { base_Url } from "../authRedux/userAuthService";
 export const getAllApplicationUser = async () => {
     try {
         const appUsers = await axios.get(`${base_Url}auth/get-all-app-users`);
-        return appUsers.data;
+       
+        return appUsers?.data?.$values;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
+
     }
 }
 
@@ -18,10 +20,11 @@ export const getAllApplicationUser = async () => {
 // *****************ALL DEPOSITS*********************
 export const getAllDeposits = async () => {
     try {
-        const deposits = await axios.get(`${base_Url}admin/allDeposit`);
-        return deposits?.data?.result?.$values;
+        const deposits = await axios.get(`${base_Url}admin/admin-get-all-deposits`);
+        return deposits?.data?.$values;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
+
     }
 }
 
@@ -31,9 +34,9 @@ export const getAllDeposits = async () => {
 export const getAllWithdrawals = async () => {
     try {
         const withdrawals = await axios.get(`${base_Url}admin/allwithdrawals`);
-        return withdrawals?.data?.result?.$values;
+        return withdrawals?.data?.$values;
     } catch (error: any) {
-        return toast.error(error?.response?.data?.errorMessages?.$values[0])
+        return error?.response?.data?.message
     }
 }
 
@@ -41,14 +44,15 @@ export const getAllWithdrawals = async () => {
 
 // *****************ADMIN EDIT USER DEPOSIT AND APPROVE*********************
 export const adminEditAndApproveUserDeposit = async (id: any, theEditFeatures: any) => {
-
+  
     try {
-        const updatedDeposit = await axios.put(`${base_Url}admin/adminedituserdeposit/${id}`, theEditFeatures);
+        const updatedDeposit = await axios.put(`${base_Url}admin/admin-update-user-deposit/${id}`, theEditFeatures);
         if (updatedDeposit.data.statusCode === 200 || updatedDeposit.status === 200) {
             toast.success("Deposit Updated and Approved Successfully!!!")
         }
-        return updatedDeposit?.data?.result;
+        return updatedDeposit?.data;
     } catch (error: any) {
+        console.log(error);
         return toast.error(error?.response?.data?.errorMessages?.$values[0])
     }
 }
@@ -83,12 +87,6 @@ export const adminApproveUserWithdrawal = async (id: any) => {
 
 // *****************ADMIN BLOCK USER*********************
 export const adminBlockUser = async (id: any, blockBody: Boolean) => {
-    // // console.log(id, blockBody);
-    // console.log('====================================');
-    // console.log(id, blockBody );
-    // console.log('====================================');
-    // return
-    // return
 
     try {
         const toggleUserBlock = await axios.put(`${base_Url}auth/admin-toggle-blockuser/${id}`, blockBody);

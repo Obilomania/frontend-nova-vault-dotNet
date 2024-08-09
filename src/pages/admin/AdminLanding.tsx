@@ -5,7 +5,6 @@ import PendingWithdrawals from "./PendingWithdrawals";
 import AllAppUser from "./AllAppUser";
 import { useEffect, useState } from "react";
 import {
-  adminDeleteOneDeposit,
   getAllApplicationUser,
   getAllDeposits,
   getAllWithdrawals,
@@ -15,24 +14,24 @@ import AuthorizedDeposit from "./AuthorizedDeposit";
 import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
 import { useNavigate } from "react-router-dom";
 import withAdminAuth from "../../HOC/withAdminAuth";
+import useAdminGetHooks from "../../customHooks/useAdminGetHooks";
 
 const AdminLanding = () => {
+    useAdminGetHooks();
+
   const [allUsers, setAllUsers] = useState([]);
-  const [allDeposits, setAllDeposits] = useState([]);
   const [allWithdrawals, setAllWithdrawals] = useState([]);
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     getAllApplicationUser().then((data) => {
-      setAllUsers(data?.$values);
+      setAllUsers(data);
     });
   }, []);
 
-  useEffect(() => {
-    getAllDeposits().then((data) => {
-      setAllDeposits(data);
-    });
-  }, []);
+  
 
   useEffect(() => {
     getAllWithdrawals().then((data) => {
@@ -40,9 +39,9 @@ const AdminLanding = () => {
     });
   }, []);
 
-  if (!allUsers || !allDeposits || !allWithdrawals) {
-    return <Loader />;
-  }
+  // if (!allUsers || !allDeposits || !allWithdrawals) {
+  //   return <Loader />;
+  // }
 
 
 
@@ -53,25 +52,23 @@ const AdminLanding = () => {
           <button className="btn btn-success flex align-center justify-center mt-5 w-[100%]" onClick={() => navigate("/promoCodes")}>Click Here to get Promo Codes</button>
       </div> <hr />
         <div className="admin-container">
-          <PendngDeposits
-            deposits={allDeposits}
-          />
+          <PendngDeposits/>
         </div>
         <div className="admin-container">
-          <AuthorizedDeposit
+          {/* <AuthorizedDeposit
             deposits={allDeposits}
-          />
+          /> */}
         </div>
         <hr />
         <div className="admin-container">
-          <PendingWithdrawals withdrawals={allWithdrawals} />
+          {/* <PendingWithdrawals withdrawals={allWithdrawals} /> */}
         </div>
         <div className="admin-container">
-          <AuthorizedWithdrawals withdrawals={allWithdrawals} />
+          {/* <AuthorizedWithdrawals withdrawals={allWithdrawals} /> */}
         </div>
         <hr />
         <div className="admin-container">
-          <AllAppUser appUsers={allUsers} />
+          {/* <AllAppUser appUsers={allUsers} /> */}
         </div>
       </AdminLand>
     </MainLayout>

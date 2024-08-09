@@ -12,8 +12,8 @@ import { useState } from "react";
 const AllAppUser = ({ appUsers }: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [blockThekUser, setBlockTheUser] = useState<Boolean>(true);
-  const [unBlockTheUser, setUnBlockTheUser] = useState<Boolean>(false);
+  const [blockThekUser] = useState<Boolean>(true);
+  const [unBlockTheUser] = useState<Boolean>(false);
   if (appUsers) {
     dispatch(all_applicationUser(appUsers));
   }

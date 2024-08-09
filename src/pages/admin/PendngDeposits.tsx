@@ -3,18 +3,27 @@ import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { all_deposits } from "../../redux/adminRedux/adminSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllDeposits } from "../../redux/adminRedux/adminService";
 
 const PendngDeposits = ({ deposits }: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  if (deposits) {
-    dispatch(all_deposits(deposits));
-  }
-  const allDeposits = useSelector((state: any) => state.admin.allDeposits);
+    const [allDeposits, setAllDeposits] = useState([]);
 
-  let pendingDeposits = allDeposits.filter(
+
+
+
+  
+  if (allDeposits) {
+    dispatch(all_deposits(allDeposits));
+  }
+  const allTheDeposits = useSelector((state: any) => state.admin.allDeposits);
+
+  let pendingDeposits = allTheDeposits.filter(
     (dep: { isProcessing: Boolean }) => !dep.isProcessing
   );
+
   return (
     <PendingDepo>
       <h1 className="heading">Pending Deposits</h1>

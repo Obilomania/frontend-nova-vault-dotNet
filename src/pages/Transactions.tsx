@@ -67,7 +67,9 @@ const Transactions = () => {
                         className="table-body the-row one"
                         key={withdraw?.id}
                       >
-                        <p className="amount">$ {withdraw?.amount}</p>
+                        <p className="amount">
+                          $ {withdraw?.amount.toFixed(2)}
+                        </p>
                         <p className="timing">
                           {formatDateString(withdraw?.createdOn)}
                         </p>
@@ -106,7 +108,7 @@ const Transactions = () => {
                   {allDeposits?.map((depo: any) => (
                     <>
                       <div className="table-body the-row one" key={depo._id}>
-                        <p className="amount">$ {depo?.amount}</p>
+                        <p className="amount">$ {depo?.amount.toFixed(2)}</p>
                         <p className="timing">
                           {formatDateString(depo?.createdOn)}
                         </p>

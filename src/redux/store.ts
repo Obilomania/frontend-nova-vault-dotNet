@@ -2,8 +2,10 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { userAuthReducer } from "./authRedux/userAuthSlice"
 import { adminReducer } from "./adminRedux/adminSlice"
-import {transactionReducer} from "./transactions/transactionSlice"
+import { transactionReducer } from "./transactions/transactionSlice"
 import storage from 'redux-persist/lib/storage';
+import dashboardApi from "./APIs/dashboardApi";
+
 
 
 const persistConfig = {
@@ -13,7 +15,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
     auth: userAuthReducer,
-    transaction: transactionReducer
+    transaction: transactionReducer,
+    admin: adminReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -21,10 +24,11 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({
     reducer: {
         persistedReducer,
-        admin : adminReducer
+        [dashboardApi.reducerPath]: dashboardApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ serializableCheck: false })
+            .concat(dashboardApi.middleware)
 
 });
 
