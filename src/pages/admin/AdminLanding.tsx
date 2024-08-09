@@ -6,7 +6,7 @@ import AllAppUser from "./AllAppUser";
 import { useEffect, useState } from "react";
 import {
   getAllApplicationUser,
-  getAllDeposits,
+  getallAppDepositss,
   getAllWithdrawals,
 } from "../../redux/adminRedux/adminService";
 import Loader from "../../components/Loader";
@@ -25,21 +25,9 @@ const AdminLanding = () => {
 
   
 
-  useEffect(() => {
-    getAllApplicationUser().then((data) => {
-      setAllUsers(data);
-    });
-  }, []);
 
-  
 
-  useEffect(() => {
-    getAllWithdrawals().then((data) => {
-      setAllWithdrawals(data);
-    });
-  }, []);
-
-  // if (!allUsers || !allDeposits || !allWithdrawals) {
+  // if (!allUsers || !allAppDepositss || !allWithdrawals) {
   //   return <Loader />;
   // }
 
@@ -56,7 +44,7 @@ const AdminLanding = () => {
         </div>
         <div className="admin-container">
           {/* <AuthorizedDeposit
-            deposits={allDeposits}
+            deposits={allAppDepositss}
           /> */}
         </div>
         <hr />

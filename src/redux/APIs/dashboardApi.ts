@@ -32,6 +32,36 @@ const dashboardApi = createApi({
             }),
             providesTags: ["DashboardItems"]
         }),
+        getTheUserWithdrawalTotal: builder.query({
+            query: (id) => ({
+                url: `withdraw/getallusertotalwithdrawal/${id}`
+            }),
+            providesTags: ["DashboardItems"]
+        }),
+        getTheUserPendingWithdrawalTotal: builder.query({
+            query: (id) => ({
+                url: `withdraw/getallusertotalwithdrawal/${id}`
+            }),
+            providesTags: ["DashboardItems"]
+        }),
+        getTheUserLastWithdrawal: builder.query({
+            query: (id) => ({
+                url: `withdraw/userlastwithdrawal/${id}`
+            }),
+            providesTags: ["DashboardItems"]
+        }),
+        getAlltheUserDeposit: builder.query({
+            query: (id) => ({
+                url: `deposit/usergetallAppDepositss/${id}`
+            }),
+            providesTags: ["DashboardItems"]
+        }),
+        getAllTheUserWithdrawal: builder.query({
+            query: (id) => ({
+                url: `withdraw/usergetallwithdrawals/${id}`
+            }),
+            providesTags: ["DashboardItems"]
+        }),
     })
 })
 
@@ -42,5 +72,5 @@ const dashboardApi = createApi({
 
 
 
-export const {useGetTheUserAccountBalanceQuery, useGetTheUserTotalDepositBalanceQuery,useGetTheUserTotalPendingDepositBalanceQuery,useGetTheUserLastDepositQuery } = dashboardApi
+export const {useGetTheUserAccountBalanceQuery, useGetTheUserTotalDepositBalanceQuery,useGetTheUserTotalPendingDepositBalanceQuery,useGetTheUserLastDepositQuery,useGetTheUserWithdrawalTotalQuery, useGetTheUserPendingWithdrawalTotalQuery, useGetTheUserLastWithdrawalQuery, useGetAlltheUserDepositQuery,useGetAllTheUserWithdrawalQuery } = dashboardApi
 export default dashboardApi;

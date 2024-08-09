@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    allAppUsers :[],
-    allDeposits: [],
-    allWithdrawals: [],
+    allAppUsers :null,
+    allAppDeposits: null,
+    allWithdrawals: null,
 }
 
 const adminSlice = createSlice({
@@ -13,8 +13,8 @@ const adminSlice = createSlice({
         all_applicationUser: (state, action) => {
             state.allAppUsers = action.payload
         },
-        all_deposits: (state, action) => {
-            state.allDeposits = action.payload
+        all_app_deposits: (state, action) => {
+            state.allAppDeposits = action.payload
         },
         all_withdrawals: (state, action) => {
             state.allWithdrawals = action.payload
@@ -22,6 +22,6 @@ const adminSlice = createSlice({
   }
 });
 
-export const { all_applicationUser, all_deposits, all_withdrawals } = adminSlice.actions
+export const { all_applicationUser, all_app_deposits, all_withdrawals } = adminSlice.actions
 export const  adminReducer = adminSlice.reducer
 

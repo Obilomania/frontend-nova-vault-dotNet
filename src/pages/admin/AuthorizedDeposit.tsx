@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { all_deposits } from "../../redux/adminRedux/adminSlice";
+import { all_app_deposits } from "../../redux/adminRedux/adminSlice";
 
 const AuthorizedDeposit = ({ deposits }: any) => {
   const dispatch = useDispatch();
   if (deposits) {
-    dispatch(all_deposits(deposits));
+    dispatch(all_app_deposits(deposits));
   }
-  const allDeposits = useSelector((state: any) => state.admin.allDeposits);
+  const allAppDepositss = useSelector((state: any) => state.admin.allAppDepositss);
 
-  let pendingDeposits = allDeposits.filter(
+  let pendingDeposits = allAppDepositss.filter(
     (dep: { isProcessing: Boolean }) => dep.isProcessing
   );
 

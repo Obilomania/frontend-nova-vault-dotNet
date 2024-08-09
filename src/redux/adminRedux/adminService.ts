@@ -18,7 +18,7 @@ export const getAllApplicationUser = async () => {
 
 
 // *****************ALL DEPOSITS*********************
-export const getAllDeposits = async () => {
+export const getallAppDepositss = async () => {
     try {
         const deposits = await axios.get(`${base_Url}admin/admin-get-all-deposits`);
         return deposits?.data?.$values;

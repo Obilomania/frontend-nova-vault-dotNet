@@ -8,7 +8,7 @@ import Time from '../components/Time';
 
 const Transactions = () => {
   const navigate = useNavigate();
-    const allDeposits = useSelector((state:any) => state.persistedReducer.transaction.alluserdeposits)
+    const allAppDepositss = useSelector((state:any) => state.persistedReducer.transaction.alluserdeposits)
     const allWithdrawals = useSelector((state:any) => state.persistedReducer.transaction.alluserwithdrawals)
    
     function formatDateString(dateString: any) {
@@ -103,11 +103,11 @@ const Transactions = () => {
                 <p className="status">STATUS</p>
               </div>
               {/* ------------------------------------- */}
-              {allDeposits.length > 0 ? (
+              {allAppDepositss.length > 0 ? (
                 <>
-                  {allDeposits?.map((depo: any) => (
+                  {allAppDepositss?.map((depo: any) => (
                     <>
-                      <div className="table-body the-row one" key={depo._id}>
+                      <div className="table-body the-row one" key={depo.id}>
                         <p className="amount">$ {depo?.amount.toFixed(2)}</p>
                         <p className="timing">
                           {formatDateString(depo?.createdOn)}

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { current_user_btcWallet, current_user_email, current_user_fullname, current_user_ID, current_user_login_status, user_role } from "../redux/authRedux/userAuthSlice";
 import styled from "styled-components";
 import { FiExternalLink } from "react-icons/fi";
+import { all_applicationUser, all_app_deposits, all_withdrawals } from "../redux/adminRedux/adminSlice";
 
 const Time = () => {
   const [lastDepos, setLastDepos] = useState("");
@@ -103,6 +104,9 @@ const Time = () => {
       dispatch(top_up_time(0));
       dispatch(all_user_deposits(null));
       dispatch(all_user_withdrawals(null));
+      dispatch(all_app_deposits(null));
+      dispatch(all_withdrawals(null));
+      dispatch(all_applicationUser(null));
 
       navigate("/");
       toast.success("User Logged Out");
@@ -112,7 +116,7 @@ const Time = () => {
   }
 
   useEffect(() => {
-    if (todaysDate === duration) {
+    if (todaysDate >= duration) {
       toast.error("Top up time Due, Contact Admin");
 
       setTimeout(() => logOut(dispatch), 7000);

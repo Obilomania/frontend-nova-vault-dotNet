@@ -5,6 +5,7 @@ import { adminReducer } from "./adminRedux/adminSlice"
 import { transactionReducer } from "./transactions/transactionSlice"
 import storage from 'redux-persist/lib/storage';
 import dashboardApi from "./APIs/dashboardApi";
+import adminApi from "./APIs/adminApi";
 
 
 
@@ -24,11 +25,13 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({
     reducer: {
         persistedReducer,
-        [dashboardApi.reducerPath]: dashboardApi.reducer
+        [dashboardApi.reducerPath]: dashboardApi.reducer,
+        [adminApi.reducerPath]: adminApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ serializableCheck: false })
             .concat(dashboardApi.middleware)
+            .concat(adminApi.middleware)
 
 });
 

@@ -14,7 +14,7 @@ import {
 import { toast } from "react-toastify";
 import CurrentUser from "../../interfaces/currentUserModel";
 import { all_user_deposits, all_user_withdrawals, top_up_time, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from "../../redux/transactions/transactionSlice";
-import { all_applicationUser, all_deposits, all_withdrawals } from "../../redux/adminRedux/adminSlice";
+import { all_app_deposits, all_applicationUser, all_withdrawals } from "../../redux/adminRedux/adminSlice";
 
 const Logo = require("../../assets/nova-logo.png");
 const activeLink = ({ isActive }: any) =>
@@ -48,7 +48,7 @@ const Header = () => {
       dispatch(top_up_time(0));
       dispatch(all_user_deposits(null));
       dispatch(all_user_withdrawals(null));
-      dispatch(all_deposits(null));
+      dispatch(all_app_deposits(null));
       dispatch(all_withdrawals(null));
       dispatch(all_applicationUser(null));
 

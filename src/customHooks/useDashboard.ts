@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserAccountBalance } from '../redux/authRedux/userAuthService';
-import { user_account_balance, user_deposit_total, user_last_deposit, user_pendingDeposit_total } from '../redux/transactions/transactionSlice';
-import { useGetTheUserAccountBalanceQuery, useGetTheUserLastDepositQuery, useGetTheUserTotalDepositBalanceQuery, useGetTheUserTotalPendingDepositBalanceQuery } from '../redux/APIs/dashboardApi';
+import { all_user_deposits, all_user_withdrawals, user_account_balance, user_deposit_total, user_last_deposit, user_last_withdrawal, user_pending_withdrawal_total, user_pendingDeposit_total, user_withdrawal_total } from '../redux/transactions/transactionSlice';
+import { useGetAlltheUserDepositQuery, useGetAllTheUserWithdrawalQuery, useGetTheUserAccountBalanceQuery, useGetTheUserLastDepositQuery, useGetTheUserLastWithdrawalQuery, useGetTheUserPendingWithdrawalTotalQuery, useGetTheUserTotalDepositBalanceQuery, useGetTheUserTotalPendingDepositBalanceQuery, useGetTheUserWithdrawalTotalQuery } from '../redux/APIs/dashboardApi';
 
 const useDashboard = () => {
     const dispatch = useDispatch();
@@ -33,12 +31,46 @@ const useDashboard = () => {
             dispatch(user_last_deposit(data))
         }
     }
+    function GetUserWithdrawalTotal() {
+        const { data, isLoading } = useGetTheUserWithdrawalTotalQuery(id)
+        if (!isLoading) {
+            dispatch(user_withdrawal_total(data))
+        }
+    }
+    function GetUserPendingWithdrawalTotal() {
+        const { data, isLoading } = useGetTheUserPendingWithdrawalTotalQuery(id)
+        if (!isLoading) {
+            dispatch(user_pending_withdrawal_total(data))
+        }
+    }
+    function GetUserLastWithdrawal() {
+        const { data, isLoading } = useGetTheUserLastWithdrawalQuery(id)
+        if (!isLoading) {
+            dispatch(user_last_withdrawal(data))
+        }
+    }
+    function GetAllUserDeposits() {
+        const { data, isLoading } = useGetAlltheUserDepositQuery(id)
+        if (!isLoading) {
+            dispatch(all_user_deposits(data.$values))
+        }
+    }
+    function GetAllUserWithdrawals() {
+        const { data, isLoading } = useGetAllTheUserWithdrawalQuery(id)
+        if (!isLoading) {
+            dispatch(all_user_withdrawals(data.$values))
+        }
+    }
     
     GetUserAccountBalance()
     GetUserTotalDepositBalance()
     GetUserTotalDPendingepositBalance();
     GetUserLastDeposit()
-    
+    GetUserWithdrawalTotal();
+    GetUserPendingWithdrawalTotal();
+    GetUserLastWithdrawal()
+    GetAllUserDeposits();
+    GetAllUserWithdrawals();
  
 }
 

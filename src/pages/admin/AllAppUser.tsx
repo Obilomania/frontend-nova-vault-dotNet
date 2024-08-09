@@ -14,12 +14,9 @@ const AllAppUser = ({ appUsers }: any) => {
   const navigate = useNavigate();
   const [blockThekUser] = useState<Boolean>(true);
   const [unBlockTheUser] = useState<Boolean>(false);
-  if (appUsers) {
-    dispatch(all_applicationUser(appUsers));
-  }
-  const appApplicationUsers = useSelector(
-    (state: any) => state.admin.allAppUsers
-  );
+  const adminInfo = useSelector((state:any) => state.persistedReducer.admin)
+
+  
 
   const blockUser = async (id: any) => {
     await adminBlockUser(id, blockThekUser);
@@ -45,7 +42,7 @@ const AllAppUser = ({ appUsers }: any) => {
         </thead>
         <tbody className="tbody">
           <>
-            {appApplicationUsers.map((user: any, index: any) => (
+            {adminInfo?.allAppusers.map((user: any, index: any) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{user?.fullname}</td>

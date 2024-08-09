@@ -135,7 +135,7 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>$ {withdrawalTotal.toFixed(2)}</span>
+                  <span>$ {transactions.userWithdrawalTotal.toFixed(2)}</span>
                   <p className="dark">TOTAL WITHDRAWAL</p>
                 </div>
               </div>
@@ -145,7 +145,7 @@ const Dashboard = () => {
                 </div>
                 <div className="inside-dash">
                   <span className="text-danger fw-bold">
-                    $ {pendingWithdrawalTotal.toFixed(2)}
+                    $ {transactions.userPendingWithdrawalTotal.toFixed(2)}
                   </span>
                   <p className="dark">PENDING WITHDRAWAL</p>
                 </div>
@@ -155,7 +155,12 @@ const Dashboard = () => {
                   <TbZoomMoney />
                 </div>
                 <div className="inside-dash">
-                  $ {!lastWithdrawal ? <>0.00</> : <>{lastWithdrawal}</>}
+                  ${" "}
+                  {!transactions.userLastWithdrawal ? (
+                    <>0.00</>
+                  ) : (
+                    <>{transactions.userLastWithdrawal.amount}</>
+                  )}
                   <p className="dark">LAST WITHDRAWAL</p>
                 </div>
               </div>
