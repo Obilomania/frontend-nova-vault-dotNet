@@ -35,7 +35,7 @@ const MainLayout = ({ children } :any) => {
     return (
       <Layout>
         <>
-          {cryptoData.length === 0 || cryptoData === null ? (
+          {cryptoData?.length === 0 || cryptoData === null ? (
             <Loader />
           ) : (
             <>

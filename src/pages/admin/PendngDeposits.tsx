@@ -25,7 +25,7 @@ const PendngDeposits = () => {
           </tr>
         </thead>
         <tbody className="tbody">
-          {pendingDeposits.length <= 0 ? (
+          {pendingDeposits?.length <= 0 ? (
             <tr key="">
               <td></td>
               <td></td>

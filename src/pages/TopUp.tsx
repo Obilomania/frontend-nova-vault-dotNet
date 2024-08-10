@@ -66,7 +66,7 @@ const TopUp = () => {
               Top Up Due Date : <span>{transactionInfo?.topUpTime}</span>
             </h5>
             <div className="top-up-btns">
-              {numberOfDeposits.length > 2 ? (
+              {numberOfDeposits?.length > 2 ? (
                 <button onClick={revealBalancePop}>Top Up With Balance</button>
               ) : (
                 <button onClick={revealBtcPop}>Top Up With Bitcoin</button>
