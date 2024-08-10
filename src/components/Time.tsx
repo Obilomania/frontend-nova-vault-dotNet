@@ -115,14 +115,15 @@ const Time = () => {
   }
 
 // Parse the date string into a Date object
-  
-  useEffect(() => {
-    if (todaysDate === duration || todaysDate < duration) {
-      toast.error("Top up time Due, Contact Admin");
+  // const thisDay = "Sat, Aug 10, 2024, 2:36 PM";
+  // useEffect(() => {
+  //   if (thisDay > duration) {
+  //     toast.error("Top up time Due, Contact Admin biko");
 
-      setTimeout(() => logOut(dispatch), 7000);
-    }
-  }, [todaysDate, duration, dispatch]);
+  //     // setTimeout(() => logOut(dispatch), 7000);
+  //   }
+  // }, [todaysDate, duration, dispatch]);
+  // console.log(todaysDate)
 
   return (
     <Timing>
@@ -138,7 +139,7 @@ const Time = () => {
             </Link>
           </span>
         </h6>
-        <div className="duration">
+        {/* <div className="duration">
           {investmentPlan === "Bronze" || !investmentPlan ? (
             ""
           ) : (
@@ -151,7 +152,7 @@ const Time = () => {
               </span>
             </>
           )}
-        </div>
+        </div> */}
         {/* <h6> AND</h6> */}
       </div>
     </Timing>
