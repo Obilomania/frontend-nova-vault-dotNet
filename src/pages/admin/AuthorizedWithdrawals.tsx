@@ -31,7 +31,7 @@ const AuthorizedWithdrawals = () => {
             </tr>
           ) : (
             <>
-              {pendingWithdrawals.map((pend: any, index: any) => (
+              {pendingWithdrawals?.map((pend: any, index: any) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>

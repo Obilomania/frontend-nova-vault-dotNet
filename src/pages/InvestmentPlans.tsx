@@ -59,7 +59,7 @@ const InvestmentPlans = () => {
         <div className="invest-content">
           <h1 className="heading">Investment Plans</h1>
           <div className="investment-cards">
-            {ThePlans.map((plans, index) => (
+            {ThePlans?.map((plans, index) => (
               <div className="investment-card" key={index}>
                 <p className="plan-title">{plans.title.toUpperCase()}</p>
                 <p className="investment-price">{plans.pricing}</p>

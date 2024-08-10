@@ -38,7 +38,7 @@ const InvestmentPlans = () => {
         </p>
       </div>
       <div className="invest-cards">
-        {InvestmentServices.map((plans, index) => (
+        {InvestmentServices?.map((plans, index) => (
           <Card plans={plans} key={index} />
         ))}
       </div>

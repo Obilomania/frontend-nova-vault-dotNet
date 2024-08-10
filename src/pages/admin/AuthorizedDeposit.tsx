@@ -35,7 +35,7 @@ const AuthorizedDeposit = () => {
             </tr>
           ) : (
             <>
-              {approvedDeposit.map((pend: any, index: any) => (
+              {approvedDeposit?.map((pend: any, index: any) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>

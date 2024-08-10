@@ -15,7 +15,7 @@ const PriceList = ({ cryptoData }:any) => {
       <>
         <Link to={"/"} className="crypto-info">
           {cryptoData
-            .map((data:any, index:any) => (
+            ?.map((data:any, index:any) => (
               <div key={index} className="all-cryto">
                 <img src={data?.iconUrl} alt="" />
                 <span className="name">{data?.name}</span>
@@ -38,7 +38,7 @@ const PriceList = ({ cryptoData }:any) => {
             ))
             .slice(0, 10)}
           {cryptoData
-            .map((data:any, index:any) => (
+            ?.map((data:any, index:any) => (
               <div key={index} className="all-cryto">
                 <img src={data.iconUrl} alt="" />
                 <span className="name">{data.name}</span>

@@ -91,7 +91,7 @@ const Review = () => {
         <h2 className="heading">New Clients Review</h2>
         <div className="sliderContent">
           <Slider {...settings}>
-            {reviews.map((item, index) => (
+            {reviews?.map((item, index) => (
               <div key={index}>
                 <div className="Cleancard">
                   <div className="namePics">
