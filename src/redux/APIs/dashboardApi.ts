@@ -40,7 +40,7 @@ const dashboardApi = createApi({
         }),
         getTheUserPendingWithdrawalTotal: builder.query({
             query: (id) => ({
-                url: `withdraw/getallusertotalwithdrawal/${id}`
+                url: `withdraw/getalluserpendingwithdrawaltotal/${id}`
             }),
             providesTags: ["DashboardItems"]
         }),

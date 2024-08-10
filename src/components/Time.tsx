@@ -12,7 +12,6 @@ import { FiExternalLink } from "react-icons/fi";
 import { all_applicationUser, all_app_deposits, all_withdrawals } from "../redux/adminRedux/adminSlice";
 
 const Time = () => {
-  const [lastDepos, setLastDepos] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo: CurrentUser = useSelector(
@@ -21,7 +20,6 @@ const Time = () => {
   const transactionRedux = useSelector(
     (state: any) => state.persistedReducer.transaction
   );
-  const userId = userInfo?.id;
   let lastDeposit = transactionRedux.userLastDeposit;
   let lastDepoDate = lastDeposit?.createdOn;
   let investmentPlan = lastDeposit?.plan;
@@ -84,6 +82,7 @@ const Time = () => {
     // second: "numeric",
   });
 
+
   async function logOut(dispatch: Dispatch<any>) {
     try {
       localStorage.clear();
@@ -115,8 +114,10 @@ const Time = () => {
     }
   }
 
+// Parse the date string into a Date object
+  
   useEffect(() => {
-    if (todaysDate >= duration) {
+    if (todaysDate === duration || todaysDate < duration) {
       toast.error("Top up time Due, Contact Admin");
 
       setTimeout(() => logOut(dispatch), 7000);

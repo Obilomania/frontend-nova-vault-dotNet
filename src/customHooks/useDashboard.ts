@@ -51,9 +51,6 @@ const useDashboard = () => {
     }
     function GetAllUserDeposits() {
         const { data, isLoading } = useGetAlltheUserDepositQuery(id)
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
         if (!isLoading) {
             dispatch(all_the_user_deposits(data?.$values))
         }

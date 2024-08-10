@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import {  useSelector } from "react-redux";
 import { adminApproveUserWithdrawal } from "../../redux/adminRedux/adminService";
 
-const PendingWithdrawals = ({ withdrawals }: any) => {
+const PendingWithdrawals = () => {
   const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
   
    if (adminInfo.allWithdrawals === null) {
@@ -12,6 +12,8 @@ const PendingWithdrawals = ({ withdrawals }: any) => {
   let pendingWithdrawals = adminInfo.allWithdrawals.filter(
     (dep: { isProcessing: Boolean }) => !dep.isProcessing
   );
+
+  
 
   const approveWithdrawal: any = async (id: any) => {
     await adminApproveUserWithdrawal(id);
