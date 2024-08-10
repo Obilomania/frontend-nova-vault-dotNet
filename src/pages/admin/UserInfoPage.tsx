@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import MainLayout from "../../components/layout/MainLayout";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllApplicationUser } from "../../redux/adminRedux/adminService";
-import { useDispatch, useSelector } from "react-redux";
-import { all_applicationUser } from "../../redux/adminRedux/adminSlice";
+import {  useSelector } from "react-redux";
 
 const UserInfoPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const [allUsers, setAllUsers] = useState([]);
-  useEffect(() => {
-    getAllApplicationUser().then((data) => {
-      setAllUsers(data?.$values);
-    });
-  }, []);
-  if (allUsers) {
-    dispatch(all_applicationUser(allUsers));
-  }
+  const allTheAppUser = useSelector((state:any) => state.persistedReducer.admin.allAppUsers)
+
 //   const users = useSelector((state: any) => state.admin.allAppUsers);
-    const userInfo:any = allUsers?.find((u: any) => u.id === id);
+  const userInfo: any = allTheAppUser?.find((u: any) => u.id === id);
 
   return (
     <MainLayout>
