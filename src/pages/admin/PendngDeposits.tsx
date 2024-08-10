@@ -10,10 +10,7 @@ const PendngDeposits = () => {
      return <h6 className="text-center">NO DEPOSITS AT ALL</h6>;
    }
 
-  let pendingDeposits = adminInfo.allAppDeposits.filter(
-    (dep: { isProcessing: Boolean }) => !dep.isProcessing
-  );
-
+  let pendingDeposits = adminInfo.allPendingAppDeposits;
   return (
     <PendingDepo>
       <h1 className="heading">Pending Deposits</h1>

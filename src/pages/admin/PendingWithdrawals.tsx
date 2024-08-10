@@ -9,10 +9,7 @@ const PendingWithdrawals = () => {
    if (adminInfo.allWithdrawals === null) {
      return <h6 className="text-center">NO WITHDRAWALS AT ALL</h6>;
    }
-  let pendingWithdrawals = adminInfo.allWithdrawals.filter(
-    (dep: { isProcessing: Boolean }) => !dep.isProcessing
-  );
-
+  let pendingWithdrawals = adminInfo.allPendingWithdrawals;
   
 
   const approveWithdrawal: any = async (id: any) => {

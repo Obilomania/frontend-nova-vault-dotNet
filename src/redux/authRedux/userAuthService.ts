@@ -6,8 +6,8 @@ export const validateEmail = async (email: string) => {
     return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 }
 
-// export const base_Url = "https://nova-vault-ventures-api.azurewebsites.net/api/"
-export const base_Url = "https://localhost:44338/api/"
+export const base_Url = "https://nova-vault-ventures-api.azurewebsites.net/api/"
+// export const base_Url = "https://localhost:44338/api/"
 
 // *****************REGISTRATION SERVICE*********************
 

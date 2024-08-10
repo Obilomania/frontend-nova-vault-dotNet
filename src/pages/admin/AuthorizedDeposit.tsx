@@ -9,9 +9,7 @@ const AuthorizedDeposit = () => {
       <h6 className="text-center">NO DEPOSITS AT ALL</h6>
     )
   }
-    let pendingDeposits = adminInfo.allAppDeposits?.filter(
-      (dep: { isProcessing: Boolean }) => dep.isProcessing
-    );
+  let approvedDeposit = adminInfo.allApprovedAppDeposits;
 
    
   return (
@@ -27,7 +25,7 @@ const AuthorizedDeposit = () => {
           </tr>
         </thead>
         <tbody className="tbody">
-          {pendingDeposits.length <= 0 ? (
+          {approvedDeposit?.length <= 0 ? (
             <tr key="">
               <td></td>
               <td></td>
@@ -37,7 +35,7 @@ const AuthorizedDeposit = () => {
             </tr>
           ) : (
             <>
-              {pendingDeposits.map((pend: any, index: any) => (
+              {approvedDeposit.map((pend: any, index: any) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>

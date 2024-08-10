@@ -4,13 +4,9 @@ import { useSelector } from "react-redux";
 
 const AuthorizedWithdrawals = () => {
   const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
-  if (adminInfo.allWithdrawals === null) {
-    return <h6 className="text-center">NO WITHDRAWALS AT ALL</h6>;
-  }
-  let pendingWithdrawals = adminInfo.allWithdrawals.filter(
-    (dep: { isProcessing: Boolean }) => dep.isProcessing
-  );
 
+  let pendingWithdrawals = adminInfo.allApprovedWithdrawals;
+  
   return (
     <PendingWithdraw>
       <h1 className="heading">Approved Withdrawals</h1>

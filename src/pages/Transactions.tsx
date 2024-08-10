@@ -59,7 +59,7 @@ const Transactions = () => {
                 <p className="status">WALLET</p>
               </div>
               {/* ------------------------------------- */}
-              {allWithdrawals?.length > 0 || !allWithdrawals ? (
+              {allWithdrawals?.length > 0 || allWithdrawals ? (
                 <>
                   {allWithdrawals?.map((withdraw: any) => (
                     <>
@@ -103,7 +103,7 @@ const Transactions = () => {
                 <p className="status">STATUS</p>
               </div>
               {/* ------------------------------------- */}
-              {allAppDepositss.length > 0 || !allAppDepositss? (
+              {allAppDepositss?.length > 0 || allAppDepositss? (
                 <>
                   {allAppDepositss?.map((depo: any) => (
                     <>
