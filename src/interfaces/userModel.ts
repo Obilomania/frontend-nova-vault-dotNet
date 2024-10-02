@@ -5,4 +5,5 @@ export default interface userModel {
     role: string;
     isBlocked: boolean;
     btcWallet: string;
+    userBonus: any;
 }

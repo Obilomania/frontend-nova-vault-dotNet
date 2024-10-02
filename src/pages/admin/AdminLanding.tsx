@@ -8,10 +8,24 @@ import useAdminGetHooks from "../../customHooks/useAdminGetHooks";
 import PendingWithdrawals from "./PendingWithdrawals";
 import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
 import AllAppUser from "./AllAppUser";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const AdminLanding = () => {
   useAdminGetHooks();
   const navigate = useNavigate();
+  useEffect(() => {
+    const bounceSmallScreen = () => {
+      const screenSize = window.innerWidth;
+      const computerScreenSize = 1920;
+      if (screenSize < computerScreenSize) {
+        toast.error("Log into a PC to access this page");
+        navigate("/");
+      }
+      return;
+    };
+    bounceSmallScreen();
+  }, [navigate]);
 
   return (
     <MainLayout>

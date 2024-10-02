@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AuthorizedDeposit = () => {
+  const navigate = useNavigate();
   const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
   if (adminInfo.allAppDeposits === null) {
-    return (
-      <h6 className="text-center">NO DEPOSITS AT ALL</h6>
-    )
+    return <h6 className="text-center">NO DEPOSITS AT ALL</h6>;
   }
   let approvedDeposit = adminInfo.allApprovedAppDeposits;
 
-   
   return (
     <PendingDepo>
       <h1 className="heading">Approved Deposits</h1>
@@ -40,7 +39,17 @@ const AuthorizedDeposit = () => {
                   <td>{index + 1}</td>
                   <td>{pend?.appUser?.email}</td>
                   <td>$ {pend?.amount}</td>
-                  <td className="text-success"><b>Approved</b></td>
+                  <td className="text-success">
+                    <b>Approved</b>
+                  </td>
+                  <td className="text-success">
+                    <button
+                      className="approve btn btn-success"
+                      onClick={() => navigate(`/topupdeposit/${pend?.id}`)}
+                    >
+                      Top Up
+                    </button>
+                  </td>
                 </tr>
               ))}
             </>

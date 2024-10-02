@@ -7,70 +7,70 @@ const useDashboard = () => {
     const userInfo = useSelector((state: any) => state.persistedReducer.auth)
     const id = userInfo.id;
 
-    function GetUserAccountBalance() {
-        const { data, isLoading } = useGetTheUserAccountBalanceQuery(id)
-        if (!isLoading) {
-            dispatch(user_account_balance(data?.result))
-        }
-    }
-    function GetUserTotalDepositBalance() {
-        const { data, isLoading } = useGetTheUserTotalDepositBalanceQuery(id)
-        if (!isLoading) {
-            dispatch(user_deposit_total(data))
-        }
-    }
-    function GetUserTotalDPendingepositBalance() {
-        const { data, isLoading } = useGetTheUserTotalPendingDepositBalanceQuery(id)
-        if (!isLoading) {
-            dispatch(user_pendingDeposit_total(data))
-        }
-    }
-    function GetUserLastDeposit() {
-        const { data, isLoading } = useGetTheUserLastDepositQuery(id)
-        if (!isLoading) {
-            dispatch(user_last_deposit(data))
-        }
-    }
-    function GetUserWithdrawalTotal() {
-        const { data, isLoading } = useGetTheUserWithdrawalTotalQuery(id)
-        if (!isLoading) {
-            dispatch(user_withdrawal_total(data))
-        }
-    }
-    function GetUserPendingWithdrawalTotal() {
-        const { data, isLoading } = useGetTheUserPendingWithdrawalTotalQuery(id)
-        if (!isLoading) {
-            dispatch(user_pending_withdrawal_total(data))
-        }
-    }
-    function GetUserLastWithdrawal() {
-        const { data, isLoading } = useGetTheUserLastWithdrawalQuery(id)
-        if (!isLoading) {
-            dispatch(user_last_withdrawal(data))
-        }
-    }
-    function GetAllUserDeposits() {
-        const { data, isLoading } = useGetAlltheUserDepositQuery(id)
-        if (!isLoading) {
-            dispatch(all_the_user_deposits(data?.$values))
-        }
-    }
-    function GetAllUserWithdrawals() {
-        const { data, isLoading } = useGetAllTheUserWithdrawalQuery(id)
-        if (!isLoading) {
-            dispatch(all_user_withdrawals(data?.$values))
-        }
-    }
+    // function GetUserAccountBalance() {
+    //     const { data, isLoading } = useGetTheUserAccountBalanceQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_account_balance(data?.result))
+    //     }
+    // // }
+    // function GetUserTotalDepositBalance() {
+    //     const { data, isLoading } = useGetTheUserTotalDepositBalanceQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_deposit_total(data))
+    //     }
+    // }
+    // function GetUserTotalDPendingepositBalance() {
+    //     const { data, isLoading } = useGetTheUserTotalPendingDepositBalanceQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_pendingDeposit_total(data))
+    //     }
+    // }
+    // function GetUserLastDeposit() {
+    //     const { data, isLoading } = useGetTheUserLastDepositQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_last_deposit(data))
+    //     }
+    // }
+    // function GetUserWithdrawalTotal() {
+    //     const { data, isLoading } = useGetTheUserWithdrawalTotalQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_withdrawal_total(data))
+    //     }
+    // }
+    // function GetUserPendingWithdrawalTotal() {
+    //     const { data, isLoading } = useGetTheUserPendingWithdrawalTotalQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_pending_withdrawal_total(data))
+    //     }
+    // }
+    // function GetUserLastWithdrawal() {
+    //     const { data, isLoading } = useGetTheUserLastWithdrawalQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(user_last_withdrawal(data))
+    //     }
+    // }
+    // function GetAllUserDeposits() {
+    //     const { data, isLoading } = useGetAlltheUserDepositQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(all_the_user_deposits(data?.$values))
+    //     }
+    // }
+    // function GetAllUserWithdrawals() {
+    //     const { data, isLoading } = useGetAllTheUserWithdrawalQuery(id)
+    //     if (!isLoading) {
+    //         dispatch(all_user_withdrawals(data?.$values))
+    //     }
+    // }
     
-    GetUserAccountBalance()
-    GetUserTotalDepositBalance()
-    GetUserTotalDPendingepositBalance();
-    GetUserLastDeposit()
-    GetUserWithdrawalTotal();
-    GetUserPendingWithdrawalTotal();
-    GetUserLastWithdrawal()
-    GetAllUserDeposits();
-    GetAllUserWithdrawals();
+    // GetUserAccountBalance()
+    // GetUserTotalDepositBalance()
+    // GetUserTotalDPendingepositBalance();
+    // GetUserLastDeposit()
+    // GetUserWithdrawalTotal();
+    // GetUserPendingWithdrawalTotal();
+    // GetUserLastWithdrawal()
+    // GetAllUserDeposits();
+    // GetAllUserWithdrawals();
  
 }
 

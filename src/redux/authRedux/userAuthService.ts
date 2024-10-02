@@ -6,8 +6,8 @@ export const validateEmail = async (email: string) => {
     return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 }
 
-export const base_Url = "https://nova-vault-ventures-api.azurewebsites.net/api/"
-// export const base_Url = "https://localhost:44338/api/"
+// export const base_Url = "https://nova-vault-ventures-api.azurewebsites.net/api/"
+export const base_Url = "https://localhost:44338/api/"
 
 // *****************REGISTRATION SERVICE*********************
 
@@ -22,6 +22,17 @@ export const registerNewUser = async (userData: registrationData) => {
         return toast.error(error.response.data.errorMessages.$values[0])
     }
 }
+// export const userProfile = async (userData: any) => {
+//     try {
+//         const response = await axios.post(`${base_Url}auth/register`, userData)
+//         if (response.status === 200) {
+//             toast.success("Registration is successful")
+//         }
+//         return response.data.result
+//     } catch (error: any) {
+//         return toast.error(error.response.data.errorMessages.$values[0])
+//     }
+// }
 
 // *****************RECOVER PASSWORD SERVICE*********************
 interface recoverPassword {
@@ -121,3 +132,15 @@ export const makeADeposit = async (Body: any) => {
 }
 
 
+
+export const addToAccountBalance = async ({UserBonus, id} :any) => {
+    try {
+        const response = await axios.put(`${base_Url}transactions/adminedituserbalance/${id}`, UserBonus)
+        if (response.status === 200) {
+            toast.success("Successful")
+        }
+        return response.data.result
+    } catch (error: any) {
+        return toast.error(error.response.data.errorMessages?.$values[0])
+    }
+}

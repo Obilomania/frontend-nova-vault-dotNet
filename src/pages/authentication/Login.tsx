@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { base_Url } from "../../redux/authRedux/userAuthService";
 import userModel from "../../interfaces/userModel";
 import {
+  current_user_account_bonus,
   current_user_btcWallet,
   current_user_email,
   current_user_fullname,
@@ -53,8 +54,15 @@ const Login = () => {
       );
       if (response?.data?.result) {
         const token = response?.data?.result?.token;
-        const { fullName, id, email, role, isBlocked, btcWallet }: userModel =
-          jwtDecode(token);
+        const {
+          fullName,
+          id,
+          email,
+          role,
+          isBlocked,
+          btcWallet,
+          userBonus,
+        }: userModel = jwtDecode(token);
         if (isBlocked === true) {
           setIsLoading(false);
           return toast.error("User Blocked, Please contact Admin");
@@ -64,6 +72,7 @@ const Login = () => {
         dispatch(current_user_ID(id));
         dispatch(current_user_email(email));
         dispatch(current_user_btcWallet(btcWallet));
+        dispatch(current_user_account_bonus(userBonus));
         dispatch(current_user_login_status(true));
         dispatch(user_role(role));
         navigate("/dashboard");

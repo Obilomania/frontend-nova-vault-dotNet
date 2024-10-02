@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const dashboardApi = createApi({
     reducerPath: "dashboardApi",
     baseQuery: fetchBaseQuery({
-        // baseUrl: "https://localhost:44338/api/"
-        baseUrl: "https://nova-vault-ventures-api.azurewebsites.net/api/"
+        baseUrl: "https://localhost:44338/api/"
+        // baseUrl: "https://nova-vault-ventures-api.azurewebsites.net/api/"
 
     }),
     tagTypes: ["DashboardItems"],

@@ -22,6 +22,7 @@ import TopUp from "./pages/TopUp";
 import ApproveDeposit from "./pages/admin/ApproveDeposit";
 import PromoCodes from "./pages/admin/PromoCodes";
 import Transactions from "./pages/Transactions";
+import TopUpDeposit from "./pages/admin/TopUpDeposit";
 
 export const ScrollToTop = () => {
   const location = useLocation();
@@ -64,6 +65,7 @@ function App() {
         <Route path="/getParticularUser/:id" element={<UserInfoPage />} />
         <Route path="/editDeposit/:id" element={<ApproveDeposit />} />
         <Route path="/promoCodes" element={<PromoCodes />} />
+        <Route path="/topupdeposit/:id" element={<TopUpDeposit />} />
       </Routes>
     </BrowserRouter>
   );

@@ -9,7 +9,8 @@ const initialState = {
     isBlocked :"",
     btcWallet :"",
     isLoggedin: false,
-    userRole: ""
+    userRole: "",
+    userBalance:0
 }
 
 const userAuthSlice = createSlice({
@@ -31,6 +32,9 @@ const userAuthSlice = createSlice({
         current_user_login_status: (state, action) => {
             state.isLoggedin = action.payload;
         },
+        current_user_account_bonus: (state, action) => {
+          state.userBalance = action.payload  
+        },
         user_role: (state, action) => {
             state.userRole = action.payload;
             localStorage.setItem("userRole", action.payload)
@@ -38,5 +42,5 @@ const userAuthSlice = createSlice({
     }
 });
 
-export const { current_user_fullname, current_user_ID, current_user_email,current_user_btcWallet, current_user_login_status, user_role } = userAuthSlice.actions
+export const { current_user_fullname, current_user_ID, current_user_email,current_user_btcWallet, current_user_login_status, user_role, current_user_account_bonus } = userAuthSlice.actions
 export const userAuthReducer = userAuthSlice.reducer;
