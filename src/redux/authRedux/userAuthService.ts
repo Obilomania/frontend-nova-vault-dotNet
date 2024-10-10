@@ -45,7 +45,6 @@ export const recoverUserPassword = async (userData: recoverPassword) => {
         if (response.status === 200) {
             toast.success(response.data.result)
         }
-        console.log(response)
         return response
     } catch (error: any) {
         return toast.error(error?.response?.data?.errorMessages?.$values[0])

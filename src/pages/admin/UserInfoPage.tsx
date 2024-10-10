@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../components/layout/MainLayout";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,19 +6,33 @@ import { useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import { addToAccountBalance } from "../../redux/authRedux/userAuthService";
+import { getAllApplicationUser } from "../../redux/adminRedux/adminService";
 
 const UserInfoPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [users, setUsers] = useState([])
   const allTheAppUser = useSelector(
     (state: any) => state.persistedReducer.admin.allAppUsers
   );
+
+  useEffect(() => {
+    getAllApplicationUser()
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  console.log(users)
   const totalBalance = useSelector(
     (state: any) => state.persistedReducer.transaction.userAccountBalance
   );
 
   //   const users = useSelector((state: any) => state.admin.allAppUsers);
-  const userInfo: any = allTheAppUser?.find((u: any) => u.id === id);
+  const userInfo: any = users?.find((u: any) => u.id === id);
   const [addToBalance, setAddToBalance] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const toggleRevealAdd = () => setAddToBalance(!addToBalance)
@@ -78,9 +92,9 @@ const UserInfoPage = () => {
               <p className="confirm-writeups">
                 <span>User Account Balance :</span> $ {totalBalance.toFixed(2)}
               </p>
-              <div className="confirm-writeups">
+              {/* <div className="confirm-writeups">
                 <span>Exposed Password :</span> {userInfo?.openPassword}
-              </div>{" "}
+              </div>{" "} */}
               <br />
               <div className="call-to-action">
                 {/* <button
@@ -91,9 +105,9 @@ const UserInfoPage = () => {
                 >
                   EDIT WALLET
                 </button> */}
-                <button className="btn-danger btn" onClick={toggleRevealAdd}>
+                {/* <button className="btn-danger btn" onClick={toggleRevealAdd}>
                   ADD TO USER BALANCE
-                </button>
+                </button> */}
                 <button
                   className="btn-danger btn"
                   onClick={() => navigate("/admin-landing")}

@@ -7,8 +7,7 @@ import { base_Url } from "../authRedux/userAuthService";
 export const getAllApplicationUser = async () => {
     try {
         const appUsers = await axios.get(`${base_Url}auth/get-all-app-users`);
-       
-        return appUsers?.data?.$values;
+        return appUsers?.data;
     } catch (error: any) {
         return error?.response?.data?.message
 

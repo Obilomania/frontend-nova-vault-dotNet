@@ -15,7 +15,7 @@ const TopUpWithBitcoin = ({ btcPop, revealBtcPop }: any) => {
 
   const [depositTopUp, setDepositTopUp] = useState({
     amount: "",
-    transactionID: "",
+    transactionID: "BTC Top Up",
     plan: theLastDeposit?.plan,
   });
 
@@ -26,7 +26,7 @@ const TopUpWithBitcoin = ({ btcPop, revealBtcPop }: any) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!depositTopUp.amount || !depositTopUp.transactionID) {
+    if (!depositTopUp.amount) {
       return toast.error("All Fields are required");
     }
     const apiKey: any = "0BMBZ1V-JTF47DV-QVCSR64-7ZJFXVQ";
@@ -61,7 +61,7 @@ const TopUpWithBitcoin = ({ btcPop, revealBtcPop }: any) => {
     await makeADeposit({
       AppUserId: userInfo.id,
       amount: depositTopUp.amount,
-      transactionID: depositTopUp.transactionID,
+      transactionID: userInfo.email,
       plan: theLastDeposit?.plan,
     });
   };
