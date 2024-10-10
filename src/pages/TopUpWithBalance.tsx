@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { makeADeposit } from "../redux/authRedux/userAuthService";
@@ -14,7 +14,6 @@ const TopUpWithBalance = ({
   balancePop,
 }: TopUpWithBalanceProps) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const transactionInfo = useSelector(
     (state: any) => state.persistedReducer.transaction

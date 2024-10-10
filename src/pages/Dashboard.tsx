@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -48,7 +48,7 @@ const Dashboard = () => {
   const { data: userLastWithdrawal } = useGetTheUserLastWithdrawalQuery(id);
   const { data: userDeposits } = useGetAlltheUserDepositQuery(id);
   const { data: userWithdrawals } = useGetAllTheUserWithdrawalQuery(id);
-
+  
   useEffect(() => {
     if (!isLoading) {
       dispatch(user_account_balance(userTotalBalance?.result));
@@ -70,23 +70,12 @@ const Dashboard = () => {
     (state: any) => state.persistedReducer.transaction.userAccountBalance
   );
 
-  let [cantWithdraw, setCantWithdraw] = useState(false);
-
+  // let [cantWithdraw, setCantWithdraw] = useState(false);
   // //Top Up Balance Settings ===========================================================
-  let currentPlan = transactions.userLastDeposit?.plan;
   let accountBalance = transactions.userAccountBalance;
 
-  useEffect(() => {
-    if (currentPlan === "Gold" || accountBalance <= 7000) {
-      setCantWithdraw(true);
-    } else if (currentPlan === "Silver" || accountBalance <= 3500) {
-      setCantWithdraw(true);
-    } else if (currentPlan === "Plantinum" || accountBalance <= 7000) {
-      setCantWithdraw(true);
-    } else if (currentPlan === "Diamond" || accountBalance >= 2500) {
-      setCantWithdraw(true);
-    }
-  }, [accountBalance, currentPlan]);
+
+
 
   return (
     <MainLayout>
@@ -106,7 +95,7 @@ const Dashboard = () => {
                 </div>
                 <hr />
                 <div className="call-to-action">
-                  {currentPlan === "Bronze" || !currentPlan ? (
+                  {userLastDeposit?.length >= 2 ? (
                     <Link to={"/my-new-deposit"}>DEPOSIT</Link>
                   ) : (
                     <Link to={"/topUp"}>TOP-UP</Link>
@@ -181,10 +170,7 @@ const Dashboard = () => {
                   <FaBitcoin />
                 </div>
                 <div className="inside-dash">
-                  <span>
-                    ${" "}
-                    {transactions.userWithdrawalTotal}
-                  </span>
+                  <span>$ {transactions.userWithdrawalTotal}</span>
                   <p className="dark">TOTAL WITHDRAWAL</p>
                 </div>
               </div>

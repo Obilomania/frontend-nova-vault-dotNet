@@ -1,17 +1,14 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from "react-redux";
-import { all_applicationUser } from "../../redux/adminRedux/adminSlice";
 import { useNavigate } from "react-router-dom";
 import {
   adminBlockUser,
   adminUnBlockUser,
 } from "../../redux/adminRedux/adminService";
 import { useState } from "react";
+import MiniLoader from "../../components/MiniLoader";
 
-const AllAppUser = () => {
-  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
-
+const AllAppUser = ({ allAppUsers }: any) => {
   const navigate = useNavigate();
   const [blockThekUser] = useState<Boolean>(true);
   const [unBlockTheUser] = useState<Boolean>(false);
@@ -29,7 +26,13 @@ const AllAppUser = () => {
   return (
     <AllUsers>
       <h1 className="heading">All App Users</h1>
-      <Table striped size="sm" className="table">
+      {!allAppUsers ? (
+        <div className="loader">
+          <MiniLoader/>
+      </div>
+      ) : (
+        
+         <Table striped size="sm" className="table">
         <thead>
           <tr>
             <th>No.</th>
@@ -40,7 +43,7 @@ const AllAppUser = () => {
         </thead>
         <tbody className="tbody">
           <>
-            {adminInfo?.allAppUsers?.map((user: any, index: any) => (
+            {allAppUsers?.map((user: any, index: any) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{user?.fullname}</td>
@@ -73,6 +76,7 @@ const AllAppUser = () => {
           </>
         </tbody>
       </Table>
+     )}
     </AllUsers>
   );
 };

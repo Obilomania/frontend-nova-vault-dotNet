@@ -59,7 +59,7 @@ const Layout = styled.div`
   z-index: 200;
   .children {
     width: 100%;
-    min-height: 83vh;
+    min-height: 80vh;
     height: fit-content;
   }
 `;

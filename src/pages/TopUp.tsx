@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import MainLayout from '../components/layout/MainLayout'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import TopUpWithBalance from './TopUpWithBalance';
 import TopUpWithBitcoin from './TopUpWithBitcoin';
 import withAuth from '../HOC/withAuth';
+import { useGetAlltheUserDepositQuery } from '../redux/APIs/dashboardApi';
+import Loader from '../components/Loader';
 
 const TopUp = () => {
     const [balancePop, setBalancePop] = useState(false);
     const revealBalancePop = () => setBalancePop(!balancePop);
     const [btcPop, setBtcPop] = useState(false);
-    const revealBtcPop = () => setBtcPop(!btcPop);
+  const revealBtcPop = () => setBtcPop(!btcPop);
+  const userInfo: any = useSelector((state: any) => state.persistedReducer.auth);
+  const { data } = useGetAlltheUserDepositQuery(userInfo?.id);
+  console.log(data?.$values)
     
     const transactionInfo = useSelector(
       (state:any) => state.persistedReducer.transaction
@@ -46,6 +51,7 @@ const TopUp = () => {
     const formattedDateString = formatDateString(inputDateString);
   return (
     <MainLayout>
+      {!data?.$values && <Loader />}
       <Toppings>
         <div className="dashboard-content">
           <div className="top">
@@ -66,7 +72,7 @@ const TopUp = () => {
               Top Up Due Date : <span>{transactionInfo?.topUpTime}</span>
             </h5>
             <div className="top-up-btns">
-              {numberOfDeposits?.length > 2 ? (
+              {data?.$values > 2 ? (
                 <button onClick={revealBalancePop}>Top Up With Balance</button>
               ) : (
                 <button onClick={revealBtcPop}>Top Up With Bitcoin</button>

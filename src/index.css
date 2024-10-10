@@ -46,6 +46,11 @@ html {
     rgba(173, 137, 134, 1) 100%
   );
 }
+.mini-loader{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
 .btn-secondary:hover {
   color: white;
   border-radius: 2rem;

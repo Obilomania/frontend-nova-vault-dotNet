@@ -29,6 +29,7 @@ const Login = () => {
     password: "",
   });
 
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInput((prevData) => ({
@@ -40,7 +41,10 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+    if (!userInput.email || !userInput.password) {
+      setIsLoading(false);
+      return toast.error("Please fill all fields");
+    }
     try {
       const response = await axios.post(
         `${base_Url}auth/login`,
@@ -52,6 +56,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response?.data?.result);
       if (response?.data?.result) {
         const token = response?.data?.result?.token;
         const {
@@ -80,8 +85,10 @@ const Login = () => {
         return toast.success("Login Successful");
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.errorMessages?.$values[0]);
-      return setIsLoading(false);
+      console.log(error?.response?.data?.errorMessages);
+      toast.error(error?.response?.data?.errorMessages[0]);
+      setIsLoading(false);
+      return;
     }
   };
 

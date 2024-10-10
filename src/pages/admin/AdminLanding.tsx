@@ -10,6 +10,13 @@ import AuthorizedWithdrawals from "./AuthorizedWithdrawals";
 import AllAppUser from "./AllAppUser";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import {
+  useGetallApprovedAppDepositssQuery,
+  useGetAllApprovedWithdrawalsQuery,
+  useGetAllAppUsersQuery,
+  useGetallPendingAppDepositssQuery,
+  useGetAllPendingWithdrawalsQuery,
+} from "../../redux/APIs/adminApi";
 
 const AdminLanding = () => {
   useAdminGetHooks();
@@ -26,6 +33,12 @@ const AdminLanding = () => {
     };
     bounceSmallScreen();
   }, [navigate]);
+  const { data: allAppUsers } = useGetAllAppUsersQuery(null);
+  const { data: allPendingDeposits } = useGetallPendingAppDepositssQuery(null);
+  const { data: allApprovedDeposits } = useGetallApprovedAppDepositssQuery(null);
+  const { data: allPendingWithdrawals } =
+  useGetAllPendingWithdrawalsQuery(null);
+  const { data: allApprovedWithdrawal } = useGetAllApprovedWithdrawalsQuery (null);
 
   return (
     <MainLayout>
@@ -40,21 +53,21 @@ const AdminLanding = () => {
         </div>{" "}
         <hr />
         <div className="admin-container">
-          <PendngDeposits />
+          <PendngDeposits allPendingDeposits={allPendingDeposits} />
         </div>
         <div className="admin-container">
-          <AuthorizedDeposit />
-        </div>
-        <hr />
-        <div className="admin-container">
-          <PendingWithdrawals/>
-        </div>
-        <div className="admin-container">
-          <AuthorizedWithdrawals />
+          <AuthorizedDeposit allApprovedDeposits={allApprovedDeposits} />
         </div>
         <hr />
         <div className="admin-container">
-          <AllAppUser />
+          <PendingWithdrawals allPendingWithdrawals={allPendingWithdrawals} />
+        </div>
+        <div className="admin-container">
+          <AuthorizedWithdrawals allApprovedWithdrawal={allApprovedWithdrawal} />
+        </div>
+        <hr />
+        <div className="admin-container">
+          <AllAppUser allAppUsers={allAppUsers} />
         </div>
       </AdminLand>
     </MainLayout>

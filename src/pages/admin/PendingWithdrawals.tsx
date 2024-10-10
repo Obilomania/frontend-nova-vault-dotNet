@@ -1,17 +1,9 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import {  useSelector } from "react-redux";
 import { adminApproveUserWithdrawal } from "../../redux/adminRedux/adminService";
+import MiniLoader from "../../components/MiniLoader";
 
-const PendingWithdrawals = () => {
-  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
-  
-   if (adminInfo.allWithdrawals === null) {
-     return <h6 className="text-center">NO WITHDRAWALS AT ALL</h6>;
-   }
-  let pendingWithdrawals = adminInfo.allPendingWithdrawals;
-  
-
+const PendingWithdrawals = (allPendingWithdrawals:any) => {
   const approveWithdrawal: any = async (id: any) => {
     await adminApproveUserWithdrawal(id);
     window.location.reload();
@@ -20,51 +12,59 @@ const PendingWithdrawals = () => {
   return (
     <PendingWithdraw>
       <h1 className="heading">Pending Withdrawals</h1>
-      <Table striped size="sm" className="table">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Email</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className="tbody">
-          {pendingWithdrawals <= 0 ? (
-            <tr key="">
-              <td></td>
-              <td></td>
-              <td className="no-result"> No Pending Withdrawals</td>
-              <td></td>
-              <td></td>
+      {!allPendingWithdrawals?.allPendingWithdrawals ? (
+        <div className="mini-loader">
+          <MiniLoader />
+        </div>
+      ) : (
+        <Table striped size="sm" className="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th></th>
             </tr>
-          ) : (
-            <>
-              {pendingWithdrawals?.map((pend: any, index: any) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{pend?.appUser?.email}</td>
-                  <td>$ {pend?.amount}</td>
-                  <td className="text-danger">
-                    <b>Processing</b>
-                  </td>
-                  
-                  <td className="call-to-action">
-                    <button
-                      className="approve btn btn-success"
-                      onClick={() => approveWithdrawal(pend?.id)}
-                    >
-                      Approve
-                    </button>
-                    {/* <button className="delete btn btn-danger">Delete</button> */}
-                  </td>
-                </tr>
-              ))}
-            </>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody className="tbody">
+            {allPendingWithdrawals?.allPendingWithdrawals <= 0 ? (
+              <tr key="">
+                <td></td>
+                <td></td>
+                <td className="no-result"> No Pending Withdrawals</td>
+                <td></td>
+                <td></td>
+              </tr>
+            ) : (
+              <>
+                {allPendingWithdrawals?.allPendingWithdrawals?.map(
+                  (pend: any, index: any) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{pend?.appUser?.email}</td>
+                      <td>$ {pend?.amount}</td>
+                      <td className="text-danger">
+                        <b>Processing</b>
+                      </td>
+
+                      <td className="call-to-action">
+                        <button
+                          className="approve btn btn-success"
+                          onClick={() => approveWithdrawal(pend?.id)}
+                        >
+                          Approve
+                        </button>
+                        {/* <button className="delete btn btn-danger">Delete</button> */}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </>
+            )}
+          </tbody>
+        </Table>
+      )}
     </PendingWithdraw>
   );
 };

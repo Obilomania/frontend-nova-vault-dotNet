@@ -1,101 +1,105 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Accordion from "react-bootstrap/Accordion";
-import { Link, useNavigate } from "react-router-dom";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import MainLayout from "../components/layout/MainLayout";
-import Loader from "../components/Loader";
 import Time from "../components/Time";
-import { makeADeposit } from "../redux/authRedux/userAuthService";
 import withAuth from "../HOC/withAuth";
+import { toast } from "react-toastify";
+import { makeADeposit } from "../redux/authRedux/userAuthService";
 
 const Deposit = () => {
-  const [iAmount, setIAmount] = useState<any>("");
-  // const [data, setData] = useState([]);
-  const [transaction, setTransaction] = useState("");
-  const [selectPlan, setSelectPlan] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const transactionRedux = useSelector(
     (state: any) => state.persistedReducer.transaction
   );
   const userInfo = useSelector((state: any) => state.persistedReducer.auth);
+  const [price_amount, setPrice_Amount] = useState<any>(0);
+  const [order_Description, setOrder_Description] = useState("");
+  const [order_id] = useState(userInfo?.id + Date.now());
+
   let theTotalDeposit = transactionRedux?.userDepositTotal;
-  const copyClicked = () => {
-    toast.success("Wallet Copied to Clipboard");
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    // Use a regular expression to remove non-numeric characters
-    const numericValue = value.replace(/[^0-9]/g, "");
-    setIAmount(numericValue);
-  };
-  const handleTransaction = (e: any) => {
-    setTransaction(e.target.value);
-  };
-
-  const handleSelectChange = (e: any) => {
-    setSelectPlan(e.target.value);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectPlan === "") {
+    if (order_Description === "") {
       return toast.error("Please Select a valid Plan");
     }
-    if (!iAmount) {
+    if (!price_amount) {
       return toast.error("Please enter a valid amount");
     }
-    if (!transaction) {
-      return toast.error("Please Blockchain transaction ID");
-    }
-    if (iAmount < 50) {
+    if (price_amount < 50) {
       return toast.error("Cant invest less than $50");
     }
     if (
-      (selectPlan === "Bronze" && iAmount < 50) ||
-      (selectPlan === "Bronze" && iAmount > 300)
+      (order_Description === "Bronze" && price_amount < 50) ||
+      (order_Description === "Bronze" && price_amount > 300)
     ) {
       return toast.error("Plan doesnt align with Amount");
     }
     if (
-      (selectPlan === "Silver" && iAmount > 3500) ||
-      (selectPlan === "Silver" && iAmount < 300)
+      (order_Description === "Silver" && price_amount > 3500) ||
+      (order_Description === "Silver" && price_amount < 300)
     ) {
       return toast.error("Plan doesnt align with Amount");
     }
     if (
-      (selectPlan === "Gold" && iAmount > 7000) ||
-      (selectPlan === "Gold" && iAmount < 3500)
+      (order_Description === "Gold" && price_amount > 7000) ||
+      (order_Description === "Gold" && price_amount < 3500)
     ) {
       return toast.error("Plan doesnt align with Amount");
     }
     if (
-      (selectPlan === "Platinum" && iAmount > 25000) ||
-      (selectPlan === "Platinum" && iAmount < 7000)
+      (order_Description === "Platinum" && price_amount > 25000) ||
+      (order_Description === "Platinum" && price_amount < 7000)
     ) {
       return toast.error("Plan doesnt align with Amount");
     }
-    if (selectPlan === "Diamond" && iAmount < 25000) {
+    if (order_Description === "Diamond" && price_amount < 25000) {
       return toast.error("Plan doesnt align with Amount");
     }
-    setLoading(true);
-    await makeADeposit({
-      AppUserId: userInfo.id,
-      plan: selectPlan,
-      amount: iAmount,
-      transactionID: transaction,
-    });
-    navigate("/dashboard");
-    setLoading(false);
+   
+
+    const apiKey: any = "0BMBZ1V-JTF47DV-QVCSR64-7ZJFXVQ";
+    const paymentUrl = "https://api.nowpayments.io/v1/invoice";
+    const paymentData = {
+      price_amount: price_amount,
+      price_currency: "usd",
+      order_id: order_id,
+      order_description: order_Description,
+      ipn_callback_url: "https://nowpayments.io",
+      success_url: "http://localhost:3000/payment-successful",
+      cancel_url: "http://localhost:3000/payment-failed",
+    };
+    try {
+      const response = await fetch(paymentUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+        },
+        body: JSON.stringify(paymentData),
+      })
+      const data = await response.json();
+      if (data && data.invoice_url) {
+        window.location.href = data.invoice_url;
+      } else {
+        console.error("Failed to create payment", data)
+      }
+    } catch (error) {
+      console.error("Failed to create payment", error)
+      
+    }
+     await makeADeposit({
+       AppUserId: userInfo.id,
+       plan: order_Description,
+       amount: price_amount,
+       transactionID: order_id,
+     });
+ 
   };
   return (
     <MainLayout>
-      {loading && <Loader />}
       <MyDeposit>
         <div className="dashboard-content">
           <Time />
@@ -191,23 +195,16 @@ const Deposit = () => {
 
             <div className="right-dash dash">
               <h5 className="heading-deposit-form">Select a plan</h5>
-              <div className="btcWallet-address">
-                <p className="walletAddress text-center">
-                  bc1qpm63hne4x550ane3x632msnqtxdetegjlzg4ns
-                </p>
-                <CopyToClipboard text="bc1qpm63hne4x550ane3x632msnqtxdetegjlzg4ns">
-                  <button onClick={copyClicked}>COPY WALLET ADDRESS</button>
-                </CopyToClipboard>
-                <p className="text-danger">
-                  <b>BITCOIN ONLY </b>
-                </p>
-              </div>
+
               <form onSubmit={handleSubmit}>
                 <br />
                 <div className="plan-form">
                   <label>Select Investment Plan:</label>
 
-                  <select value={selectPlan} onChange={handleSelectChange}>
+                  <select
+                    value={order_Description}
+                    onChange={(e) => setOrder_Description(e.target.value)}
+                  >
                     <option value="">
                       ----- Choose The Investment Plan of your Choice -----
                     </option>
@@ -243,21 +240,11 @@ const Deposit = () => {
                     <span>(Numbers Only)</span> :
                   </label>
                   <input
-                    type="text"
-                    placeholder="$0.00"
-                    name="iAmount"
-                    value={iAmount}
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                </div>
-                <div className="plan-form">
-                  <label>Transaction ID :</label>
-                  <input
-                    type="text"
-                    placeholder="dsfsdjhkjdbsd78***"
-                    name="transaction"
-                    value={transaction}
-                    onChange={(e) => handleTransaction(e)}
+                    type="number"
+                    value={price_amount}
+                    onChange={(e) => setPrice_Amount(e.target.value)}
+                    placeholder="Amount in USD"
+                    required
                   />
                 </div>
 
@@ -380,6 +367,14 @@ const MyDeposit = styled.div`
     &:hover {
       background: black;
       color: white;
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: black;
     }
   }
   .go-back {

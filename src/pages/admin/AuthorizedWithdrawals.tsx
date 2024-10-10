@@ -1,60 +1,62 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import MiniLoader from "../../components/MiniLoader";
 
-const AuthorizedWithdrawals = () => {
-  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+const AuthorizedWithdrawals = (allApprovedWithdrawal: any) => {
+  let pendingWithdrawals = allApprovedWithdrawal.allApprovedWithdrawal;
 
-  let pendingWithdrawals = adminInfo.allApprovedWithdrawals;
-  
   return (
     <PendingWithdraw>
       <h1 className="heading">Approved Withdrawals</h1>
-      <Table striped size="sm" className="table">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Email</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className="tbody">
-          {pendingWithdrawals <= 0 ? (
-            <tr key="">
-              <td></td>
-              <td></td>
-              <td className="no-result"> No Approved Withdrawals</td>
-              <td></td>
-              <td></td>
+      {!allApprovedWithdrawal.allApprovedWithdrawal ? (
+        <MiniLoader />
+      ) : (
+        <Table striped size="sm" className="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th></th>
             </tr>
-          ) : (
-            <>
-              {pendingWithdrawals?.map((pend: any, index: any) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{pend?.appUser?.email}</td>
-                  <td>$ {pend?.amount}</td>
-                  <td className="text-success">
-                    <b>Approved</b>
-                  </td>
-                  <td></td>
+          </thead>
+          <tbody className="tbody">
+            {pendingWithdrawals <= 0 ? (
+              <tr key="">
+                <td></td>
+                <td></td>
+                <td className="no-result"> No Approved Withdrawals</td>
+                <td></td>
+                <td></td>
+              </tr>
+            ) : (
+              <>
+                {pendingWithdrawals?.map((pend: any, index: any) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{pend?.appUser?.email}</td>
+                    <td>$ {pend?.amount}</td>
+                    <td className="text-success">
+                      <b>Approved</b>
+                    </td>
+                    <td></td>
 
-                  {/* <td className="call-to-action"> */}
-                  {/* <button
+                    {/* <td className="call-to-action"> */}
+                    {/* <button
                       className="approve btn btn-success"
                     >
                       Approve
                     </button> */}
-                  {/* <button className="delete btn btn-danger">Delete</button> */}
-                  {/* </td> */}
-                </tr>
-              ))}
-            </>
-          )}
-        </tbody>
-      </Table>
+                    {/* <button className="delete btn btn-danger">Delete</button> */}
+                    {/* </td> */}
+                  </tr>
+                ))}
+              </>
+            )}
+          </tbody>
+        </Table> 
+      )}
     </PendingWithdraw>
   );
 };

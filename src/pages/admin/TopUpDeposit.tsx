@@ -8,7 +8,6 @@ import styled from "styled-components";
 const TopUpDeposit = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState("");
   const navigate = useNavigate();
   const [theEditFeatures, setTheEditFeatures] = useState({
     amount: "",

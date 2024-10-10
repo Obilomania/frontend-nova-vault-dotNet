@@ -1,63 +1,76 @@
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
+import MiniLoader from "../../components/MiniLoader";
+import { adminDeleteOneDeposit } from "../../redux/adminRedux/adminService";
 
-const PendngDeposits = () => {
-  const adminInfo = useSelector((state: any) => state.persistedReducer.admin);
+const PendngDeposits = (allPendingDeposits: any) => {
+  const deleteDeposit = async (id: any) => {
+    await adminDeleteOneDeposit(id)
+    window.location.reload();
+  }
   const navigate = useNavigate();
-   if (adminInfo.allAppDeposits === null) {
-     return <h6 className="text-center">NO DEPOSITS AT ALL</h6>;
-   }
-
-  let pendingDeposits = adminInfo.allPendingAppDeposits;
   return (
     <PendingDepo>
       <h1 className="heading">Pending Deposits</h1>
-      <Table striped size="sm" className="table">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Email</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className="tbody">
-          {pendingDeposits?.length <= 0 ? (
-            <tr key="">
-              <td></td>
-              <td></td>
-              <td className="no-result"> No Pending Withdrawals</td>
-              <td></td>
-              <td></td>
+      {!allPendingDeposits?.allPendingDeposits ? (
+        <MiniLoader />
+      ) : (
+        <Table striped size="sm" className="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Deposit Id</th>
+              <th>Status</th>
+              <th></th>
             </tr>
-          ) : (
-            <>
-              {pendingDeposits?.map((pend: any, index: any) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{pend?.appUser?.email}</td>
-                  <td>$ {pend?.amount}</td>
-                  <td className="text-danger">
-                    <b>Processing</b>
-                  </td>
-                  <td className="call-to-action">
-                    <button
-                      className="approve btn btn-success"
-                      onClick={() => navigate(`/editDeposit/${pend?.id}`)}
-                    >
-                      Approve
-                    </button>
-                    {/* <button className="delete btn btn-danger">Delete</button> */}
-                  </td>
-                </tr>
-              ))}
-            </>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+
+          <tbody className="tbody">
+            {allPendingDeposits?.allPendingDeposits?.length <= 0 ? (
+              <tr key="">
+                <td></td>
+                <td></td>
+                <td className="no-result"> No Pending Withdrawals</td>
+                <td></td>
+                <td></td>
+              </tr>
+            ) : (
+              <>
+                {allPendingDeposits?.allPendingDeposits?.map(
+                  (pend: any, index: any) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{pend?.appUser?.email}</td>
+                      <td>$ {pend?.amount}</td>
+                      <td> {pend?.transactionID}</td>
+                      <td className="text-danger">
+                        <b>Processing</b>
+                      </td>
+                      <td className="call-to-action">
+                        <button
+                          className="approve btn btn-success"
+                          onClick={() => navigate(`/editDeposit/${pend?.id}`)}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="delete btn btn-danger"
+                          onClick={() => deleteDeposit(pend?.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </>
+            )}
+          </tbody>
+        </Table>
+      )}
     </PendingDepo>
   );
 };

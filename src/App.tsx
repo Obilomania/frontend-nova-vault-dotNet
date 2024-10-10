@@ -23,6 +23,9 @@ import ApproveDeposit from "./pages/admin/ApproveDeposit";
 import PromoCodes from "./pages/admin/PromoCodes";
 import Transactions from "./pages/Transactions";
 import TopUpDeposit from "./pages/admin/TopUpDeposit";
+import PaymentForm from "./pages/payment/PaymentForm";
+import Success from "./pages/payment/Success";
+import Failed from "./pages/payment/Failed";
 
 export const ScrollToTop = () => {
   const location = useLocation();
@@ -59,6 +62,10 @@ function App() {
         <Route path="/my-new-deposit" element={<Deposit />} />
         <Route path="/topUp" element={<TopUp />} />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/make-payment" element={<PaymentForm />} />
+        <Route path="/payment-successful" element={<Success />} />
+        <Route path="/payment-failed" element={<Failed />} />
+
 
         {/* Admin Section */}
         <Route path="/admin-landing" element={<AdminLanding />} />
