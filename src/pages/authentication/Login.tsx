@@ -56,7 +56,6 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(response?.data?.result);
       if (response?.data?.result) {
         const token = response?.data?.result?.token;
         const {

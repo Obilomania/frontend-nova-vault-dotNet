@@ -95,7 +95,7 @@ const Dashboard = () => {
                 </div>
                 <hr />
                 <div className="call-to-action">
-                  {userLastDeposit?.length >= 2 ? (
+                  {userLastDeposit?.length <= 2 ? (
                     <Link to={"/my-new-deposit"}>DEPOSIT</Link>
                   ) : (
                     <Link to={"/topUp"}>TOP-UP</Link>
