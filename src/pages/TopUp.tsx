@@ -15,7 +15,6 @@ const TopUp = () => {
   const revealBtcPop = () => setBtcPop(!btcPop);
   const userInfo: any = useSelector((state: any) => state.persistedReducer.auth);
   const { data } = useGetAlltheUserDepositQuery(userInfo?.id);
-  console.log(data?.$values)
     
     const transactionInfo = useSelector(
       (state:any) => state.persistedReducer.transaction
@@ -48,10 +47,18 @@ const TopUp = () => {
     }
 
     const inputDateString = theLastDeposit?.createdOn;
-    const formattedDateString = formatDateString(inputDateString);
+  const formattedDateString = formatDateString(inputDateString);
+
+  
+  let dueDate = new Date(formattedDateString);
+  
+  dueDate.setTime(dueDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+  
+  // console.log(data.length);
+  
   return (
     <MainLayout>
-      {!data?.$values && <Loader />}
+      {!data && <Loader />}
       <Toppings>
         <div className="dashboard-content">
           <div className="top">
@@ -69,10 +76,10 @@ const TopUp = () => {
               First time of Deposit : <span>{formattedDateString}</span>
             </h5>
             <h5>
-              Top Up Due Date : <span>{transactionInfo?.topUpTime}</span>
+              Top Up Due Date : <span>{dueDate.toString()}</span>
             </h5>
             <div className="top-up-btns">
-              {data?.$values > 2 ? (
+              {data?.length <= 1 ? (
                 <button onClick={revealBalancePop}>Top Up With Balance</button>
               ) : (
                 <button onClick={revealBtcPop}>Top Up With Bitcoin</button>

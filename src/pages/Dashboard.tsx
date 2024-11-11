@@ -74,7 +74,6 @@ const Dashboard = () => {
   // //Top Up Balance Settings ===========================================================
   let accountBalance = transactions.userAccountBalance;
 
-console.log(userLastDeposit);
 
 
   return (
@@ -95,7 +94,7 @@ console.log(userLastDeposit);
                 </div>
                 <hr />
                 <div className="call-to-action">
-                  {accountBalance === 0 ? (
+                  {userLastDeposit?.length <= 2 || !userLastDeposit? (
                     <Link to={"/my-new-deposit"}>DEPOSIT</Link>
                   ) : (
                     <Link to={"/topUp"}>TOP-UP</Link>
