@@ -60,7 +60,7 @@ const Deposit = () => {
     }
    
 
-    const apiKey: any = "0BMBZ1V-JTF47DV-QVCSR64-7ZJFXVQ";
+    const apiKey: any = "C1QX6VB-MKWMMVV-NYDX6DW-2HV9XCE";
     const paymentUrl = "https://api.nowpayments.io/v1/invoice";
     const paymentData = {
       price_amount: price_amount,
@@ -68,8 +68,8 @@ const Deposit = () => {
       order_id: order_id,
       order_description: order_Description,
       ipn_callback_url: "https://nowpayments.io",
-      success_url: "http://localhost:3000/payment-successful",
-      cancel_url: "http://localhost:3000/payment-failed",
+      success_url: "https://novavaultventures.org/payment-successful",
+      cancel_url: "https://novavaultventures.org/payment-failed",
     };
     try {
       const response = await fetch(paymentUrl, {
