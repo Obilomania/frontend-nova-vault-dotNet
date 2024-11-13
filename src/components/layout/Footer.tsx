@@ -44,7 +44,7 @@ const Footer = () => {
             <CiLocationOn /> 20-22 Wenlock Road, London, England, N1 7GU
           </p>
           <p>
-            <CiMail /> support@novavaultventures.com
+            <CiMail /> support@novavaultventures.org
           </p>
         </div>
       </div>
