@@ -24,7 +24,7 @@ const AdminLanding = () => {
   useEffect(() => {
     const bounceSmallScreen = () => {
       const screenSize = window.innerWidth;
-      const computerScreenSize = 1200;
+      const computerScreenSize = 1000;
       if (screenSize < computerScreenSize) {
         toast.error("Log into a PC to access this page");
         navigate("/");
