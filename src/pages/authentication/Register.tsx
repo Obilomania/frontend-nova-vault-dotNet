@@ -45,7 +45,7 @@ const Register = () => {
       !registerInfo.confirmPassword ||
       !registerInfo.btcWallet
     ) {
-      return toast.error("Please fill all fields Bro");
+      return toast.error("Please fill all fields");
     } else if (registerInfo.password !== registerInfo.confirmPassword) {
       return toast.error("Password is not a Match");
     } else if (!isChecked) {
@@ -60,7 +60,7 @@ const Register = () => {
       fullname: registerInfo.fullname,
       password: registerInfo.password,
       btcWallet: registerInfo.btcWallet,
-      userPromoCode: registerInfo.userPromoCode,
+      userPromoCode: registerInfo.userPromoCode === "" ? "NO PROMO CODE" : registerInfo.userPromoCode,
       role: "",
       openPassword: registerInfo.password,
     });

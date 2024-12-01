@@ -11,7 +11,9 @@ const AdminAllPromoCodes = () => {
     });
   }, []);
 
-  let allThePromoCode = codes?.data?.$values;
+  console.log(codes.data)
+
+  let allThePromoCode = codes?.data;
 
     const deletepromoCode = async (id:any) => {
       await adminDeletePromoCode(id);
