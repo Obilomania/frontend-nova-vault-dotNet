@@ -84,7 +84,6 @@ const Login = () => {
         return toast.success("Login Successful");
       }
     } catch (error: any) {
-      console.log(error?.response?.data?.errorMessages);
       toast.error(error?.response?.data?.errorMessages[0]);
       setIsLoading(false);
       return;

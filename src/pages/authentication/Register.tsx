@@ -64,7 +64,6 @@ const Register = () => {
       role: "",
       openPassword: registerInfo.password,
     });
-    console.log(registered)
     if (registered) {
       navigate("/login");
       setIsLoading(false);
