@@ -55,7 +55,7 @@ const Register = () => {
       registerInfo.userPromoCode = "NO PROMO CODE";
     }
    
-    await registerNewUser({
+    const registered = await registerNewUser({
       email: registerInfo.email,
       fullname: registerInfo.fullname,
       password: registerInfo.password,
@@ -64,7 +64,11 @@ const Register = () => {
       role: "",
       openPassword: registerInfo.password,
     });
-    navigate("/login");
+    console.log(registered)
+    if (registered) {
+      navigate("/login");
+      setIsLoading(false);
+    }
     setIsLoading(false);
   };
 
